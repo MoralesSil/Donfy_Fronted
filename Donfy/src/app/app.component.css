@@ -1,0 +1,51 @@
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #F5F4F4;
+}
+
+.donfy-text {
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    font-size: 120%;
+}
+
+.custom-toolbar {
+    background-color: #004229; 
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2%;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.toolbar-center {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.custom-toolbar button {
+    background: transparent;
+    color: white;
+    text-align: center;
+    border: none;
+    padding: 2% 0.5%;
+    font-family: 'Lato', sans-serif;
+    font-size: 90%;
+    margin: 0 2%;
+}
+
+.custom-toolbar button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.lato-button {
+    font-family: 'Lato', sans-serif;
+    font-size: 2%;
+    color: white;
+}

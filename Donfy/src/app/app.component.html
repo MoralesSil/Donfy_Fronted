@@ -1,1 +1,37 @@
-<app-notificationtype></app-notificationtype>
+<mat-toolbar class="custom-toolbar">
+  <div class="toolbar-left">
+    <span class="donfy-text">Donfy</span>
+  </div>
+  <div class="toolbar-center">
+    <button mat-button routerLink="/reportes">Inicio</button>
+
+    <!-- Menú de Usuario -->
+    <button class="text" mat-button [matMenuTriggerFor]="menuUsuario">Usuarios</button>
+    <mat-menu #menuUsuario="matMenu">
+      <button class="text" mat-menu-item routerLink="/usuario-info">Información de Usuario</button>
+      <button class="text" mat-menu-item routerLink="/usuario-rol">Roles de Usuario</button>
+    </mat-menu>
+
+    <!-- Menú de Notificaciones -->
+    <button class="text" mat-button [matMenuTriggerFor]="menuNotificaciones">Notificaciones</button>
+    <mat-menu #menuNotificaciones="matMenu">
+      <button class="text" mat-menu-item routerLink="/NotificationType">Tipo de Notificaciones</button>
+      <button class="text" mat-menu-item routerLink="/notificaciones">Notificaciones</button>
+    </mat-menu>
+  
+    <!-- Menú de Donaciones -->
+    <button class="text" mat-button [matMenuTriggerFor]="menuDonaciones" >Donaciones</button>
+    <mat-menu #menuDonaciones="matMenu">
+      <button class="text" mat-menu-item routerLink="/donaciones-tipo">Tipo de Donaciones</button>
+      <button class="text" mat-menu-item routerLink="/donaciones">Donaciones</button>
+    </mat-menu>
+  
+    <!-- Comprobante -->
+    <button class="text" mat-button routerLink="/comprobante">Comprobantes</button>
+  </div>
+  <div>
+    <span ></span>
+  </div>
+  <span class="spacer"></span>
+  </mat-toolbar>
+  <router-outlet></router-outlet>

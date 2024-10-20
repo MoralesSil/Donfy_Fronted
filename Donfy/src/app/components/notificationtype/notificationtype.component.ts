@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { ListarNotificationtypeComponent } from "./listar-notificationtype/listar-notificationtype.component";
 
@@ -9,6 +9,7 @@ import { ListarNotificationtypeComponent } from "./listar-notificationtype/lista
   templateUrl: './notificationtype.component.html',
   styleUrl: './notificationtype.component.css'
 })
-export class NotificationtypeComponent {
+export class NotificationtypeComponent implements OnInit{
   constructor(public route:ActivatedRoute){}
+  ngOnInit(): void {}
 }
