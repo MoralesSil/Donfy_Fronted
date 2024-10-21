@@ -6,13 +6,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
+import { DonationtypeComponent } from './components/donationtype/donationtype.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet, 
-    NotificationtypeComponent, 
+    NotificationtypeComponent,
+    DonationtypeComponent, 
     MatToolbarModule,
     MatMenuModule,
     RouterLink,
