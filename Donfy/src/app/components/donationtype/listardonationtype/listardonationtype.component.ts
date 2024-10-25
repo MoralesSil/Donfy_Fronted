@@ -20,7 +20,9 @@ export class ListardonationtypeComponent {
   ngOnInit(): void{
     this.dtS.list().subscribe((data) => {
       this.dataSource=new MatTableDataSource(data)
-    }
-    )
+    });
+    this.dtS.getList().subscribe(data=>{
+      this.dataSource=new MatTableDataSource(data);
+    });
   }
 }
