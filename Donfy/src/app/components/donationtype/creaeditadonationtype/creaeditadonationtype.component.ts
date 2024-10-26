@@ -5,7 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DonationType } from '../../../models/DonationType';
 import { DonationtypeService } from '../../../services/donationtype.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-creaeditadonationtype',
@@ -13,7 +13,8 @@ import { Router } from '@angular/router';
   imports: [MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   templateUrl: './creaeditadonationtype.component.html',
   styleUrl: './creaeditadonationtype.component.css'

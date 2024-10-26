@@ -1,5 +1,16 @@
-<router-outlet>
-    <div [hidden]="route.children.length!==0">
-        <app-listardonationtype></app-listardonationtype>
-    </div>
-</router-outlet>
+<div class="page-container">
+    <mat-card class="action-card">
+        <mat-card-title>Gestión de Tipo de Donaciones</mat-card-title>
+        <mat-card-content>
+            <div class="button-group">
+                <button mat-button [routerLink]="['/DonationType/listar']">Listar</button>
+                <button mat-button [routerLink]="['/DonationType/nuevo']">Registrar</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+  
+
+
+  

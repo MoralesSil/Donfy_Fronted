@@ -69,3 +69,28 @@ body {
 .mat-cell {
     padding: 10px;
 }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    min-width: 120px; /* Ancho mínimo para botones más largos */
+    background-color: #004229 !important;
+    color: white !important;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #006d5b !important;
+}

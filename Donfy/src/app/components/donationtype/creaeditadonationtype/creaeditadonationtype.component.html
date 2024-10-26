@@ -3,11 +3,12 @@
         <h1>Registro Tipo de Donaciones</h1>
         <form [formGroup]="form" (submit)="aceptar()">
             <mat-form-field class="example-full-width">
-                <mat-label>Tipo de Donacion</mat-label>
-                <input matInput placeholder="Ejem. Fisica" formControlName="htipodonacion">
+                <mat-label>Tipo de Donación</mat-label>
+                <input matInput placeholder="Ejem. Física" formControlName="htipodonacion">
             </mat-form-field>
             <div class="button-container">
-                <button mat-flat-button>Registrar</button>
+                <button mat-flat-button color="primary">Registrar</button>
+                <button mat-flat-button color="accent" [routerLink]="['/DonationType']">Volver al Menú</button>
             </div>
         </form>
     </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterModule } from '@angular/router';
 import { NotificationtypeComponent } from "./components/notificationtype/notificationtype.component";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +20,8 @@ import { DonationtypeComponent } from './components/donationtype/donationtype.co
     RouterLink,
     MatButtonModule,
     MatBadgeModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
