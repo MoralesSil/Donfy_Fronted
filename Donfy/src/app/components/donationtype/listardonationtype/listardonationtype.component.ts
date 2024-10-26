@@ -4,7 +4,7 @@ import { DonationType } from '../../../models/DonationType';
 import { DonationtypeService } from '../../../services/donationtype.service';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-listardonationtype',
@@ -13,30 +13,38 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     RouterModule,
     MatButtonModule,
-    MatIconModule
+    MatIcon
   ],
   templateUrl: './listardonationtype.component.html',
-  styleUrl: './listardonationtype.component.css'
+  styleUrls: ['./listardonationtype.component.css']
 })
 export class ListardonationtypeComponent implements OnInit {
   dataSource:MatTableDataSource<DonationType>=new MatTableDataSource();
 
-  displayedColumns: string[]=['c1','c2','accion01']
+  displayedColumns: string[]=['c1','c2','accion01','accion02']
 
   constructor(private dtS:DonationtypeService){}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.dtS.list().subscribe((data) => {
-      this.dataSource=new MatTableDataSource(data)
+      // Ordena los datos por idTipoDonation de forma ascendente
+      data.sort((a, b) => a.idTipoDonation - b.idTipoDonation);
+      this.dataSource = new MatTableDataSource(data);
     });
-    this.dtS.getList().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data);
+    
+    this.dtS.getList().subscribe(data => {
+      // Ordena los datos por idTipoDonation de forma ascendente
+      data.sort((a, b) => a.idTipoDonation - b.idTipoDonation);
+      this.dataSource = new MatTableDataSource(data);
     });
   }
-  eliminar(id:number){
-    this.dtS.delete(id).subscribe(data=>{
-      this.dtS.list().subscribe(data=>{
-        this.dtS.setList(data);
+
+  eliminar(id: number) {
+    this.dtS.delete(id).subscribe(() => {
+      this.dtS.list().subscribe(data => {
+        // Ordena nuevamente la lista después de la eliminación
+        data.sort((a, b) => a.idTipoDonation - b.idTipoDonation);
+        this.dataSource = new MatTableDataSource(data);
       });
     });
   }

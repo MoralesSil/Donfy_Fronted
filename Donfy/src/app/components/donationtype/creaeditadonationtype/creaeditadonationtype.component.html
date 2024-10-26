@@ -2,12 +2,21 @@
     <div class="form-container">
         <h1>Registro Tipo de Donaciones</h1>
         <form [formGroup]="form" (submit)="aceptar()">
+            <mat-form-field class="example-full-width" *ngIf="edicion">
+                <mat-label>Código</mat-label>
+                <input matInput formControlName="hcodigo">
+            </mat-form-field>
+
             <mat-form-field class="example-full-width">
                 <mat-label>Tipo de Donación</mat-label>
                 <input matInput placeholder="Ejem. Física" formControlName="htipodonacion">
+                <mat-error *ngIf="form.get('htipodonacion')?.hasError('required')">
+                    Este campo es obligatorio.
+                </mat-error>
             </mat-form-field>
+
             <div class="button-container">
-                <button mat-flat-button color="primary">Registrar</button>
+                <button mat-flat-button color="primary" [disabled]="form.invalid">Registrar</button>
                 <button mat-flat-button color="accent" [routerLink]="['/DonationType']">Volver al Menú</button>
             </div>
         </form>

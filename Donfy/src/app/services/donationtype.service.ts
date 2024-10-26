@@ -27,6 +27,12 @@ export class DonationtypeService {
     return this.listaCambio.asObservable();
   }
   delete(id:number){
-    return this.http.delete(`${this.url}/${id}`)
+    return this.http.delete(`${this.url}/${id}`);
+  }
+  listId(id:number){
+    return this.http.get<DonationType>(`${this.url}/${id}`);
+  }
+  update(dt:DonationType){
+    return this.http.put(this.url,dt);
   }
 }

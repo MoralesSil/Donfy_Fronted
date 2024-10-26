@@ -22,6 +22,10 @@ export const routes: Routes = [
         path: 'DonationType/nuevo',
         component: CreaeditadonationtypeComponent // Este muestra el registro
       },
+      {
+        path:'DonationType/editar/:id',
+        component:CreaeditadonationtypeComponent
+      },
       { path: '', redirectTo: '/DonationType', pathMatch: 'full' },
       { path: '**', redirectTo: '/DonationType' }
 ];
