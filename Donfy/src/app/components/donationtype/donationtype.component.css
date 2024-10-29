@@ -1,0 +1,67 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #F5F4F4;
+}
+
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 100vh;
+    padding-top: 15vh;
+    background-size: cover; /* Hace que la imagen cubra todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.action-card {
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    color: #004229;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+mat-card-title {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 2.2em;
+    color: #004229;
+    margin-bottom: 25px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+button[mat-button] {
+    padding: 15px 25px;
+    font-size: 1.1em;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+    color: white;
+    background-color: #004229 !important;
+    border-radius: 5px;
+    text-transform: none;
+    width: 85%;
+    transition: background-color 0.3s ease;
+}
+
+button[mat-button]:hover {
+    background-color: #006d5b !important;
+}
