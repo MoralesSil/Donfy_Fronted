@@ -2,7 +2,7 @@
   <h1 class="title">Tipos de Notificaciones</h1>
   <div class="search-container">
       <input type="text" class="search-input" placeholder="Buscar...">
-      <button class="new-button">Nuevo</button>
+      <button class="new-button" [routerLink]="['/NotificationType/New']" routerLinkActive="router-link-active">Nuevo</button>
   </div>
   <div class="tabla">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
@@ -17,6 +17,27 @@
               <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Nombre </th>
               <td mat-cell *matCellDef="let element" class="mat-cell"> {{element.nombre}} </td>
           </ng-container>
+          
+          <!-- c3 Column -->
+          <ng-container matColumnDef="c3">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Eliminar </th>
+            <td mat-cell *matCellDef="let element" (click)="eliminar(element.idTipoNotificacion)">
+              <button mat-fab aria-label="Example icon button with a delete icon">
+                <mat-icon style="color: #004229">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- c4 Column -->
+          <ng-container matColumnDef="c4">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Actualizar </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-raised-button [routerLink]="['Ediciones',element.idTipoNotificacion]">
+                <mat-icon style="color: #004229">edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>

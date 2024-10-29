@@ -1,0 +1,330 @@
+.toolbar {
+    background-color: #004229;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.toolbar-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+}
+
+.toolbar-center {
+    flex: 10;
+    display: flex;
+    justify-content: center;
+}
+
+.img{
+    margin-left: 1.5rem; 
+}
+
+.donfy {
+    font-weight: 700;
+    font-size: 1.5rem;
+    font-family: 'Lato', sans-serif;
+}
+
+.toolbar-center {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-navegacion {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    padding: 0; 
+}
+
+.menu-navegacion li {
+    margin: 0;
+}
+
+.menu-navegacion a {
+    color: white;
+    text-decoration: none; 
+    font-size: 1.1rem; 
+    padding: 0.5rem 1rem; 
+    border-radius: 4px;
+    transition: background-color 0.3s ease; 
+}
+
+.menu-navegacion a:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+}
+
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem; 
+    gap: 0.5rem;
+}
+
+.acciones {
+    background: transparent;
+    border: none;
+    color: white; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.acciones mat-icon {
+    font-size: 1.5rem;
+}
+
+.acciones:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    text-align: center;
+    max-width: 35%;
+    margin-left: auto;
+    margin-right: 5%;
+    margin-top: 13%;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #004229; 
+    font-family: 'Lato', sans-serif;
+}
+
+p {
+    font-size: 0.9rem; 
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    color: #000000; 
+    font-family: 'Open Sans', sans-serif;
+    text-align: justify;
+}
+
+.btn-registrate {
+    background-color: #004229; 
+    color: #ffffff; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Lato', sans-serif;
+}
+
+.btn-registrate:hover {
+    background-color: #006644; 
+}
+
+/* Sección Nosotros */
+.nosotros {
+    background-color: #F5F4F4;
+    width: 100%;
+    height: 100%;
+    padding: 2.5rem;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.nosotros h2 {
+    color: #004229;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+.nosotros p {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+}
+
+/* Sección ONG's */
+.ongs {
+    width: 100%;
+    height: 100%;
+    padding: 2.5rem;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.ongs h2 {
+    color: #004229;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.ongs p {
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.carousel {
+    position: relative;
+    max-width: 80%;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.carousel img {
+    width: 100%;
+    height: auto;
+}
+
+/* Sección Blog */
+.blog {
+    width: 100%;
+    height: 100%;
+    padding: 2.5rem;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.blog h2 {
+    color: #004229;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.blog-posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.blog-post {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 45%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post h3 {
+    color: #004229;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.blog-post p {
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.blog-post a {
+    color: #004229;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Sección Contacto */
+.contact {
+    width: 100%;
+    height: 100%;
+    padding: 2.5rem;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.contact h2 {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.contact input, .contact textarea {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact button {
+    background-color: #ffffff;
+    color: #004229;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.contact button:hover {
+    background-color: #e1e1e1;
+}
+
+/* Pie de página */
+.footer {
+    background-color: #333;
+    color: #ffffff;
+    padding: 1rem;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.social-media {
+    margin-top: 0.5rem;
+}
+
+.social-media a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+.social-media a:hover {
+    color: #ccc;
+}
+

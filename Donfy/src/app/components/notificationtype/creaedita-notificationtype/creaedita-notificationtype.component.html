@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="header">
+        <h1>Registro de Ambiente</h1>
+    </div>
+    <div class="form-container">
+        <form [formGroup]="form" (submit)="aceptar()">
+            <div class="input-field">
+                <mat-form-field class="example-full-width" *ngIf="edicion">
+                    <mat-label>Id</mat-label>
+                    <input matInput placeholder="Ejm. Sala" formControlName="ntid">
+                </mat-form-field>
+            </div>
+            
+            <div class="input-field">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Ejm. Sala" formControlName="ntname">
+                </mat-form-field>
+            </div>
+
+            <div class="button-container">
+                <button mat-flat-button color="primary" [disabled]="form.invalid">Registrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
