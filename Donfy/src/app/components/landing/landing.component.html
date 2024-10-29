@@ -36,9 +36,27 @@
 
 <!-- Sección de Información -->
 <section id="nosotros" class="nosotros">
-    <h2>¿Quiénes somos?</h2>
-    <p>Donfy es una ONG dedicada a mejorar la calidad de vida de las comunidades más necesitadas.</p>
-    <p>Nuestra misión es promover la solidaridad y el compromiso a través de diversas iniciativas que buscan transformar vidas.</p>
+    <div class="info-container">
+        <h2>¿Quiénes somos?</h2>
+        <p>Donfy es una ONG dedicada a mejorar la calidad de vida de las comunidades más necesitadas.</p>
+        <p>Nuestra misión es promover la solidaridad y el compromiso a través de diversas iniciativas que buscan transformar vidas.</p>
+
+        <h3>Nuestros Valores</h3>
+        <ul class="valores">
+            <li>
+                <span class="valor-icon">🤝</span>
+                <strong>Solidaridad:</strong> Creemos en la importancia de ayudar a quienes más lo necesitan.
+            </li>
+            <li>
+                <span class="valor-icon">🔍</span>
+                <strong>Transparencia:</strong> Mantenemos una comunicación abierta sobre nuestras actividades y el uso de los recursos.
+            </li>
+            <li>
+                <span class="valor-icon">🌟</span>
+                <strong>Compromiso:</strong> Estamos dedicados a hacer una diferencia positiva en la vida de las personas.
+            </li>
+        </ul>
+    </div>
 </section>
 
 <!-- Sección de ONG's -->
@@ -52,19 +70,19 @@
             <div class="carousel-item active">
                 <img src="assets/img/ong1.jpg" alt="ONG 1" class="d-block w-100">
                 <div class="carousel-caption">
-                    <h5>ONG 1</h5>
+                    <h5>ONG Caridad</h5>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="assets/img/ong2.jpg" alt="ONG 2" class="d-block w-100">
                 <div class="carousel-caption">
-                    <h5>ONG 2</h5>
+                    <h5>ONG Vida única</h5>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="assets/img/ong3.jpg" alt="ONG 3" class="d-block w-100">
                 <div class="carousel-caption">
-                    <h5>ONG 3</h5>
+                    <h5>ONG Salud y compromiso</h5>
                 </div>
             </div>
         </div>
@@ -79,40 +97,117 @@
     </div>
 </section>
 
+<!-- Sección de Nuestro Equipo -->
+<section id="equipo" class="equipo">
+    <h2>Nuestro Equipo</h2>
+    <div class="equipo-container">
+        <div class="miembro">
+            <img src="assets/img/AndreesHuertas.jpg" alt="Andres Enrique Huertas Hizo">
+            <h3>Andres Enrique Huertas Hizo</h3>
+        </div>
+        <div class="miembro">
+            <img src="assets/img/AngieMorales.jpg" alt="Angie Magdiel Morales Silverio">
+            <h3>Angie Magdiel Morales Silverio</h3>
+        </div>
+        <div class="miembro">
+            <img src="assets/img/RodrigoQuispe.jpg" alt="Rodrigo Gabriel Quispe Giraldo">
+            <h3>Rodrigo Gabriel Quispe Giraldo</h3>
+        </div>
+        <div class="miembro">
+            <img src="assets/img/CamilaMorales.jpg" alt="Camila Fernanda Morales Farias">
+            <h3>Camila Fernanda Morales Farias</h3>
+        </div>
+    </div>
+</section>
+
+
 <!-- Sección del Blog -->
 <section id="blog" class="blog">
-    <h2>Últimas Noticias</h2>
-    <div class="blog-posts">
-        <article class="blog-post">
-            <h3>Título del Blog 1</h3>
-            <p>Resumen del blog 1...</p>
-            <a href="#">Leer más</a>
+    <h2 style="text-align: center; margin-bottom: 20px;">Blog</h2>
+    <p style="text-align: center; margin-bottom: 30px;">
+        Mantente al día con las últimas novedades y artículos destacados de nuestra organización.
+    </p>
+    
+    <div class="blog-posts" style="display: flex; gap: 20px; justify-content: center;">
+        <article class="blog-post" style="border: 1px solid #ddd; padding: 20px; width: 250px; border-radius: 8px;">
+            <img src="assets/img/blog1.jpeg" alt="Imagen del Blog 1" style="width: 100%; height: auto; border-radius: 8px 8px 0 0;">
+            <h3 style="margin-top: 15px;">La Importancia de la Solidaridad</h3>
+            <p style="color: #555;">Este artículo destaca temas importantes sobre la solidaridad en nuestras comunidades y cómo cada uno de nosotros puede contribuir.</p>
+            <a href="#" style="color: #004229; text-decoration: none; font-weight: bold;">Leer más</a>
         </article>
-        <article class="blog-post">
-            <h3>Título del Blog 2</h3>
-            <p>Resumen del blog 2...</p>
-            <a href="#">Leer más</a>
+        
+        <article class="blog-post" style="border: 1px solid #ddd; padding: 20px; width: 250px; border-radius: 8px;">
+            <img src="assets/img/blog2.jpg" alt="Imagen del Blog 2" style="width: 100%; height: auto; border-radius: 8px 8px 0 0;">
+            <h3 style="margin-top: 15px;">Proyectos Recientes en Acción</h3>
+            <p style="color: #555;">Conoce más sobre los proyectos recientes y el impacto que están teniendo en la vida de muchas personas en nuestra comunidad.</p>
+            <a href="#" style="color: #004229; text-decoration: none; font-weight: bold;">Leer más</a>
+        </article>
+        
+        <article class="blog-post" style="border: 1px solid #ddd; padding: 20px; width: 250px; border-radius: 8px;">
+            <img src="assets/img/blog3.jpg" alt="Imagen del Blog 3" style="width: 100%; height: auto; border-radius: 8px 8px 0 0;">
+            <h3 style="margin-top: 15px;">Iniciativas de Desarrollo Sostenible</h3>
+            <p style="color: #555;">Descubre nuestras iniciativas de desarrollo y cómo estamos trabajando para crear un futuro más sostenible y equitativo para todos.</p>
+            <a href="#" style="color: #004229; text-decoration: none; font-weight: bold;">Leer más</a>
         </article>
     </div>
 </section>
+
+
 
 <!-- Sección de Contacto -->
 <section id="contactanos" class="contact">
     <h2>Contáctanos</h2>
     <form>
-        <input type="text" placeholder="Nombre" required>
-        <input type="email" placeholder="Correo Electrónico" required>
-        <textarea placeholder="Mensaje" required></textarea>
+        <div class="form-group">
+            <input type="text" placeholder="Nombre" required>
+        </div>
+        <div class="form-group">
+            <input type="email" placeholder="Correo Electrónico" required>
+        </div>
+        <div class="form-group">
+            <textarea placeholder="Mensaje" required></textarea>
+        </div>
         <button type="submit">Enviar</button>
     </form>
 </section>
 
+
 <!-- Pie de página -->
 <footer class="footer">
-    <p>&copy; 2024 Donfy. Todos los derechos reservados.</p>
-    <div class="social-media">
-        <a href="#">Facebook</a>
-        <a href="#">Twitter</a>
-        <a href="#">Instagram</a>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>¿Qué hacemos?</h4>
+            <ul>
+                <li>Donaciones físicas</li>
+                <li>Recolección y distribución</li>
+                <li>Colaboraciones con ONGs</li>
+                <li>Consultoría en proyectos solidarios</li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos en redes</h4>
+            <div class="social-media">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>¿Nos cuentas tu proyecto?</h4>
+            <p>Donfy: Transformando donaciones en impacto social</p>
+            <p>Calle Solidaridad 45, 28037 Madrid</p>
+            <p>Tel: +34 91 000 00 00</p>
+        </div>
     </div>
+
+    <div class="footer-links">
+        <a href="#" class="footer-link">Aviso legal</a>
+        <span>|</span>
+        <a href="#" class="footer-link">Privacidad y Cookies</a>
+    </div>
+
+    <p>&copy; 2024 Donfy. Todos los derechos reservados.</p>
 </footer>
