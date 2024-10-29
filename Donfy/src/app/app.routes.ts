@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { RouterModule,Routes } from '@angular/router';
 import { NotificationtypeComponent } from './components/notificationtype/notificationtype.component';
 import { DonationtypeComponent } from './components/donationtype/donationtype.component';
@@ -41,16 +41,18 @@ export const routes: Routes =
     {
         path: 'register',
         component: RegisterComponent,
-    }
-        Component: DonationtypeComponent, // Este solo muestra los botones
+    },
+    {
+        path: 'DonationType',
+        component: DonationtypeComponent,
     },
     {
         path: 'DonationType/listar',
-        Component: ListardonationtypeComponent // Este muestra el listado
+        component: ListardonationtypeComponent
       },
       {
         path: 'DonationType/nuevo',
-        component: CreaeditadonationtypeComponent // Este muestra el registro
+        component: CreaeditadonationtypeComponent
       },
       {
         path:'DonationType/editar/:id',
