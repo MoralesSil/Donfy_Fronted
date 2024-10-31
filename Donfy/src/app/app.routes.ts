@@ -8,6 +8,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { CreaeditaNotificationtypeComponent } from './components/notificationtype/creaedita-notificationtype/creaedita-notificationtype.component';
 import { CreaeditadonationtypeComponent } from './components/donationtype/creaeditadonationtype/creaeditadonationtype.component';
 import { ListardonationtypeComponent } from './components/donationtype/listardonationtype/listardonationtype.component';
+import { CreaeditadonationComponent } from './components/donation/creaeditadonation/creaeditadonation.component';
+import { DonationComponent } from './components/donation/donation.component';
 
 export const routes: Routes = 
 [
@@ -59,7 +61,16 @@ export const routes: Routes =
         component:CreaeditadonationtypeComponent
       },
       { path: '', redirectTo: '/DonationType', pathMatch: 'full' },
-      { path: '**', redirectTo: '/DonationType' }
+      { path: '**', redirectTo: '/DonationType' },
+      {
+        path: 'Donation',
+        component:DonationComponent,
+        children: [
+            {
+                path:'nuevo',component:CreaeditadonationComponent
+            }
+        ]
+      }
 ];
 
 @NgModule({
