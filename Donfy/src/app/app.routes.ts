@@ -89,9 +89,10 @@ export const routes: Routes =
         {
             path: 'DonationType/editar/:id',
             component: CreaeditadonationtypeComponent
-        },
+        }
+        /*,
         { path: '', redirectTo: '/DonationType', pathMatch: 'full' },
-        { path: '**', redirectTo: '/DonationType' }
+        { path: '**', redirectTo: '/DonationType' }*/
     ];
 
 @NgModule({
