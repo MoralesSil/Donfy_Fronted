@@ -8,7 +8,7 @@ const base_url=environment.base
 @Injectable({
   providedIn: 'root'
 })
-export class DonationService {
+export class DonationsService {
 
   private url = `${base_url}/Donations`;
   private listaCambio=new Subject<Donations[]>();
