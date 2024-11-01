@@ -3,8 +3,8 @@
     <div class="toolbar-left">
         <span class="donfy">Donfy</span>
     </div>
-    <div class="toolbar-center">
-        <div class="menu-navegacion">
+    <div class="toolbar-center" [ngClass]="{'menu-desplegable': menuAbierto}">
+        <div class="menu-navegacion" [ngClass]="{'vertical': menuAbierto, 'horizontal': !menuAbierto}">
             <li><a class="active" href="#">Inicio</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#ong">ONG's</a></li>
@@ -12,6 +12,9 @@
             <li><a href="#contactanos">Contáctanos</a></li>
         </div>
     </div>
+    <button class="acciones hamburguesa" (click)="toggleMenu()" *ngIf="isSmallScreen()">
+        <mat-icon>menu</mat-icon>
+    </button>
     <div class="toolbar-right">
         <div [routerLink]="['/login']" routerLinkActive="router-link-active">
             <button mat-icon-button class="acciones">
