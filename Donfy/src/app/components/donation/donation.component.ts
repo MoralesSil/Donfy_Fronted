@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ListardonationComponent } from "./listardonation/listardonation.component";
 
 @Component({
   selector: 'app-donation',
   standalone: true,
-  imports: [],
+  imports: [    
+    RouterOutlet,
+    ListardonationComponent
+  ],
   templateUrl: './donation.component.html',
   styleUrl: './donation.component.css'
 })
