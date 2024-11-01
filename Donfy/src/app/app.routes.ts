@@ -8,6 +8,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { CreaeditaNotificationtypeComponent } from './components/notificationtype/creaedita-notificationtype/creaedita-notificationtype.component';
 import { CreaeditadonationtypeComponent } from './components/donationtype/creaeditadonationtype/creaeditadonationtype.component';
 import { ListardonationtypeComponent } from './components/donationtype/listardonationtype/listardonationtype.component';
+import { CreaeditadonationComponent } from './components/donation/creaeditadonation/creaeditadonation.component';
+import { DonationComponent } from './components/donation/donation.component';
+import { UserComponent } from './components/user/user.component';
+import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedita-user.component';
 
 export const routes: Routes = 
 [
@@ -31,6 +35,20 @@ export const routes: Routes =
             {
                 path:'Ediciones/:id',
                 component:CreaeditaNotificationtypeComponent
+            }
+        ]
+    },
+    { 
+        path: 'Users',
+        component: UserComponent,
+        children:[
+            {
+                path:'New',
+                component:CreaeditaUserComponent
+            },
+            {
+                path:'Ediciones/:id',
+                component:CreaeditaUserComponent
             }
         ]
     },

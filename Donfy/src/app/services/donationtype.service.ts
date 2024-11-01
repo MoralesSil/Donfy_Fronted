@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { environmet } from '../../environments/environment';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DonationType } from '../models/DonationType';
 import { Subject } from 'rxjs';
-const base_url = environmet.base
+const base_url = environment.base
 
 @Injectable({
   providedIn: 'root'
