@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-donation',
@@ -8,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './donation.component.css'
 })
 export class DonationComponent {
+constructor(public route:ActivatedRoute) { }
 
 }
