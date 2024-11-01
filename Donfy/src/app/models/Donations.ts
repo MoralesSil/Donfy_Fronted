@@ -1,4 +1,5 @@
 import { DonationType } from "./DonationType"
+import { Users } from "./Users"
 
 export class Donations{
     idDonation:number=0
@@ -9,6 +10,7 @@ export class Donations{
     montoDonado:number=0
     eliminado:boolean=false
     direccionRecojo:string=""
-    //Las FK de Usuario
+    user:Users=new Users()
+    userReceptor:Users=new Users()
     donationType:DonationType=new DonationType()
 }
