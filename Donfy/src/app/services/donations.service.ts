@@ -36,5 +36,4 @@ export class DonationService {
   update(dnt:Donations){
     return this.http.put(this.url,dnt);
   }
-
 }

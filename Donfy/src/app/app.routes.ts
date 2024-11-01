@@ -79,14 +79,18 @@ export const routes: Routes =
       { path: '', redirectTo: '/DonationType', pathMatch: 'full' },
       { path: '**', redirectTo: '/DonationType' },
       {
-        path: 'Donation',
+        path: 'Donations',
         component:DonationComponent,
         children: [
             {
                 path:'nuevo',component:CreaeditadonationComponent
+            },
+            {
+                path:'Edit/id',component:CreaeditadonationComponent
             }
         ]
       }
+
 ];
 
 @NgModule({
