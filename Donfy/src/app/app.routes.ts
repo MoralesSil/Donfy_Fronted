@@ -15,87 +15,92 @@ import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedi
 import { RoleComponent } from './components/role/role.component';
 import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
 
-export const routes: Routes =
-    [
-        {
-            path: '',
-            redirectTo: 'landing',
-            pathMatch: 'full',
-        },
-        {
-            path: 'landing',
-            component: LandingComponent
-        },
-        {
-            path: 'NotificationType',
-            component: NotificationtypeComponent,
-            children: [
-                {
-                    path: 'New',
-                    component: CreaeditaNotificationtypeComponent
-                },
-                {
-                    path: 'Ediciones/:id',
-                    component: CreaeditaNotificationtypeComponent
-                }
-            ]
-        },
-        {
-            path: 'Users',
-            component: UserComponent,
-            children: [
-                {
-                    path: 'New',
-                    component: CreaeditaUserComponent
-                },
-                {
-                    path: 'Ediciones/:id',
-                    component: CreaeditaUserComponent
-                }
-            ]
-        },
-        {
-            path: 'Donations',
-            component: DonationComponent,
-            children: [
-                {
-                    path: 'nuevo',
-                    component: CreaeditadonationComponent
-                },
-                {
-                    path: 'Edit/:id', 
-                    component: CreaeditadonationComponent
-                }
-            ]
-        },
-        {
-            path: 'login',
-            component: LoginComponent,
-        },
-        {
-            path: 'register',
-            component: RegisterComponent,
-        },
-        {
-            path: 'DonationType',
-            component: DonationtypeComponent,
-        },
-        {
-            path: 'DonationType/listar',
-            component: ListardonationtypeComponent
-        },
-        {
-            path: 'DonationType/nuevo',
-            component: CreaeditadonationtypeComponent
-        },
-        {
-            path: 'DonationType/editar/:id',
-            component: CreaeditadonationtypeComponent
-        }
-        /*,
-        { path: '', redirectTo: '/DonationType', pathMatch: 'full' },
-        { path: '**', redirectTo: '/DonationType' }*/
-    ];
+export const routes: Routes = 
+[
+    {
+        path: '',
+        redirectTo: 'landing',
+        pathMatch: 'full',
+    },
+    {
+        path:'landing',
+        component: LandingComponent
+    },
+    { 
+        path: 'NotificationType',
+        component: NotificationtypeComponent,
+        children:[
+            {
+                path:'New',
+                component:CreaeditaNotificationtypeComponent
+            },
+            {
+                path:'Ediciones/:id',
+                component:CreaeditaNotificationtypeComponent
+            }
+        ]
+    },
+    { 
+        path: 'Users',
+        component: UserComponent,
+        children:[
+            {
+                path:'New',
+                component:CreaeditaUserComponent
+            },
+            {
+                path:'Ediciones/:id',
+                component:CreaeditaUserComponent
+            }
+        ]
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+    },
+    {
+        path: 'register',
+        component: RegisterComponent,
+    },
+    {
+        path: 'DonationType',
+        component: DonationtypeComponent,
+    },
+    {
+        path: 'DonationType/listar',
+        component: ListardonationtypeComponent
+      },
+      {
+        path: 'DonationType/nuevo',
+        component: CreaeditadonationtypeComponent
+      },
+      {
+        path:'DonationType/editar/:id',
+        component:CreaeditadonationtypeComponent
+      },
+      
+      {
+        path: 'Donations',
+        component:DonationComponent,
+        children: [
+            {
+                path:'nuevo',component:CreaeditadonationComponent
+            },
+            {
+                path:'Edit/id',component:CreaeditadonationComponent
+            }
+        ]
+      },
+      {
+        path:'Roles',
+        component:RoleComponent,
+        children:[
+            {
+                path:'nuevo',component:CreaeditaroleComponent
+            }
+        ]
+      }
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
