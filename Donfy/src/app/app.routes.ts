@@ -12,6 +12,8 @@ import { CreaeditadonationComponent } from './components/donation/creaeditadonat
 import { DonationComponent } from './components/donation/donation.component';
 import { UserComponent } from './components/user/user.component';
 import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedita-user.component';
+import { RoleComponent } from './components/role/role.component';
+import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
 
 export const routes: Routes = 
 [
@@ -76,8 +78,7 @@ export const routes: Routes =
         path:'DonationType/editar/:id',
         component:CreaeditadonationtypeComponent
       },
-      { path: '', redirectTo: '/DonationType', pathMatch: 'full' },
-      { path: '**', redirectTo: '/DonationType' },
+      
       {
         path: 'Donations',
         component:DonationComponent,
@@ -89,8 +90,16 @@ export const routes: Routes =
                 path:'Edit/id',component:CreaeditadonationComponent
             }
         ]
+      },
+      {
+        path:'Roles',
+        component:RoleComponent,
+        children:[
+            {
+                path:'nuevo',component:CreaeditaroleComponent
+            }
+        ]
       }
-
 ];
 
 @NgModule({
