@@ -14,6 +14,8 @@ import { UserComponent } from './components/user/user.component';
 import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedita-user.component';
 import { RoleComponent } from './components/role/role.component';
 import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
+import { VouchersComponent } from './components/vouchers/vouchers.component';
+import { CreaeditavouchersComponent } from './components/vouchers/creaeditavouchers/creaeditavouchers.component';
 
 export const routes: Routes = 
 [
@@ -88,6 +90,15 @@ export const routes: Routes =
             },
             {
                 path:'Edit/id',component:CreaeditadonationComponent
+            }
+        ]
+      },
+      {
+        path: 'Comprobantes',
+        component:VouchersComponent,
+        children: [
+            {
+                path:'nuevo',component:CreaeditavouchersComponent
             }
         ]
       },

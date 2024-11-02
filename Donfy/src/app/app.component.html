@@ -25,7 +25,12 @@
         <button mat-menu-item routerLink="/Donations">Donaciones</button>
       </mat-menu>
 
-      <button mat-button routerLink="/comprobante">Comprobantes</button>
+      <button mat-button [matMenuTriggerFor]="menuComprobantes">Comprobantes</button>
+      <mat-menu #menuComprobantes="matMenu">
+        <button mat-menu-item routerLink="/Comprobantes">Listar Comprobante</button>
+        <button mat-menu-item routerLink="/Comprobantes/nuevo">Registrar Comprobante</button>
+  
+      </mat-menu>
     </div>
   </div>
   <div class="toolbar-right">
