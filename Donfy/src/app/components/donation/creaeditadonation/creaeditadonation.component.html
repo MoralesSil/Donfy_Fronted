@@ -1,1 +1,67 @@
-<p>creaeditadonation works!</p>
+<div class="container">
+    <div class="header">
+        <h1>Actualiza tu Donación</h1>
+    </div>
+    <div class="form-container">
+        <form [formGroup]="form" (submit)="aceptar()">
+            <div class="input-field">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Tipo de Donativo</mat-label>
+                    <mat-select formControlName="tipoDonativo">
+                        <mat-option value="fisico">Físico</mat-option>
+                        <mat-option value="monetario">Monetario</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field">
+                <mat-form-field class="example-full-width">
+                    <mat-label>ONG Receptora</mat-label>
+                    <input matInput placeholder="Nombre de la ONG" formControlName="ongReceptora">
+                </mat-form-field>
+            </div>
+
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'monetario'">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Monto</mat-label>
+                    <input matInput placeholder="Ejm. 100.00" formControlName="monto" type="number">
+                </mat-form-field>
+            </div>
+
+            <!-- Mostrar nombre y descripción solo si el tipo es 'fisico' -->
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Descripción</mat-label>
+                    <textarea matInput placeholder="Descripción del donativo" formControlName="descripcion"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Nombre del Donativo</mat-label>
+                    <input matInput placeholder="Ejm. Juguetes" formControlName="nombreDonativo">
+                </mat-form-field>
+            </div>
+
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Fecha de Recojo</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="fechaRecojo">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Dirección de Recojo</mat-label>
+                    <input matInput placeholder="Ejm. Av. Ejemplo 123" formControlName="direccionRecojo">
+                </mat-form-field>
+            </div>
+
+            <div class="button-container">
+                <button mat-flat-button color="primary" [disabled]="form.invalid">Registrar Donación</button>
+            </div>
+        </form>
+    </div>
+</div>

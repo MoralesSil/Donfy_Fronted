@@ -61,7 +61,7 @@ export const routes: Routes =
                     component: CreaeditadonationComponent
                 },
                 {
-                    path: 'Edit/id', 
+                    path: 'Edit/:id', 
                     component: CreaeditadonationComponent
                 }
             ]
