@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="header"><h1>Registro de Comprobantes</h1>
+    </div>
+    <div class="form-container">
+        <form [formGroup]="form" (ngSubmit)="aceptar()">
+            
+           <!-- Eliminar <div class="input-field">
+            <mat-form-field class="example-full-width">
+                <mat-label>Nro de Comprobantes</mat-label>
+                <input matInput placeholder="Ejem. N° 1" formControlName="dComprobante">
+            </mat-form-field>
+            <br />
+            </div> -->
+            
+            <div class="input-field">
+            <mat-form-field class="example-full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Ejem. Andres H" formControlName="dNombre"/>
+            </mat-form-field>
+            <br />
+            </div>
+
+            <div class="input-field">
+            <mat-form-field class="example-full-width">
+                <mat-label>Nro de Donante</mat-label>
+                <input matInput placeholder="Ejem. N° 1" formControlName="dDonante">
+            </mat-form-field>
+            <br />
+            </div>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Descripcion</mat-label>
+                <input matInput placeholder="Ejem. Se donó..." formControlName="dDescripcion"/>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Total</mat-label>
+                <input matInput placeholder="Ejem. 250" formControlName="dTotal"/>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Fecha de Emision</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dFecha">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <br />
+
+            
+            
+
+        </form>
+        <div class="button-container">
+            <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="aceptar()">Registrar</button>
+
+        </div>
+    </div>
+</div>
