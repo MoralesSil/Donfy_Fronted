@@ -12,6 +12,8 @@ import { CreaeditadonationComponent } from './components/donation/creaeditadonat
 import { DonationComponent } from './components/donation/donation.component';
 import { UserComponent } from './components/user/user.component';
 import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedita-user.component';
+import { RoleComponent } from './components/role/role.component';
+import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
 
 export const routes: Routes =
     [
