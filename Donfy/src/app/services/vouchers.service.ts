@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Vouchers } from '../models/Vouchers';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 const base_url=environment.base
 
 @Injectable({
@@ -33,7 +33,7 @@ export class VouchersService {
     return this.http.get<Vouchers>(`${this.url}/${id}`);
   }
 
-  delete(id:number){
+  delete(id: number): Observable<any> {
     return this.http.delete(`${this.url}/${id}`);
   }
 

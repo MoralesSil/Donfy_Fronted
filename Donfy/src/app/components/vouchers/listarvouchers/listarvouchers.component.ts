@@ -27,7 +27,8 @@ export class ListarvouchersComponent {
     'descripcion', 
     'monto', 
     'fechaEmision',
-    'actualizar'
+    'actualizar',
+    'borrar'
   ];
 
   constructor(private vou: VouchersService) {}
@@ -40,6 +41,16 @@ export class ListarvouchersComponent {
     this.vou.getList().subscribe((data)=>{
       this.dataSource=new MatTableDataSource(data);
     })
+  }
+
+  eliminar(id: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este comprobante?')) {
+      this.vou.delete(id).subscribe(() => {
+        this.dataSource.data = this.dataSource.data.filter(voucher => voucher.idComprobante !== id);
+      }, (error) => {
+        console.error('Error al eliminar el voucher', error);
+      });
+    }
   }
 
   
