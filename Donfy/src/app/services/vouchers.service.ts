@@ -33,4 +33,12 @@ export class VouchersService {
     return this.http.get<Vouchers>(`${this.url}/${id}`);
   }
 
+  delete(id:number){
+    return this.http.delete(`${this.url}/${id}`);
+  }
+
+  update(vou:Vouchers){
+    return this.http.put(this.url,vou);
+  }
+
 }
