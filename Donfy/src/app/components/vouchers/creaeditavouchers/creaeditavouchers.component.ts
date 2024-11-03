@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -28,7 +28,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './creaeditavouchers.component.html',
   styleUrls: ['./creaeditavouchers.component.css']
 })
-export class CreaeditavouchersComponent {
+export class CreaeditavouchersComponent implements OnInit{
   form: FormGroup = new FormGroup({});
   vouchers : Vouchers = new Vouchers();
   edicion: boolean = false;
@@ -44,21 +44,33 @@ export class CreaeditavouchersComponent {
     ){}
 
 
-  ngOnInit(): void {
-    this.route.params.subscribe((data:Params)=>{
-      this.id = data['id'];
-      this.edicion = this.id != null;
-    })
-
-    this.form= this.formBuilder.group({
-      dNombre:['', Validators.required],
-      dDonante:['', Validators.required],
-      dDescripcion:['', Validators.required],
-      dTotal:['', Validators.required],
-      dFecha:['', Validators.required]
-    })
+    ngOnInit(): void {
+      this.form = this.formBuilder.group({
+        dNombre: ['', Validators.required],
+        dDonante: ['', Validators.required],
+        dDescripcion: ['', Validators.required],
+        dTotal: ['', Validators.required],
+        dFecha: ['', Validators.required]
+      });
     
+      this.route.params.subscribe((data: Params) => {
+        this.id = data['id'];
+        this.edicion = this.id != null;
+        if (this.edicion) {
+          this.vou.listId(this.id).subscribe((voucher) => {
+            this.vouchers = voucher;
+            this.form.patchValue({
+              dNombre: voucher.nombreDonante,
+              dDonante: voucher.donations.idDonation,
+              dDescripcion: voucher.descripcion,
+              dTotal: voucher.total,
+              dFecha: voucher.fechaEmision
+            });
+          });
+        }
+      });
   }
+  
 
   aceptar(): void {
     if (this.form.valid) {
@@ -67,18 +79,28 @@ export class CreaeditavouchersComponent {
       this.vouchers.total = this.form.value.dTotal;
       this.vouchers.fechaEmision = this.form.value.dFecha;
       this.vouchers.donations.idDonation = this.form.value.dDonante;
-      this.vou.insert(this.vouchers).subscribe((data)=>{
-        this.vou.list().subscribe((data)=>{
-          this.vou.setList(data)
-        })
-      })
 
-      
+      if (this.edicion) {
+        this.vou.update(this.vouchers).subscribe(() => {
+          this.vou.list().subscribe((data) => {
+            this.vou.setList(data);
+          });
+        });
+      } else {
+        this.vou.insert(this.vouchers).subscribe(() => {
+          this.vou.list().subscribe((data) => {
+            this.vou.setList(data);
+          });
+        });
+      }
+
       this.router.navigate(['Comprobantes']);
-      
-
     }
-  }
+}
+
+
+  
+  
   
   
 }

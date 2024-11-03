@@ -99,6 +99,10 @@ export const routes: Routes =
         children: [
             {
                 path:'nuevo',component:CreaeditavouchersComponent
+            },
+            {
+                path: 'Edit/:id',
+                component: CreaeditavouchersComponent
             }
         ]
       },
