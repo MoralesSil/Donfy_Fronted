@@ -3,43 +3,89 @@
         <div class="register-left">
             <h2 class="welcome-title">¡Regístrate aquí!</h2>
             <div class="register-form">
-                <div class="form-group">
+                <form [formGroup]="form" (submit)="registrar()">
+                    <div class="form-group">
                         <label for="names">Nombres</label>
-                        <input type="text" id="names" placeholder="Juan Jose">
-                </div>
-                <div class="form-group">
-                    <label for="surnames">Apellidos</label>
-                    <input type="text" id="surnames" placeholder="Ramirez Rojas">
-                </div>
-                <div class="form-group">
-                    <label for="email">Correo</label>
-                    <input type="text" id="email" placeholder="example@gmail.com">
-                </div>
-                <div class="form-group-row">
-                    <div class="form-group">
-                        <label for="number">Teléfono</label>
-                        <input type="text" id="number" placeholder="+51 987654321">
+                        <input type="text" formControlName="nombres" placeholder="Juan Jose">
+                        <mat-error *ngIf="form.get('nombres')?.hasError('required') && form.get('nombres')?.touched">
+                            Los nombres son obligatorios.
+                        </mat-error>
                     </div>
                     <div class="form-group">
-                        <label for="dni">Dni</label>
-                        <input type="text" id="dni" placeholder="87654321">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="direccion">Dirección</label>
-                    <input type="text" id="direccion" placeholder="Av.example">
-                </div>
-                <div class="form-group-row">
-                    <div class="form-group">
-                        <label for="username">Usuario</label>
-                        <input type="text" id="username" placeholder="Pepito123">
+                        <label for="surnames">Apellidos</label>
+                        <input type="text" formControlName="apellidos" placeholder="Ramirez Rojas">
+                        <mat-error *ngIf="form.get('apellidos')?.hasError('required') && form.get('apellidos')?.touched">
+                            Los apellidos son obligatorios.
+                        </mat-error>
                     </div>
                     <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" id="password" placeholder="•••••••••">
+                        <label for="email">Correo</label>
+                        <input type="text" formControlName="correo" placeholder="ejemplo@gmail.com" (blur)="autoFillEmailDomain()">
+                        <mat-error *ngIf="form.get('correo')?.hasError('required') && form.get('correo')?.touched">
+                            El correo es obligatorio.
+                        </mat-error>
+                        <mat-error *ngIf="form.get('correo')?.hasError('email') && form.get('correo')?.touched">
+                            Correo inválido.
+                        </mat-error>
                     </div>
-                </div>
-                <button class="btn-register">Registrarse</button>
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <div class="phone-input-container">
+                                <span class="country-code">
+                                    <img src="assets/img/Peru.png" alt="Bandera de Perú" class="flag-icon"> +51
+                                </span>
+                                <input type="text" formControlName="telefono" placeholder="987654321" maxlength="9">
+                                <mat-error *ngIf="form.get('telefono')?.hasError('required') && form.get('telefono')?.touched">
+                                    El teléfono es obligatorio.
+                                </mat-error>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dni">DNI</label>
+                            <input type="text" formControlName="dni" placeholder="87654321">
+                            <mat-error *ngIf="form.get('dni')?.hasError('required') && form.get('dni')?.touched">
+                                El DNI es obligatorio.
+                            </mat-error>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <input type="text" formControlName="direccion" placeholder="Av.example">
+                        <mat-error *ngIf="form.get('direccion')?.hasError('required') && form.get('direccion')?.touched">
+                            La dirección es obligatoria.
+                        </mat-error>
+                    </div>
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="username">Usuario</label>
+                            <input type="text" formControlName="username">
+                            <mat-error *ngIf="form.get('username')?.hasError('required') && form.get('username')?.touched">
+                                El usuario es obligatorio.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('username')?.hasError('usernameTaken') && form.get('username')?.touched">
+                                El nombre de usuario ya está en uso.
+                            </mat-error>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <div class="password-container">
+                                <input [type]="isPasswordVisible ? 'text' : 'password'" formControlName="contra">
+                                <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                                    <mat-icon>{{ isPasswordVisible ? 'visibility' : 'visibility_off' }}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="form.get('contra')?.hasError('required') && form.get('contra')?.touched">
+                                    La contraseña es obligatoria.
+                                </mat-error>
+                                <mat-error *ngIf="form.get('contra')?.hasError('minlength') && form.get('contra')?.touched">
+                                    Mínimo de 10 caracteres.
+                                </mat-error>
+                            </div>
+                        </div>                        
+                    </div>
+                    <button class="btn-register" [disabled]="form.invalid">Registrarse</button>
+                </form>
             </div>
             <div class="login-message">
                 <p>¿Tienes cuenta? <a [routerLink]="['/login']" routerLinkActive="router-link-active" class="btn-login">Inicia sesión aquí</a></p>
@@ -51,4 +97,3 @@
         </div>
     </div>
 </div>
-

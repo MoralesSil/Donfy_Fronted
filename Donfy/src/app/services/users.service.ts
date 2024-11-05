@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Users } from '../models/Users';
 const base_url = environment.base
 
@@ -20,7 +20,7 @@ export class UsersService {
   }
   
   insert(u: Users) {
-    return this.http.post(this.url, u);
+    return this.http.post(`${this.url}/registrar`, u);
   }
 
   setList(listaNueva: Users[]) {
@@ -41,5 +41,9 @@ export class UsersService {
 
   update(u:Users){
     return this.http.put(this.url,u);
+  }
+
+  existsByUsername(username: string):Observable<boolean>{
+    return this.http.get<boolean>(`${this.url}/?username=${username}`)
   }
 }

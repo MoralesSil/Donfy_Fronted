@@ -52,11 +52,12 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
+    margin-top: 0.7em;
 }
 
 .form-group {
-    margin-bottom: 1.5%;
+    position: relative;
+    margin-bottom: 3.5%;
 }
 
 .form-group-row {
@@ -67,7 +68,7 @@
 
 .form-group label {
     display: block;
-    margin-bottom: 2%; 
+    margin-bottom: 0.1%; 
     color: #333333;
     font-family: 'Lato', sans-serif;
     font-size: 0.95rem;
@@ -146,6 +147,85 @@
     cursor: pointer;
     color: #333;
 }
+
+.password-container {
+    position: relative; 
+    display: flex;
+    align-items: center; 
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.toggle-password mat-icon {
+    color: #004229;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-35%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.phone-input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E5E5E5;
+    border-radius: 0.5em; 
+    background-color: #F2F2F2;
+    padding: 0.17em; 
+}
+
+.flag-icon {
+    width: 20px;
+    height: auto;
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
+.country-code {
+    font-family: 'Lato', sans-serif; 
+    color: #808080;
+    font-size: 0.85rem;
+    margin-right: 5px;
+    display: flex;
+    align-items: center; 
+}
+
+.phone-input-container input {
+    border: none;
+    outline: none;
+    font-size: 0.85rem;
+    background-color: transparent;
+    color: #808080;
+    width: 100%;
+    padding: 0.2em 0.5em;
+}
+
+mat-error {
+    position: absolute; /* Posiciona el mensaje de error de forma absoluta */
+    left: 10px; /* Alinea a la izquierda */
+    bottom: -20px; /* Coloca el mensaje de error por debajo del campo de entrada */
+    color: #ff0000; /* Color rojo para el texto de error */
+    font-family: 'Lato', sans-serif;
+    font-size: 0.70rem; /* Ajusta el tamaño de la fuente si es necesario */
+    opacity: 0; /* Inicialmente oculto */
+    transition: opacity 0.3s ease; /* Suaviza la aparición del mensaje de error */
+}
+
+/* Mostrar el mensaje de error cuando hay un error */
+.form-group input.ng-invalid.ng-touched ~ mat-error {
+    opacity: 1; /* Muestra el mensaje de error */
+}
+
+
 
 @media (max-width: 768px) {
     .register-container {
