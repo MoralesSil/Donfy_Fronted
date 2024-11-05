@@ -1,38 +1,42 @@
 <div class="container">
-    <div class="form-container">
-      <h1>Registro Roles</h1>
-      <form [formGroup]="form" (ngSubmit)="aceptar()">
-        <mat-form-field class="example-full-width">
-          <mat-label>Rol</mat-label>
-          <input matInput placeholder="Ejem. Donador" formControlName="hrol">
-          <mat-error *ngIf="form.get('hrol')?.hasError('required')">
-            Este campo es obligatorio.
-          </mat-error>
-        </mat-form-field>
+  <div class="form-container">
+    <h1>Registro Roles</h1>
+    <form [formGroup]="form" (ngSubmit)="aceptar()">
+      <mat-form-field class="example-full-width">
+        <mat-label>Rol</mat-label>
+        <input matInput placeholder="Ejem. Donador" formControlName="hrol">
+        <mat-error *ngIf="form.get('hrol')?.hasError('required')">
+          Este campo es obligatorio.
+        </mat-error>
+      </mat-form-field>
+    
+      <mat-form-field class="example-full-width">
+        <mat-label>Usuario</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Escribe el nombre de usuario"
+          formControlName="husername"
+          [matAutocomplete]="auto"
+        >
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let user of filteredUsuarios | async" [value]="user.username">
+            {{ user.username }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="form.get('husername')?.hasError('required')">
+          Este campo es obligatorio.
+        </mat-error>
+      </mat-form-field>
       
-        <mat-form-field class="example-full-width">
-          <mat-label>Usuario</mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Escribe el nombre de usuario"
-            formControlName="husername"
-            [matAutocomplete]="auto"
-          >
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let user of filteredUsuarios | async" [value]="user.username">
-              {{ user.username }}
-            </mat-option>
-          </mat-autocomplete>
-          <mat-error *ngIf="form.get('husername')?.hasError('required')">
-            Este campo es obligatorio.
-          </mat-error>
-        </mat-form-field>
-      
-        <div class="button-container">
-            <button mat-flat-button color="primary">Registrar</button> 
-        </div>
-      </form>
-    </div>
+      <!-- Mostrar mensaje de error si el usuario ya tiene un rol -->
+      <div *ngIf="mensajeError" class="error-message">
+        {{ mensajeError }}
+      </div>
+
+      <div class="button-container">
+        <button mat-flat-button color="primary">Registrar</button> 
+      </div>
+    </form>
   </div>
-  
+</div>

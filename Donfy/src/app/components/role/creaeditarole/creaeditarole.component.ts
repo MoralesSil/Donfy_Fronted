@@ -31,6 +31,7 @@ export class CreaeditaroleComponent implements OnInit {
   ro:Role=new Role();
   listaUsuarios: Users[]=[];
   filteredUsuarios!: Observable<Users[]>;
+  mensajeError: string = '';  
 
   constructor(
     private formBuilder:FormBuilder,
@@ -63,20 +64,28 @@ export class CreaeditaroleComponent implements OnInit {
     aceptar(): void {
       this.ro.rol = this.form.value.hrol;
       const selectedUser = this.listaUsuarios.find(user => user.username === this.form.value.husername);
-      
+  
       if (selectedUser) {
-        this.ro.user = selectedUser;
-    
-        this.rS.insert(this.ro).subscribe({
-          next: () => {
-            // Actualiza la lista en el servicio para que los suscriptores reciban la nueva lista
-            this.rS.list().subscribe(data => {
-              this.rS.setList(data); // Llama a setList con la nueva lista
+        // Comprueba si el usuario ya tiene un rol asignado
+        this.rS.list().subscribe(roles => {
+          const userHasRole = roles.some(role => role.user?.username === selectedUser.username);
+  
+          if (userHasRole) {
+            this.mensajeError = `El usuario ${selectedUser.username} ya tiene un rol asignado y no se le puede asignar otro.`;
+          } else {
+            // Procede con el registro
+            this.ro.user = selectedUser;
+            this.rS.insert(this.ro).subscribe({
+              next: () => {
+                this.rS.list().subscribe(data => {
+                  this.rS.setList(data);
+                });
+                this.router.navigate(['Roles']);
+              },
+              error: (err) => {
+                console.error("Error al registrar:", err);
+              }
             });
-            this.router.navigate(['Roles']);
-          },
-          error: (err) => {
-            console.error("Error al registrar:", err);
           }
         });
       } else {
