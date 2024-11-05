@@ -1,1 +1,61 @@
-<p>listarrole works!</p>
+<div class="container">
+    <h1 class="title">Roles</h1>
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Buscar..." />
+      <button class="new-button">Buscar</button>
+    </div>
+    <div class="tabla">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 custom-table"
+      >
+        <!-- Columna de ID -->
+        <ng-container matColumnDef="cd1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="background-color: #004229; color: white"
+          >
+            Id
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+  
+        <!-- Columna de Rol -->
+        <ng-container matColumnDef="cd2">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="background-color: #004229; color: white"
+          >
+            Rol
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.rol }}
+          </td>
+        </ng-container>
+  
+         <!-- Columna de User -->
+        <ng-container matColumnDef="cd3">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="background-color: #004229; color: white"
+          >
+            Usuario
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.user.username }}
+          </td>
+        </ng-container>
+  
+        <!-- Filas de la tabla -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <button class="new-button back-button" [routerLink]="['/DonationType']">
+        Volver al Menú
+      </button>
+    </div>
+  </div>
