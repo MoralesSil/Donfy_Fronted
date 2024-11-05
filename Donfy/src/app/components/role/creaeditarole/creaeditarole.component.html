@@ -1,7 +1,7 @@
 <div class="container">
     <div class="form-container">
       <h1>Registro Roles</h1>
-      <form [formGroup]="form" (submit)="aceptar()">
+      <form [formGroup]="form" (ngSubmit)="aceptar()">
         <mat-form-field class="example-full-width">
           <mat-label>Rol</mat-label>
           <input matInput placeholder="Ejem. Donador" formControlName="hrol">
@@ -9,7 +9,7 @@
             Este campo es obligatorio.
           </mat-error>
         </mat-form-field>
-  
+      
         <mat-form-field class="example-full-width">
           <mat-label>Usuario</mat-label>
           <input
@@ -27,13 +27,10 @@
           <mat-error *ngIf="form.get('husername')?.hasError('required')">
             Este campo es obligatorio.
           </mat-error>
-          <mat-error *ngIf="form.get('husername')?.hasError('userNotFound')">
-            Usuario no encontrado.
-          </mat-error>
         </mat-form-field>
-  
+      
         <div class="button-container">
-          <button mat-flat-button color="primary">Registrar</button>
+            <button mat-flat-button color="primary">Registrar</button> 
         </div>
       </form>
     </div>
