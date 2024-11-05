@@ -1,8 +1,8 @@
 <div class="container">
     <h1 class="title">Roles</h1>
     <div class="search-container">
-      <input type="text" class="search-input" placeholder="Buscar..." />
-      <button class="new-button">Buscar</button>
+        <input type="text" class="search-input" placeholder="Buscar...">
+        <button class="new-button" [routerLink]="['/Roles/nuevo']" routerLinkActive="router-link-active">Nuevo</button>
     </div>
     <div class="tabla">
       <table
@@ -54,8 +54,5 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <button class="new-button back-button" [routerLink]="['/DonationType']">
-        Volver al Menú
-      </button>
     </div>
   </div>
