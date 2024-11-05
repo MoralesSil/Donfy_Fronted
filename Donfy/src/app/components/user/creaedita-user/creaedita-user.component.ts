@@ -31,6 +31,7 @@ export class CreaeditaUserComponent implements OnInit{
   users:Users=new Users();
   id: number = 0;
   edicion: boolean = false;
+  isPasswordVisible = false;
 
   constructor(
     private uS:UsersService,
@@ -55,6 +56,10 @@ export class CreaeditaUserComponent implements OnInit{
       correo: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
     });
+  }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   guardarCambios():void{

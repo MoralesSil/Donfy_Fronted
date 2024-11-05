@@ -8,7 +8,7 @@
 
 .header h1 {
     font-size: 2.5rem;
-    color: #004229;
+    color: #004229; /* Puedes cambiar este color si lo deseas */
     margin: 0;
     font-family: 'Lato', sans-serif;
     font-weight: 600;
@@ -50,23 +50,53 @@
     object-fit: cover; 
 }
 
-.row-datos {
-    display: flex; /* Hacer que la fila sea un contenedor flex */
-    justify-content: space-between; /* Distribuir el espacio entre las columnas */
-    margin-bottom: 1rem; /* Espacio debajo de la fila */
+.form-group-row {
+    display: flex; /* Usar flexbox para las filas */
+    margin-bottom: 1rem; /* Espacio entre filas */
 }
 
-.column {
+.form-group {
     flex: 1; /* Las columnas ocuparán el mismo ancho */
     margin-right: 1rem; /* Espaciado entre columnas */
 }
 
-.column:last-child {
-    margin-right: 0; /* Eliminar el margen derecho del último elemento */
+.form-group:last-child {
+    margin-right: 0; /* Eliminar margen derecho del último elemento */
 }
 
-/* Asegúrate de que los mat-form-field ocupen el 100% del ancho disponible */
-.example-full-width {
-    width: 100%;
+label {
+    color: #3D3B3B; /* Color de los labels */
+    font-family: 'Lato', sans-serif; /* Tipografía para los labels */
+    font-weight: 600; /* Peso de la fuente */
 }
 
+input {
+    width: 100%; /* Asegurar que los inputs ocupen el 100% del ancho */
+    background: transparent; /* Sin fondo */
+    border: none; /* Sin borde */
+    border-bottom: 1px solid #5A5757; /* Línea inferior */
+    color: #5A5757; /* Color del texto del input */
+    padding: 10px 0; /* Espaciado vertical para los inputs */
+}
+
+input:focus {
+    outline: none; /* Eliminar el contorno al enfocar */
+    border-bottom: 1px solid #3D3B3B; /* Color de la línea inferior al enfocar */
+}
+
+.button-container {
+    margin-top: 20px; /* Espacio superior para el botón */
+}
+
+.btn-register {
+    background-color: #3D3B3B; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interior del botón */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave para el color */
+}
+
+.btn-register:hover {
+    background-color: #5A5757; /* Color de fondo al pasar el cursor */
+}
