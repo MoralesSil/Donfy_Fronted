@@ -35,7 +35,7 @@
                                 <span class="country-code">
                                     <img src="assets/img/Peru.png" alt="Bandera de Perú" class="flag-icon"> +51
                                 </span>
-                                <input type="text" formControlName="telefono" placeholder="987654321" maxlength="9">
+                                <input type="text" formControlName="telefono" placeholder="000000000" maxlength="9">
                                 <mat-error *ngIf="form.get('telefono')?.hasError('required')">
                                     El teléfono es obligatorio.
                                 </mat-error>
@@ -47,7 +47,7 @@
                         
                         <div class="form-group">
                             <label for="dni">DNI</label>
-                            <input type="text" formControlName="dni" placeholder="87654321" maxlength="8">
+                            <input type="text" formControlName="dni" placeholder="00000000" maxlength="8">
                             <mat-error *ngIf="form.get('dni')?.hasError('required')">
                                 El DNI es obligatorio.
                             </mat-error>
@@ -88,9 +88,9 @@
                                     Mínimo de 8 caracteres.
                                 </mat-error>
                             </div>
-                        </div>                       
+                        </div>                      
                     </div>
-                    <button class="btn-register" [disabled]="form.invalid">Registrarse</button>
+                    <button class="btn-register" [disabled]="form.invalid ">Registrarse</button>
                 </form>
             </div>
             <div class="login-message">

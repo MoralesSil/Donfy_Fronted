@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { Users } from '../models/Users';
 const base_url = environment.base
 
@@ -16,7 +16,18 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   list() {
-    return this.http.get<Users[]>(this.url);
+    return this.http.get<Users[]>(this.url).pipe(
+      map(users => {
+        const seenUsernames = new Set<string>();
+        return users.filter(user => {
+          if (!seenUsernames.has(user.username)) {
+            seenUsernames.add(user.username);
+            return true;
+          }
+          return false;
+        });
+      })
+    );
   }
   
   insert(u: Users) {
@@ -43,7 +54,4 @@ export class UsersService {
     return this.http.put(this.url,u);
   }
 
-  existsByUsername(username: string):Observable<boolean>{
-    return this.http.get<boolean>(`${this.url}/?username=${username}`)
-  }
 }

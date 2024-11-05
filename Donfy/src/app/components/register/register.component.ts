@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit{
       username: ['',[Validators.required, Validators.minLength(3)]],
       contra: ['',[Validators.required, Validators.minLength(8)]],
       estado: [''],
-      correo: ['',[Validators.required, Validators.email]],
+      correo: ['',[Validators.required, Validators.email, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$')]],
       nombres:['', Validators.required],
       apellidos:['', Validators.required],
       telefono:['',[Validators.required, Validators.minLength(9)]],
@@ -80,24 +80,43 @@ export class RegisterComponent implements OnInit{
   }
 
   registrar(): void {
-    this.users.id = this.form.value.codigo;
-    this.users.username = this.form.value.username;
-    this.users.password = this.form.value.contra;
-    this.users.enabled = true;
-    this.users.correo = this.form.value.correo;
-    this.users.nombre = this.form.value.nombres;
-    this.users.apellidos = this.form.value.apellidos;
-    this.users.telefono = this.form.value.telefono;
-    this.users.dni = this.form.value.dni;
-    this.users.ruc= this.form.value.ruc;
-    this.users.direccion = this.form.value.direccion;
-    this.users.nombreONG = this.form.value.nombreONG;
-    this.users.saldo = this.form.value.saldo;     
-    this.uS.insert(this.users).subscribe(data => {
-      this.uS.list().subscribe((data) => {
-        this.uS.setList(data);
+    if (this.form.valid) {
+      const username = this.form.value.username;
+  
+      this.uS.list().subscribe((users: Users[]) => {
+        const userExists = users.some(user => user.username === username);
+        if (userExists) {
+          this.form.controls['username'].setErrors({ usernameTaken: true });
+          this.snackbar.open('El nombre de usuario ya está en uso', '', {
+            duration: 3000,
+          });
+        } else {
+          this.users.id = this.form.value.codigo;
+          this.users.username = username;
+          this.users.password = this.form.value.contra;
+          this.users.enabled = true;
+          this.users.correo = this.form.value.correo;
+          this.users.nombre = this.form.value.nombres;
+          this.users.apellidos = this.form.value.apellidos;
+          this.users.telefono = this.form.value.telefono;
+          this.users.dni = this.form.value.dni;
+          this.users.ruc = this.form.value.ruc;
+          this.users.direccion = this.form.value.direccion;
+          this.users.nombreONG = this.form.value.nombreONG;
+          this.users.saldo = this.form.value.saldo;
+  
+          this.uS.insert(this.users).subscribe(() => {
+            this.uS.list().subscribe((data) => {
+              this.uS.setList(data);
+            });
+            this.router.navigate(['login']);
+          });
+        }
       });
-    });
-    this.router.navigate(['login']);
+    } else {
+      this.snackbar.open('Por favor completa todos los campos obligatorios', '', {
+          duration: 3000,
+      });
+  }
   }
 }
