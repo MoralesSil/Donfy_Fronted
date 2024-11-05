@@ -8,7 +8,7 @@
     </div>
     <div class="middle-content">
         <div class="image-container">
-            <img src="assets/img/logoVerdeNavegacion.png" alt="">
+            <img src="assets/img/logoVerdeNavegacion.png" alt="" class="profile-image">
         </div>
     </div>
     <div class="container">
@@ -17,15 +17,15 @@
         <div class="form-container">
             <form [formGroup]="form" (submit)="guardarCambios()">
                 <div class="input-field">
-                    <div class="row">
+                    <div class="row-datos">
                         <div class="column">
                             <mat-form-field class="example-full-width">
-                                <input matInput formControlName="nombres" placeholder="Nombres">
+                                <input formControlName="nombres" >
                             </mat-form-field>
                         </div>
                         <div class="column">
                             <mat-form-field class="example-full-width">
-                                <input matInput formControlName="apellidos" placeholder="Apellidos">
+                                <input formControlName="apellidos">
                             </mat-form-field>
                         </div>
                     </div>
@@ -34,14 +34,14 @@
                 <div class="row">
                     <div class="column">
                         <mat-form-field class="example-full-width">
-                            <mat-label>USUARIO</mat-label>
-                            <input matInput formControlName="username">
+                            <label>USUARIO</label>
+                            <input formControlName="username">
                         </mat-form-field>
                     </div>
                     <div class="column">
                         <mat-form-field class="example-full-width">
-                            <mat-label>DNI</mat-label>
-                            <input matInput formControlName="dni">
+                            <label>DNI</label>
+                            <input formControlName="dni">
                         </mat-form-field>
                     </div>
                 </div>
@@ -49,14 +49,14 @@
                 <div class="row">
                     <div class="column">
                         <mat-form-field class="example-full-width">
-                            <mat-label>CONTRASEÑA</mat-label>
+                            <label>CONTRASEÑA</label>
                             <input matInput formControlName="contra" type="password">
                         </mat-form-field>
                     </div>
                     <div class="column">
                         <mat-form-field class="example-full-width">
-                            <mat-label>DIRECCIÓN</mat-label>
-                            <input matInput formControlName="direccion">
+                            <label>DIRECCIÓN</label>
+                            <input formControlName="direccion">
                         </mat-form-field>
                     </div>
                 </div>
@@ -64,8 +64,8 @@
                 <div class="row">
                     <div class="column">
                         <mat-form-field class="example-full-width">
-                            <mat-label>CORREO</mat-label>
-                            <input matInput formControlName="correo">
+                            <label>CORREO</label>
+                            <input formControlName="correo">
                         </mat-form-field>
                     </div>
                 </div>
@@ -73,8 +73,8 @@
                 <div class="row">
                     <div class="column">
                         <mat-form-field class="example-full-width">
-                            <mat-label>TELÉFONO</mat-label>
-                            <input matInput formControlName="telefono">
+                            <label>TELÉFONO</label>
+                            <input formControlName="telefono">
                         </mat-form-field>
                     </div>
                 </div>
