@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { NotificationtypeComponent } from './components/notificationtype/notificationtype.component';
 import { DonationtypeComponent } from './components/donationtype/donationtype.component';
 import { LandingComponent } from './components/landing/landing.component';
@@ -14,6 +13,7 @@ import { UserComponent } from './components/user/user.component';
 import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedita-user.component';
 import { RoleComponent } from './components/role/role.component';
 import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
+import { seguridadGuard } from './guard/seguridad.guard';
 
 export const routes: Routes = 
 [
@@ -38,7 +38,8 @@ export const routes: Routes =
                 path:'Ediciones/:id',
                 component:CreaeditaNotificationtypeComponent
             }
-        ]
+        ],
+        canActivate: [seguridadGuard],
     },
     { 
         path: 'Users',
@@ -52,31 +53,36 @@ export const routes: Routes =
                 path:'Ediciones/:id',
                 component:CreaeditaUserComponent
             }
-        ]
+        ],
+        canActivate: [seguridadGuard],
     },
     {
         path: 'login',
         component: LoginComponent,
     },
     {
-        path: 'register',
+        path: 'registrar',
         component: RegisterComponent,
     },
     {
         path: 'DonationType',
         component: DonationtypeComponent,
+        canActivate: [seguridadGuard],
     },
     {
         path: 'DonationType/listar',
-        component: ListardonationtypeComponent
+        component: ListardonationtypeComponent,
+        canActivate: [seguridadGuard],
       },
       {
         path: 'DonationType/nuevo',
-        component: CreaeditadonationtypeComponent
+        component: CreaeditadonationtypeComponent,
+        canActivate: [seguridadGuard],
       },
       {
         path:'DonationType/editar/:id',
-        component:CreaeditadonationtypeComponent
+        component:CreaeditadonationtypeComponent,
+        canActivate: [seguridadGuard],
       },
       
       {
@@ -89,7 +95,8 @@ export const routes: Routes =
             {
                 path:'Edit/id',component:CreaeditadonationComponent
             }
-        ]
+        ],
+        canActivate: [seguridadGuard],
       },
       {
         path:'Roles',
@@ -98,12 +105,8 @@ export const routes: Routes =
             {
                 path:'nuevo',component:CreaeditaroleComponent
             }
-        ]
+        ],
+        canActivate: [seguridadGuard],
       }
 ];
 
-@NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
-})
-export class AppRoutingModule { }

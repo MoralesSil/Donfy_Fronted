@@ -8,6 +8,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, NgIf } from '@angular/common';
 import { DonationtypeComponent } from './components/donationtype/donationtype.component';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -29,4 +30,9 @@ import { DonationtypeComponent } from './components/donationtype/donationtype.co
 })
 export class AppComponent {
   title = 'Donfy';
+  
+  constructor(private loginService: LoginService) {}
+  cerrar() {
+    sessionStorage.clear();
+  }
 }
