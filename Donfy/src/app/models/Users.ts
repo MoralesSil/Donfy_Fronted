@@ -1,3 +1,5 @@
+import { Role } from "./Role"
+
 export class Users {
     id : number = 0
     username : string = ""
@@ -12,4 +14,5 @@ export class Users {
     direccion : string = ""
     nombreONG : string = ""
     saldo : number = 0
+    roles: Role[] = new Array<Role>();
 }

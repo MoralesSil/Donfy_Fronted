@@ -5,11 +5,15 @@ import { Role } from '../models/Role';
 import { HttpClient } from '@angular/common/http';
 const base_url = environment.base
 
+const base_url2 = environment.base
+
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
   private url = `${base_url}/Role`;
+  private url2 = `${base_url2}`;
+
   private listaCambio=new Subject<Role[]>();
 
   constructor(private http: HttpClient) { }
@@ -18,7 +22,7 @@ export class RoleService {
     return this.http.get<Role[]>(this.url);
   }
   insert(ro:Role){
-    return this.http.post(`${this.url}/registrar`, ro);
+    return this.http.post(`${this.url2}/rol`, ro);
   }
   setList(listaNueva:Role[]){
     this.listaCambio.next(listaNueva);
