@@ -53,7 +53,7 @@ export class UsersService {
   }
 
   listId(id:number){
-    return this.http.get<Users>(`${this.url}/${id}`)
+    return this.http.get<Users>(`${this.url2}/${id}`)
   }
 
   update(u:Users){

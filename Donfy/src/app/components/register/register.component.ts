@@ -9,6 +9,8 @@ import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { RoleService } from '../../services/role.service';
+import { Role } from '../../models/Role';
 
 @Component({
   selector: 'app-register',
@@ -30,11 +32,13 @@ export class RegisterComponent implements OnInit{
   form: FormGroup = new FormGroup({});
   users: Users = new Users();
   id: number = 0;
+  Role: Role = new Role();
   isPasswordVisible = false;
   
   constructor(
     private uS: UsersService,
     private router: Router,
+    private r: RoleService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private snackbar: MatSnackBar
@@ -105,18 +109,44 @@ export class RegisterComponent implements OnInit{
           this.users.nombreONG = this.form.value.nombreONG;
           this.users.saldo = this.form.value.saldo;
   
-          this.uS.insert(this.users).subscribe(() => {
+          this.uS.insert(this.users).subscribe((data) => {
             this.uS.list().subscribe((data) => {
               this.uS.setList(data);
             });
-            this.router.navigate(['login']);
+            this.Role.rol = "DONADOR"
+            this.uS.usuario(username).subscribe((id: number) => {
+              
+              this.uS.listId(id).subscribe((user: Users) => {
+                this.Role.user.id = user.id;
+                this.guardarRole(this.Role);
+                this.snackbar.open('Registro exitoso', 'cerrar', {
+                  duration: 3000,
+                });
+                this.router.navigate(['login']);
+              });
+            });
+            
+            
           });
         }
       });
     } else {
-      this.snackbar.open('Por favor completa todos los campos obligatorios', '', {
-          duration: 3000,
-      });
+      this.snackbar.open('Por favor completa todos los campos obligatorios', 'cerrar', {
+        duration: 3000,
+      }
+    );
   }
+  }
+  guardarRole(role: Role) {
+    this.r.insert(role).subscribe(
+      (response) => {
+        const roleResponse = response as Role;  // Forzamos el tipo a Role
+        console.log('Role guardado exitosamente:', roleResponse);
+        this.Role = roleResponse;  // Asigna la respuesta al Role en el componente
+      },
+      (error) => {
+        console.error('Error al guardar el Role:', error);
+      }
+    );
   }
 }
