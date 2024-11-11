@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, NgIf } from '@angular/common';
 import { DonationtypeComponent } from './components/donationtype/donationtype.component';
 import { LoginService } from './services/login.service';
+import { Users } from './models/Users';
+import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -23,16 +25,44 @@ import { LoginService } from './services/login.service';
     MatButtonModule,
     MatBadgeModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'Donfy';
+  role: string = '';
+  saldo: number = 0
   
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService,private uS: UsersService) {}
   cerrar() {
+    
     sessionStorage.clear();
+  }
+
+  verificar() {
+    this.role = this.loginService.showRole();
+    this.uS.usuario(this.loginService.showSaldo()).subscribe((id: number) => {
+              
+      this.uS.listId(id).subscribe((user: Users) => {
+        this.saldo = user.saldo;
+      });
+    });
+    return this.loginService.verificar();
+  }
+    
+
+  isDonador() {
+    return this.role === 'DONADOR';
+  }
+
+  isAdministrador() {
+    return this.role === 'ADMINISTRADOR';
+  }
+
+  isOng() {
+    return this.role === 'ONG';
   }
 }
