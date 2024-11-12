@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { DonationtypeComponent } from './components/donationtype/donationtype.component';
 
 @Component({
@@ -22,7 +22,9 @@ import { DonationtypeComponent } from './components/donationtype/donationtype.co
     MatButtonModule,
     MatBadgeModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    CommonModule
+    
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

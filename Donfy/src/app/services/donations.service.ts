@@ -11,7 +11,6 @@ const base_url=environment.base
   providedIn: 'root'
 })
 export class DonationsService {
-  private apiUrltype = 'http://localhost:4200/DonationType/listar';
 
   private url = `${base_url}/Donations`;
   private listaCambio=new Subject<Donations[]>();
@@ -38,10 +37,5 @@ export class DonationsService {
   }
   update(dnt:Donations){
     return this.http.put(this.url,dnt);
-  }
-
-  
-  getTiposDonativo(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrltype);
   }
 }

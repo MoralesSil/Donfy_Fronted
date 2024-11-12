@@ -87,3 +87,7 @@ button:hover {
 .button-container button:hover {
     background-color: #005b36; 
 }
+mat-option {
+    background-color: #fff;
+    color: #000;
+}

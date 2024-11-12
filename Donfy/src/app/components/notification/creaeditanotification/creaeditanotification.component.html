@@ -1,16 +1,18 @@
 <div class="container">
     <div class="header">
-        <h1>{{ edicion ? 'Editar Notificación' : 'Registrar Notificación' }}</h1>
+        <h1>{{ headerTitle }}</h1>
     </div>
     <div class="form-container">
         <form [formGroup]="form" (ngSubmit)="aceptar()">
+            <!-- Campo "Id" solo de lectura si "edicion" es true -->
             <div class="input-field" *ngIf="edicion">
                 <mat-form-field class="example-full-width">
                     <mat-label>Id</mat-label>
-                    <input matInput placeholder="Ej. 1" formControlName="idNotificacion" readonly>
+                    <input matInput [value]="form.get('idNotificacion')?.value" disabled>
                 </mat-form-field>
             </div>
 
+            <!-- Campo "Mensaje" -->
             <div class="input-field">
                 <mat-form-field class="example-full-width">
                     <mat-label>Mensaje</mat-label>
@@ -19,43 +21,40 @@
                 </mat-form-field>
             </div>
 
+            <!-- Campo "Estado" -->
             <div class="input-field">
                 <mat-form-field class="example-full-width">
                     <mat-label>Estado</mat-label>
                     <mat-select formControlName="estado" required>
-                        <mat-option value="activo">Activo</mat-option>
-                        <mat-option value="inactivo">Inactivo</mat-option>
+                        <mat-option value="leido">Leído</mat-option>
+                        <mat-option value="noleido">No leído</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="form.get('estado')?.hasError('required')">El estado es requerido.</mat-error>
                 </mat-form-field>
             </div>
 
-            <div class="input-field">
-                <mat-form-field class="example-full-width">
-                    <mat-label>Tipo de Notificación</mat-label>
-                    <mat-select formControlName="tipoNotificacion" required>
-                        <mat-option *ngFor="let tipo of (tiposNotificacion$ | async)" [value]="tipo.idTipoNotificacion">
-                            {{ tipo.nombre }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="form.get('tipoNotificacion')?.hasError('required')">El tipo de notificación es requerido.</mat-error>
-                </mat-form-field>
-            </div>
+            <!-- Campo "Tipo de Notificación" -->
+            <mat-form-field class="input-field" *ngIf="tiposNotificacion$ | async as tipos">
+                <mat-label>Tipo de Notificación</mat-label>
+                <mat-select formControlName="tipoNotificacion">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo.idTipoNotificacion">
+                        {{ tipo.nombre }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
-            <div class="input-field">
-                <mat-form-field class="example-full-width">
-                    <mat-label>Usuario</mat-label>
-                    <mat-select formControlName="usuarioId" required>
-                        <mat-option *ngFor="let usuario of (usuarios$ | async)" [value]="usuario.id">
-                            {{ usuario.nombre }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="form.get('usuarioId')?.hasError('required')">El usuario es requerido.</mat-error>
-                </mat-form-field>
-            </div>
+            <!-- Campo "Usuario" -->
+            <mat-form-field class="input-field" *ngIf="usuarios$ | async as usuarios">
+                <mat-label>Usuario</mat-label>
+                <mat-select formControlName="usuarioId">
+                    <mat-option *ngFor="let usuario of usuarios" [value]="usuario.id">
+                        {{ usuario.nombre }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
+            <!-- Botón de registro -->
             <div class="button-container">
-                <button mat-flat-button color="primary" [disabled]="form.invalid">Registrar</button>
+                <button class="custom-button" [disabled]="form.invalid">Registrar</button>
             </div>
         </form>
     </div>

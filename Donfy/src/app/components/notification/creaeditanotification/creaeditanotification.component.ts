@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { NotificationType } from '../../../models/NotificationType';
 import { Users } from '../../../models/Users';
@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Params } from '@angular/router';
+import { Notifications } from '../../../models/Notifications';
 
 @Component({
   selector: 'app-creaeditanotification',
@@ -30,11 +31,14 @@ import { Params } from '@angular/router';
   styleUrls: ['./creaeditanotification.component.css']
 })
 export class CreaeditanotificationComponent implements OnInit {
-  form: FormGroup;
-  tiposNotificacion$!: Observable<NotificationType[]>; // Observable para tipos de notificación
-  usuarios$!: Observable<Users[]>; // Observable para usuarios
+  form: FormGroup = new FormGroup({});
+  notification: Notifications = new Notifications();
   id: number = 0;
   edicion: boolean = false;
+  headerTitle: string = '';
+
+  tiposNotificacion$!: Observable<NotificationType[]>; // Usando `!` para indicar que será inicializado más tarde
+  usuarios$!: Observable<Users[]>; // Usando `!` para indicar que será inicializado más tarde
 
   constructor(
     private notificationsService: NotificationsService,
@@ -43,67 +47,81 @@ export class CreaeditanotificationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    this.form = this.formBuilder.group({
-      idNotificacion: [''],
-      mensaje: ['', Validators.required],
-      estado: ['', Validators.required],
-      tipoNotificacion: ['', Validators.required],
-      usuarioId: ['', Validators.required]
-    });
-  }
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
-      this.edicion = this.id !== null && this.id > 0;
+      this.id = +params['id']; // Obtener el id de los parámetros de la URL
+      this.edicion = this.id !== null && this.id > 0; // Si el id es válido, estamos en edición
       this.initForm();
-    });
+    });    
 
-    // Cargar tipos de notificación y usuarios
-    this.cargarTiposNotificacion();
-    this.cargarUsuarios();
+    this.route.url.subscribe(urlSegments => {
+      const currentPath = urlSegments.join('/'); 
+      if (currentPath.includes('Agregar')) {
+        this.headerTitle = 'Registrar Nueva Notificación';
+      } else if (currentPath.includes('Modificar')) {
+        this.headerTitle = 'Actualizar Notificación';
+      }
+    });
+    // Obtener los tipos de notificación
+    this.tiposNotificacion$ = this.notificationTypeService.list();
+    this.tiposNotificacion$.subscribe(data => {
+      //console.log('Tipos de notificación recibidos: ', data);
+      // Actualizar los valores en el formulario
+      this.form.get('tipoNotificacion')?.setValue(data[0]?.idTipoNotificacion); // Establecer un valor predeterminado si es necesario
+    });
+  
+    // Obtener los usuarios
+    this.usuarios$ = this.usersService.list();
+    this.usuarios$.subscribe(data => {
+      //console.log('Usuarios recibidos: ', data);
+      // Actualizar los valores en el formulario
+      this.form.get('usuarioId')?.setValue(data[0]?.id); // Establecer un valor predeterminado si es necesario
+    });
   }
+  
 
   initForm(): void {
     if (this.edicion) {
-      this.notificationsService.listId(this.id).subscribe(data => {
-        this.form.patchValue({
-          idNotificacion: data.idNotificacion,
-          mensaje: data.mensaje,
-          estado: data.estado,
-          tipoNotificacion: data.tipoNotificacion.idTipoNotificacion,
-          usuarioId: data.usuarios.id // Asegúrate que 'usuarioId' esté correctamente definido en el servicio
+      this.notificationsService.listId(this.id).subscribe((data) => {
+        this.form = this.formBuilder.group({
+          idNotificacion: [data.idNotificacion],
+          mensaje: [data.mensaje, Validators.required],
+          estado: [data.estado, Validators.required],
+          tipoNotificacion: [data.tipoNotificacion.idTipoNotificacion, Validators.required],
+          usuarioId: [data.usuarios.id, Validators.required],
         });
       });
+    } else {
+      this.form = this.formBuilder.group({
+        idNotificacion: [''],
+        mensaje: ['', Validators.required],
+        estado: ['', Validators.required],
+        tipoNotificacion: ['', Validators.required],
+        usuarioId: ['', Validators.required],
+      });
     }
-  }
-
-  cargarTiposNotificacion(): void {
-    this.tiposNotificacion$ = this.notificationTypeService.list();
-  }
-
-  cargarUsuarios(): void {
-    this.usuarios$ = this.usersService.list();
-  }
+  }  
 
   aceptar(): void {
     if (this.form.valid) {
-      const notification = { ...this.form.value }; 
-      
+      const notification = { ...this.form.value };
+
       if (this.edicion) {
         this.notificationsService.update(notification).subscribe(() => {
-          this.router.navigate(['Notifications']); 
-        }, error => {
-          console.error('Error al actualizar la notificación', error);
+          this.notificationsService.list().subscribe((data) => {
+            this.notificationsService.setList(data);
+          });
         });
       } else {
         this.notificationsService.insert(notification).subscribe(() => {
-          this.router.navigate(['Notifications']); 
-        }, error => {
-          console.error('Error al crear la notificación', error);
+          this.notificationsService.list().subscribe((data) => {
+            this.notificationsService.setList(data);
+          });
         });
       }
+      this.router.navigate(['Notifications']);
     }
   }
 }
