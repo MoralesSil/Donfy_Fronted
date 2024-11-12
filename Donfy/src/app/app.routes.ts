@@ -14,6 +14,7 @@ import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedi
 import { RoleComponent } from './components/role/role.component';
 import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
 import { seguridadGuard } from './guard/seguridad.guard';
+import { FormulariopagoComponent } from './components/formulariopago/formulariopago.component';
 
 export const routes: Routes = 
 [
@@ -107,6 +108,11 @@ export const routes: Routes =
             }
         ],
         canActivate: [seguridadGuard],
-      }
+      },
+      {
+        path: 'pago',
+        component: FormulariopagoComponent,
+        canActivate: [seguridadGuard],
+    },
 ];
 

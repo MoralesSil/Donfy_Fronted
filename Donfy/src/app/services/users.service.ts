@@ -23,8 +23,6 @@ export class UsersService {
     return this.http.post(`${this.url2}/registrar`, u);
   }
 
-
-
   list() {
     return this.http.get<Users[]>(`${this.url2}/usuario`).pipe(
       map(users => {
@@ -63,5 +61,4 @@ export class UsersService {
   usuario(username: string): Observable<number> {
     return this.http.get<number>(`${this.url2}/user/id/${username}`);
   }
-
 }

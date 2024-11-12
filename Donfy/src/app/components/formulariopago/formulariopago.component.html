@@ -1,0 +1,46 @@
+<div class="modal-overlay">
+    <div class="login-container">
+      <div class="login-left">
+        <img src="assets/img/Fondo-Login.png" alt="Imagen de fondo" class="login-image">
+      </div>
+      <div class="login-right">
+        <div class="login-header">
+          <div class="header-top">
+            <div class="logo">
+              <img src="assets/img/icono.png" alt="Logo Donfy" class="donfy-logo">
+              <span class="donfy-title">DonFy</span>
+            </div>
+            <button class="close-btn" routerLinkActive="router-link-active">&times;</button>
+          </div>
+          <h2 class="welcome-title">Formulario de Recarga</h2>
+        </div>
+        <div class="login-form">
+          <!-- Campo para ingresar el monto -->
+          <div class="form-group">
+            <label for="amount">Monto a recargar</label>
+            <input type="number" id="amount" placeholder="Ingresa el monto a recargar" min="1" />
+          </div>
+  
+          <!-- Campos de tarjeta (solo visuales, no validados) -->
+          <div class="form-group">
+            <label for="card-number">Número de tarjeta</label>
+            <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" />
+          </div>
+  
+          <div class="form-group">
+            <label for="expiry-date">Fecha de vencimiento</label>
+            <input type="text" id="expiry-date" placeholder="MM/AA" />
+          </div>
+  
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" placeholder="XXX" />
+          </div>
+  
+          <!-- Botón para realizar la recarga -->
+          <button class="btn-login">Recargar Saldo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
