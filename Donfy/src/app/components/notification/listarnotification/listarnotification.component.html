@@ -1,23 +1,13 @@
 <div class="container">
     <h1>Notificaciones</h1>
-    <div class="notification">
+    <div *ngFor="let notification of notifications" class="notification">
         <div class="header">
-            <span class="type">Información</span>
-            <span class="status">No leído</span>
+            <span class="type">{{ notification.tipoNotificacion?.nombre }}</span>
+            <span class="status" [class.read]="notification.estado === 'Leído'">{{ notification.estado }}</span>
         </div>
-        <div class="message">Tu donación ha sido recibida exitosamente. ¡Gracias por tu apoyo!</div>
+        <div class="message">{{ notification.mensaje }}</div>
         <div class="footer">
-            <span class="user">Usuario: Juan Pérez</span>
-        </div>
-    </div>
-    <div class="notification">
-        <div class="header">
-            <span class="type">Advertencia</span>
-            <span class="status read">Leído</span>
-        </div>
-        <div class="message">Recuerda completar tu perfil para mejorar tu experiencia.</div>
-        <div class="footer">
-            <span class="user">Usuario: Juan Pérez</span>
+            <span class="user">Usuario: {{ notification.usuarios?.nombre }}</span>
         </div>
     </div>
 </div>

@@ -1,26 +1,43 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { Users } from '../models/Users';
+import { JwtRequest } from '../models/jwtRequest';
 const base_url = environment.base
+
+const base_url2 = environment.base
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   private url = `${base_url}/Users`;
+  private url2 = `${base_url2}`;
   
   private listaCambio = new Subject<Users[]>();
 
   constructor(private http: HttpClient) {}
 
-  list() {
-    return this.http.get<Users[]>(this.url);
-  }
-  
   insert(u: Users) {
-    return this.http.post(this.url, u);
+    return this.http.post(`${this.url2}/registrar`, u);
+  }
+
+
+
+  list() {
+    return this.http.get<Users[]>(`${this.url2}/usuario`).pipe(
+      map(users => {
+        const seenUsernames = new Set<string>();
+        return users.filter(user => {
+          if (!seenUsernames.has(user.username)) {
+            seenUsernames.add(user.username);
+            return true;
+          }
+          return false; 
+        });
+      })
+    );
   }
 
   setList(listaNueva: Users[]) {
@@ -36,10 +53,15 @@ export class UsersService {
   }
 
   listId(id:number){
-    return this.http.get<Users>(`${this.url}/${id}`)
+    return this.http.get<Users>(`${this.url2}/${id}`)
   }
 
   update(u:Users){
     return this.http.put(this.url,u);
   }
+
+  usuario(username: string): Observable<number> {
+    return this.http.get<number>(`${this.url2}/user/id/${username}`);
+  }
+
 }

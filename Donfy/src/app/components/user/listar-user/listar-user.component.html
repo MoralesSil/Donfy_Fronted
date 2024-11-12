@@ -1,1 +1,90 @@
-<p>listar-user works!</p>
+<div class="container">
+    <h1 class="title">Lista de Usuarios</h1>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Buscar...">
+    </div>
+    <div class="tabla">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+        
+        <!-- ID Column -->
+        <ng-container matColumnDef="c1">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">ID</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.id }}</td>
+        </ng-container>
+  
+        <!-- Username Column -->
+        <ng-container matColumnDef="c2">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Usuario</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.username }}</td>
+        </ng-container>
+  
+        <!-- Correo Column -->
+        <ng-container matColumnDef="c3">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Correo</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.correo }}</td>
+        </ng-container>
+  
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="c4">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Nombre</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.nombre }}</td>
+        </ng-container>
+  
+        <!-- Apellidos Column -->
+        <ng-container matColumnDef="c5">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Apellidos</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.apellidos }}</td>
+        </ng-container>
+  
+        <!-- Teléfono Column -->
+        <ng-container matColumnDef="c6">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Teléfono</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.telefono }}</td>
+        </ng-container>
+  
+        <!-- DNI Column -->
+        <ng-container matColumnDef="c7">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">DNI</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.dni }}</td>
+        </ng-container>
+  
+        <!-- RUC Column -->
+        <ng-container matColumnDef="c8">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">RUC</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.ruc }}</td>
+        </ng-container>
+  
+        <!-- Dirección Column -->
+        <ng-container matColumnDef="c9">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Dirección</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.direccion }}</td>
+        </ng-container>
+  
+        <!-- Nombre ONG Column -->
+        <ng-container matColumnDef="c10">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Nombre ONG</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.nombreONG }}</td>
+        </ng-container>
+  
+        <!-- Saldo Column -->
+        <ng-container matColumnDef="c11">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Saldo</th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">{{ user.saldo }}</td>
+        </ng-container>
+  
+        <!-- Acciones Column -->
+        <ng-container matColumnDef="c12">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"></th>
+          <td mat-cell *matCellDef="let user" class="mat-cell">
+            <button mat-icon-button (click)="eliminar(user.id)">
+              <mat-icon  style="color: #004229">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+  

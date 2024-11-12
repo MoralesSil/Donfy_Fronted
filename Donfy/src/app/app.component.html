@@ -1,19 +1,19 @@
-<mat-toolbar class="toolbar">
+<mat-toolbar class="toolbar" >
   <img class="img" src="assets/img/logoVerdeNavegacion.png" alt="" width="70" height="40">
   <div class="toolbar-left">
     <span class="donfy">Donfy</span>
   </div>
-  <div class="toolbar-center">
+  <div class="toolbar-center" *ngIf="verificar()">
     <div class="menu-navegacion">
       <button mat-button routerLink="/reportes">Inicio</button>
 
-      <button mat-button [matMenuTriggerFor]="menuUsuario">Usuarios</button>
+      <button mat-button [matMenuTriggerFor]="menuUsuario" *ngIf="isDonador()">Usuarios</button>
       <mat-menu #menuUsuario="matMenu">
         <button mat-menu-item routerLink="/Users">Información de Usuario</button>
-        <button mat-menu-item routerLink="/usuario-rol">Roles de Usuario</button>
+        <button mat-menu-item routerLink="/Roles">Roles de Usuario</button>
       </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="menuNotificaciones">Notificaciones</button>
+      <button mat-button [matMenuTriggerFor]="menuNotificaciones" *ngIf="isAdministrador()">Notificaciones</button>
       <mat-menu #menuNotificaciones="matMenu">
         <button mat-menu-item routerLink="/NotificationType">Tipo de Notificaciones</button>
         <button mat-menu-item routerLink="/Notifications">Notificaciones</button>
@@ -28,15 +28,19 @@
       <button mat-button routerLink="/comprobante">Comprobantes</button>
     </div>
   </div>
-  <div class="toolbar-right">
+  <div class="toolbar-right" >
     <div>
-      <span>S/0.00</span>
+      <span>S/</span> {{ saldo }}
       <button mat-flat-button class="recargar-button" extended>Recargar</button>
     </div>
-    <button mat-icon-button class="acciones" routerLink="/comprobante" >
+    <div>
+      <span>S/</span> {{ saldo }}
+      <button mat-flat-button class="recargar-button" extended>Recargar</button>
+    </div>
+    <button mat-icon-button class="acciones" routerLink="/Users/Ediciones/:id" >
         <mat-icon>account_circle</mat-icon>
     </button>
-    <button mat-icon-button class="acciones" routerLink="/comprobante">
+    <button mat-icon-button class="acciones" routerLink="/landing" (click)="cerrar()">
         <mat-icon>exit_to_app</mat-icon>
     </button>
   </div>

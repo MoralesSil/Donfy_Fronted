@@ -1,1 +1,67 @@
-<p>creaedita-user works!</p>
+<div class="edicion">
+    <div class="titulo">
+        <div class="header">
+            <h1>Mi Perfil</h1>
+        </div>
+    </div>
+    <div class="top-container"></div>
+    <div class="middle-content">
+        <div class="image-container">
+            <img src="assets/img/logoVerdeNavegacion.png" alt="" class="profile-image">
+        </div>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <form [formGroup]="form" (submit)="guardarCambios()">
+                <div class="input-field">
+                    <div class="row-datos">
+                        <div class="column">
+                            <mat-form-field class="example-full-width">
+                                <input type="text" formControlName="nombres" >
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                                <input type="text" formControlName="apellidos">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="username">USUARIO</label>
+                        <input type="text" formControlName="username" maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">CONTRASEÑA</label>
+                        <input [type]="isPasswordVisible ? 'text' : 'password'" formControlName="contra" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">CORREO</label>
+                        <input type="text" formControlName="correo" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">TELEFÓNO</label>
+                        <input type="text" formControlName="telefono" maxlength="9">
+                    </div>
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="dni">DNI</label>
+                        <input type="text" formControlName="dni" maxlength="8">
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">DIRECCIÓN</label>
+                        <input type="text" formControlName="direccion" maxlength="150">
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                        <div class="button-container">
+                            <button class="btn-register" [disabled]="form.invalid">Guardar Cambios</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

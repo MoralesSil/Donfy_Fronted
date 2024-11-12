@@ -1,0 +1,107 @@
+.titulo {
+    margin-bottom: 2rem;
+    text-align: left;
+    padding-left: 5rem; 
+    margin-top: 1em;
+    margin-bottom: 0rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: #004229; /* Puedes cambiar este color si lo deseas */
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+}
+
+.top-container {
+    width: 100%;
+    max-width: 90%;
+    background-color: #004229; 
+    margin: 0 auto;
+    padding: 5rem;
+    margin-bottom: 0rem;
+}
+
+.container {
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #D9D9D9; 
+    padding: 3em;
+}
+
+.middle-content {
+    position: relative;
+    height: 100px;
+    margin-bottom: -6.5rem;
+}
+
+.image-container {
+    position: absolute;
+    left: 10%; 
+    top: -7rem;
+}
+
+.profile-image {
+    width: 13rem;
+    height: 13rem; 
+    border-radius: 50%;
+    object-fit: cover; 
+}
+
+.input-field{
+    margin-top: 3rem;
+}
+
+.form-group-row {
+    display: flex;
+    margin-bottom: 2.5rem;
+    margin-top: 2rem;
+}
+
+.form-group {
+    flex: 1; 
+    margin-right: 5rem; 
+}
+
+.form-group:last-child {
+    margin-right: 0; 
+}
+
+label {
+    color: #3D3B3B; /* Color de los labels */
+    font-family: 'Lato', sans-serif; /* Tipografía para los labels */
+    font-weight: 600; /* Peso de la fuente */
+}
+
+input {
+    width: 100%; /* Asegurar que los inputs ocupen el 100% del ancho */
+    background: transparent; /* Sin fondo */
+    border: none; /* Sin borde */
+    border-bottom: 1px solid #5A5757; /* Línea inferior */
+    color: #5A5757; /* Color del texto del input */
+    padding: 10px 0; /* Espaciado vertical para los inputs */
+}
+
+input:focus {
+    outline: none; /* Eliminar el contorno al enfocar */
+    border-bottom: 1px solid #3D3B3B; /* Color de la línea inferior al enfocar */
+}
+
+.button-container {
+    margin-top: 20px; /* Espacio superior para el botón */
+}
+
+.btn-register {
+    background-color: #3D3B3B; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interior del botón */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave para el color */
+}
+
+.btn-register:hover {
+    background-color: #5A5757; /* Color de fondo al pasar el cursor */
+}
