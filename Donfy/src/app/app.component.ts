@@ -26,12 +26,7 @@ import { UsersService } from './services/users.service';
     MatBadgeModule,
     MatIconModule,
     RouterModule,
-<<<<<<< HEAD
     CommonModule
-    
-=======
-    CommonModule,
->>>>>>> edea6628f735103b1119fda8d4bf2896365393b4
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

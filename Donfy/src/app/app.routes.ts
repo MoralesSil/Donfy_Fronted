@@ -11,9 +11,11 @@ import { CreaeditadonationComponent } from './components/donation/creaeditadonat
 import { DonationComponent } from './components/donation/donation.component';
 import { UserComponent } from './components/user/user.component';
 import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedita-user.component';
-<<<<<<< HEAD
 import { NotificationComponent } from './components/notification/notification.component';
-import { CreaeditanotificationComponent} from './components/notification/creaeditanotification/creaeditanotification.component';
+import { CreaeditanotificationComponent } from './components/notification/creaeditanotification/creaeditanotification.component';
+import { RoleComponent } from './components/role/role.component';
+import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
+import { seguridadGuard } from './guard/seguridad.guard';
 
 export const routes: Routes =
     [
@@ -38,7 +40,8 @@ export const routes: Routes =
                     path: 'Ediciones/:id',
                     component: CreaeditaNotificationtypeComponent
                 }
-            ]
+            ],
+            canActivate: [seguridadGuard],
         },
         {
             path: 'Users',
@@ -52,7 +55,60 @@ export const routes: Routes =
                     path: 'Ediciones/:id',
                     component: CreaeditaUserComponent
                 }
-            ]
+            ],
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'login',
+            component: LoginComponent,
+        },
+        {
+            path: 'registrar',
+            component: RegisterComponent,
+        },
+        {
+            path: 'DonationType',
+            component: DonationtypeComponent,
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'DonationType/listar',
+            component: ListardonationtypeComponent,
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'DonationType/nuevo',
+            component: CreaeditadonationtypeComponent,
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'DonationType/editar/:id',
+            component: CreaeditadonationtypeComponent,
+            canActivate: [seguridadGuard],
+        },
+
+        {
+            path: 'Donations',
+            component: DonationComponent,
+            children: [
+                {
+                    path: 'nuevo', component: CreaeditadonationComponent
+                },
+                {
+                    path: 'Edit/id', component: CreaeditadonationComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'Roles',
+            component: RoleComponent,
+            children: [
+                {
+                    path: 'nuevo', component: CreaeditaroleComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
         },
         {
             path: 'Donations',
@@ -63,7 +119,7 @@ export const routes: Routes =
                     component: CreaeditadonationComponent
                 },
                 {
-                    path: 'Edit/:id', 
+                    path: 'Edit/:id',
                     component: CreaeditadonationComponent
                 }
             ]
@@ -77,137 +133,9 @@ export const routes: Routes =
                     component: CreaeditanotificationComponent
                 },
                 {
-                    path: 'Modificar/:id', 
+                    path: 'Modificar/:id',
                     component: CreaeditanotificationComponent
                 }
             ]
         },
-        {
-            path: 'login',
-            component: LoginComponent,
-        },
-        {
-            path: 'register',
-            component: RegisterComponent,
-        },
-        {
-            path: 'DonationType',
-            component: DonationtypeComponent,
-        },
-        {
-            path: 'DonationType/listar',
-            component: ListardonationtypeComponent
-        },
-        {
-            path: 'DonationType/nuevo',
-            component: CreaeditadonationtypeComponent
-        },
-        {
-            path: 'DonationType/editar/:id',
-            component: CreaeditadonationtypeComponent
-        }
-        /*,
-        { path: '', redirectTo: '/DonationType', pathMatch: 'full' },
-        { path: '**', redirectTo: '/DonationType' }*/
     ];
-=======
-import { RoleComponent } from './components/role/role.component';
-import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
-import { seguridadGuard } from './guard/seguridad.guard';
-
-export const routes: Routes = 
-[
-    {
-        path: '',
-        redirectTo: 'landing',
-        pathMatch: 'full',
-    },
-    {
-        path:'landing',
-        component: LandingComponent
-    },
-    { 
-        path: 'NotificationType',
-        component: NotificationtypeComponent,
-        children:[
-            {
-                path:'New',
-                component:CreaeditaNotificationtypeComponent
-            },
-            {
-                path:'Ediciones/:id',
-                component:CreaeditaNotificationtypeComponent
-            }
-        ],
-        canActivate: [seguridadGuard],
-    },
-    { 
-        path: 'Users',
-        component: UserComponent,
-        children:[
-            {
-                path:'New',
-                component:CreaeditaUserComponent
-            },
-            {
-                path:'Ediciones/:id',
-                component:CreaeditaUserComponent
-            }
-        ],
-        canActivate: [seguridadGuard],
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-    },
-    {
-        path: 'registrar',
-        component: RegisterComponent,
-    },
-    {
-        path: 'DonationType',
-        component: DonationtypeComponent,
-        canActivate: [seguridadGuard],
-    },
-    {
-        path: 'DonationType/listar',
-        component: ListardonationtypeComponent,
-        canActivate: [seguridadGuard],
-      },
-      {
-        path: 'DonationType/nuevo',
-        component: CreaeditadonationtypeComponent,
-        canActivate: [seguridadGuard],
-      },
-      {
-        path:'DonationType/editar/:id',
-        component:CreaeditadonationtypeComponent,
-        canActivate: [seguridadGuard],
-      },
-      
-      {
-        path: 'Donations',
-        component:DonationComponent,
-        children: [
-            {
-                path:'nuevo',component:CreaeditadonationComponent
-            },
-            {
-                path:'Edit/id',component:CreaeditadonationComponent
-            }
-        ],
-        canActivate: [seguridadGuard],
-      },
-      {
-        path:'Roles',
-        component:RoleComponent,
-        children:[
-            {
-                path:'nuevo',component:CreaeditaroleComponent
-            }
-        ],
-        canActivate: [seguridadGuard],
-      }
-];
->>>>>>> edea6628f735103b1119fda8d4bf2896365393b4
-
