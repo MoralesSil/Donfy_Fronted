@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { DonationtypeComponent } from './components/donationtype/donationtype.component';
 import { LoginService } from './services/login.service';
 import { Users } from './models/Users';
@@ -26,7 +26,7 @@ import { UsersService } from './services/users.service';
     MatBadgeModule,
     MatIconModule,
     RouterModule,
-    CommonModule,
+    CommonModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

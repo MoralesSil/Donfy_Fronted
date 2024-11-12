@@ -1,15 +1,16 @@
 <div class="container">
     <div class="header">
-        <h1>Actualiza tu Donación</h1>
+        <h1>{{headerTitle}}</h1>
     </div>
     <div class="form-container">
         <form [formGroup]="form" (submit)="aceptar()">
             <div class="input-field">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="input-field" *ngIf="tiposDonativo$ | async as tipos">
                     <mat-label>Tipo de Donativo</mat-label>
                     <mat-select formControlName="tipoDonativo">
-                        <mat-option value="fisico">Físico</mat-option>
-                        <mat-option value="monetario">Monetario</mat-option>
+                        <mat-option *ngFor="let tipo of tipos" [value]="tipo.idTipoDonation">
+                            {{ tipo.nombreTipoDonation }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -21,29 +22,31 @@
                 </mat-form-field>
             </div>
 
-            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'monetario'">
+            <!-- Mostrar Monto solo si el tipo de donativo es 'MONETARIO' (ID de 'MONETARIO' es 2)-->
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 2">
                 <mat-form-field class="example-full-width">
                     <mat-label>Monto</mat-label>
                     <input matInput placeholder="Ejm. 100.00" formControlName="monto" type="number">
                 </mat-form-field>
             </div>
 
-            <!-- Mostrar nombre y descripción solo si el tipo es 'fisico' -->
-            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+            <!-- Mostrar Descripción solo si el tipo es 'FISICO' (ID de 'FISICO' es 1)-->
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 1">
                 <mat-form-field class="example-full-width">
                     <mat-label>Descripción</mat-label>
                     <textarea matInput placeholder="Descripción del donativo" formControlName="descripcion"></textarea>
                 </mat-form-field>
             </div>
 
-            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+            <!-- Mostrar Nombre del Donativo solo si el tipo es 'FISICO'-->
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 1">
                 <mat-form-field class="example-full-width">
                     <mat-label>Nombre del Donativo</mat-label>
                     <input matInput placeholder="Ejm. Juguetes" formControlName="nombreDonativo">
                 </mat-form-field>
             </div>
 
-            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+            <div class="example-full-width">
                 <mat-form-field class="example-full-width">
                     <mat-label>Fecha de Recojo</mat-label>
                     <input matInput [matDatepicker]="picker" formControlName="fechaRecojo">
@@ -52,7 +55,8 @@
                 </mat-form-field>
             </div>
 
-            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+            <!-- Mostrar Dirección de Recojo solo si el tipo es 'FISICO'-->
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 1">
                 <mat-form-field class="example-full-width">
                     <mat-label>Dirección de Recojo</mat-label>
                     <input matInput placeholder="Ejm. Av. Ejemplo 123" formControlName="direccionRecojo">
