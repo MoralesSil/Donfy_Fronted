@@ -1,13 +1,13 @@
 <div class="container">
     <div class="header">
-        <h1>Actualiza tu Donación</h1>
+        <h1>{{headerTitle}}</h1>
     </div>
     <div class="form-container">
         <form [formGroup]="form" (submit)="aceptar()">
             <div class="input-field">
                 <mat-form-field class="example-full-width">
                     <mat-label>Tipo de Donativo</mat-label>
-                    <mat-select formControlName="tipoDonativo">
+                    <mat-select formControlName="tipoDonativo"> <!-- Modificar para traerdata-->
                         <mat-option value="fisico">Físico</mat-option>
                         <mat-option value="monetario">Monetario</mat-option>
                     </mat-select>
@@ -43,7 +43,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 'fisico'">
+            <div class="example-full-width"> <!-- ver si está correcto el nombre-->
                 <mat-form-field class="example-full-width">
                     <mat-label>Fecha de Recojo</mat-label>
                     <input matInput [matDatepicker]="picker" formControlName="fechaRecojo">

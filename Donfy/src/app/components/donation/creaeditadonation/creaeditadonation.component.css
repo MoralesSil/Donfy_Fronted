@@ -1,16 +1,16 @@
 body {
     font-family: 'Open Sans', sans-serif;
-    color: #004229; /* Color del texto */
-    background-color: #f0f0f0; /* Color de fondo */
+    color: #004229; 
+    background-color: #f0f0f0;
 }
 
 .container {
     max-width: 600px;
     margin: auto;
     padding: 20px;
-    background-color: #ffffff; /* Color de fondo de la tarjeta */
+    background-color: #ffffff; 
     border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); 
 }
 
 .header {
@@ -20,8 +20,8 @@ body {
 
 .header h1 {
     font-size: 24px;
-    color: #004229; /* Color del título */
-    font-family: 'Lato', sans-serif; /* Fuente para el título */
+    color: #004229;
+    font-family: 'Lato', sans-serif;
 }
 
 .input-field {
@@ -30,34 +30,33 @@ body {
 
 mat-form-field {
     width: 100%;
-    border-radius: 8px; /* Bordes más redondeados */
-    background-color: #f9f9f9; /* Color de fondo de los campos */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: box-shadow 0.3s ease; /* Transición para la sombra */
+    border-radius: 8px; 
+    background-color: #f9f9f9; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease; 
 }
 
 mat-form-field:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el ratón */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
-
 mat-form-field .mat-form-field-label {
-    color: #004229; /* Color de la etiqueta */
+    color: #004229;
 }
 
 mat-form-field input, 
 mat-form-field textarea {
-    color: #004229; /* Color del texto de entrada */
-    border: none; /* Sin borde predeterminado */
-    border-radius: 8px; /* Bordes redondeados */
-    padding: 10px; /* Espaciado interno */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+    color: #004229;
+    border: none; 
+    border-radius: 8px; 
+    padding: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s; 
 }
 
 mat-form-field input:focus, 
 mat-form-field textarea:focus {
-    outline: none; /* Sin contorno */
-    box-shadow: 0 0 5px rgba(0, 75, 155, 0.5); /* Sombra de enfoque */
-    background-color: #ffffff; /* Fondo blanco al enfocar */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 75, 155, 0.5); 
+    background-color: #ffffff;
 }
 
 .button-container {
@@ -66,25 +65,25 @@ mat-form-field textarea:focus {
 
 button {
     width: 100%;
-    background-color: #004229; /* Color de fondo del botón */
-    color: white; /* Color del texto del botón */
-    font-family: 'Lato', sans-serif; /* Fuente para el botón */
-    border: none; /* Sin borde */
-    border-radius: 8px; /* Bordes redondeados */
-    padding: 10px; /* Espaciado interno */
-    transition: background-color 0.3s, transform 0.2s; /* Transiciones suaves */
+    background-color: #004229;
+    color: white; 
+    font-family: 'Lato', sans-serif; 
+    border: none;
+    border-radius: 8px; 
+    padding: 10px; 
+    transition: background-color 0.3s, transform 0.2s; 
 }
 
 button:hover {
-    background-color: #00321a; /* Color de fondo al pasar el ratón */
-    transform: scale(1.02); /* Efecto de zoom suave al pasar el ratón */
+    background-color: #00321a; 
+    transform: scale(1.02); 
 }
 
 .button-container button {
-    background-color: #004229; /* Color personalizado */
-    color: white; /* Color del texto */
+    background-color: #004229; 
+    color: white; 
 }
 
 .button-container button:hover {
-    background-color: #005b36; /* Color en hover */
+    background-color: #005b36; 
 }

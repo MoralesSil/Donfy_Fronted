@@ -3,12 +3,15 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Donations } from '../models/Donations';
 import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+
 const base_url=environment.base
 
 @Injectable({
   providedIn: 'root'
 })
 export class DonationsService {
+  private apiUrltype = 'http://localhost:4200/DonationType/listar';
 
   private url = `${base_url}/Donations`;
   private listaCambio=new Subject<Donations[]>();
@@ -35,5 +38,10 @@ export class DonationsService {
   }
   update(dnt:Donations){
     return this.http.put(this.url,dnt);
+  }
+
+  
+  getTiposDonativo(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrltype);
   }
 }

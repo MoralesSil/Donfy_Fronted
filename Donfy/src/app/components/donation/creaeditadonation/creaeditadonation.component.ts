@@ -33,6 +33,7 @@ export class CreaeditadonationComponent implements OnInit {
   donation: Donations = new Donations();
   id: number = 0;
   edicion: boolean = false;
+  headerTitle: string = '';
 
   constructor(
     private donationsService: DonationsService,
@@ -48,6 +49,15 @@ export class CreaeditadonationComponent implements OnInit {
       this.initForm();
     });
 
+    this.route.url.subscribe(urlSegments => {
+      const currentPath = urlSegments.join('/'); // Combina los segmentos de la URL
+      if (currentPath.includes('nuevo')) {
+        this.headerTitle = 'Registrar Nueva Donación';
+      } else if (currentPath.includes('Edit')) {
+        this.headerTitle = 'Actualizar Donación';
+      }
+    });
+  
     this.form = this.formBuilder.group({
       tipoDonativo: ['', Validators.required],
       ongReceptora: ['', Validators.required],

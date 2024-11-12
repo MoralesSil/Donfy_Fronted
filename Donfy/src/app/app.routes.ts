@@ -12,6 +12,8 @@ import { CreaeditadonationComponent } from './components/donation/creaeditadonat
 import { DonationComponent } from './components/donation/donation.component';
 import { UserComponent } from './components/user/user.component';
 import { CreaeditaUserComponent } from './components/user/creaedita-user/creaedita-user.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { CreaeditanotificationComponent} from './components/notification/creaeditanotification/creaeditanotification.component';
 
 export const routes: Routes =
     [
@@ -63,6 +65,20 @@ export const routes: Routes =
                 {
                     path: 'Edit/:id', 
                     component: CreaeditadonationComponent
+                }
+            ]
+        },
+        {
+            path: 'Notifications',
+            component: NotificationComponent,
+            children: [
+                {
+                    path: 'Agregar',
+                    component: CreaeditanotificationComponent
+                },
+                {
+                    path: 'Modificar/:id', 
+                    component: CreaeditanotificationComponent
                 }
             ]
         },

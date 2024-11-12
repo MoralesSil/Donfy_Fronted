@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="header">
+        <h1>{{ edicion ? 'Editar Notificación' : 'Registrar Notificación' }}</h1>
+    </div>
+    <div class="form-container">
+        <form [formGroup]="form" (ngSubmit)="aceptar()">
+            <div class="input-field" *ngIf="edicion">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Id</mat-label>
+                    <input matInput placeholder="Ej. 1" formControlName="idNotificacion" readonly>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Mensaje</mat-label>
+                    <input matInput placeholder="Ej. Notificación importante" formControlName="mensaje">
+                    <mat-error *ngIf="form.get('mensaje')?.hasError('required')">El mensaje es requerido.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="estado" required>
+                        <mat-option value="activo">Activo</mat-option>
+                        <mat-option value="inactivo">Inactivo</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('estado')?.hasError('required')">El estado es requerido.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Tipo de Notificación</mat-label>
+                    <mat-select formControlName="tipoNotificacion" required>
+                        <mat-option *ngFor="let tipo of (tiposNotificacion$ | async)" [value]="tipo.idTipoNotificacion">
+                            {{ tipo.nombre }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('tipoNotificacion')?.hasError('required')">El tipo de notificación es requerido.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Usuario</mat-label>
+                    <mat-select formControlName="usuarioId" required>
+                        <mat-option *ngFor="let usuario of (usuarios$ | async)" [value]="usuario.id">
+                            {{ usuario.nombre }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('usuarioId')?.hasError('required')">El usuario es requerido.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="button-container">
+                <button mat-flat-button color="primary" [disabled]="form.invalid">Registrar</button>
+            </div>
+        </form>
+    </div>
+</div>
