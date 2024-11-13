@@ -112,6 +112,9 @@ export const routes: Routes =
             children: [
                 {
                     path: 'nuevo', component: CreaeditaroleComponent
+                },
+                {
+                    path:'Edit/:id', component:CreaeditaroleComponent
                 }
             ],
             canActivate: [seguridadGuard],
