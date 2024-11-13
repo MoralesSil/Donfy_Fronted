@@ -1,9 +1,15 @@
 <div class="container">
   <h1 class="title">Tipos de Donativos</h1>
-  <div class="search-container">
-    <input type="text" class="search-input" placeholder="Buscar..." />
-    <button class="new-button">Buscar</button>
+  
+  <!-- Contador de registros -->
+  <div class="counter-container">
+    <span class="counter-label">Total de registros:</span>
+    <span class="counter-value">{{ totalRegistros }}</span>
   </div>
+
+  <div class="search-container">
+  <input type="text" class="search-input" placeholder="Buscar..." (input)="applyFilter($event)" />
+</div>
   <div class="tabla">
     <table
       mat-table
@@ -78,6 +84,10 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[4, 8, 10]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+        </mat-paginator>
     <button class="new-button back-button" [routerLink]="['/DonationType']">
       Volver al Menú
     </button>

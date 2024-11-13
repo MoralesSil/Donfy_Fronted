@@ -115,3 +115,31 @@ body {
 .back-button:hover {
     background-color: #006d5b; /* Verde más claro al pasar el cursor */
 }
+
+/* Contenedor del contador de registros */
+.counter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #004229; /* Verde oscuro */
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2em;
+    width: fit-content;
+}
+
+/* Etiqueta del contador */
+.counter-label {
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+/* Valor del contador */
+.counter-value {
+    font-weight: 700;
+    font-size: 1.5em;
+}

@@ -8,7 +8,7 @@
             <div class="input-field" *ngIf="edicion">
                 <mat-form-field class="example-full-width">
                     <mat-label>Id</mat-label>
-                    <input matInput [value]="form.get('idNotificacion')?.value" disabled>
+                    <input matInput formControlName="idNotificacion">
                 </mat-form-field>
             </div>
 
@@ -22,39 +22,43 @@
             </div>
 
             <!-- Campo "Estado" -->
-            <div class="input-field">
+            <div class="input-field"> 
                 <mat-form-field class="example-full-width">
                     <mat-label>Estado</mat-label>
                     <mat-select formControlName="estado" required>
-                        <mat-option value="leido">Leído</mat-option>
-                        <mat-option value="noleido">No leído</mat-option>
+                        <mat-option value="Leido">Leído</mat-option>
+                        <mat-option value="No leido">No leído</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
             <!-- Campo "Tipo de Notificación" -->
-            <mat-form-field class="input-field" *ngIf="tiposNotificacion$ | async as tipos">
-                <mat-label>Tipo de Notificación</mat-label>
-                <mat-select formControlName="tipoNotificacion">
-                    <mat-option *ngFor="let tipo of tipos" [value]="tipo.idTipoNotificacion">
-                        {{ tipo.nombre }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div class="input-field" *ngIf="tiposNotificacion$ | async as tipos">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Tipo de Notificación</mat-label>
+                    <mat-select formControlName="tipoNotificacion">
+                        <mat-option *ngFor="let tipo of tipos" [value]="tipo.idTipoNotificacion">
+                            {{ tipo.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
             <!-- Campo "Usuario" -->
-            <mat-form-field class="input-field" *ngIf="usuarios$ | async as usuarios">
-                <mat-label>Usuario</mat-label>
-                <mat-select formControlName="usuarioId">
-                    <mat-option *ngFor="let usuario of usuarios" [value]="usuario.id">
-                        {{ usuario.nombre }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div class="input-field" *ngIf="usuarios$ | async as usuarios">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Usuario</mat-label>
+                    <mat-select formControlName="usuarioId">
+                        <mat-option *ngFor="let usuario of usuarios" [value]="usuario.id">
+                            {{ usuario.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
             <!-- Botón de registro -->
             <div class="button-container">
-                <button class="custom-button" [disabled]="form.invalid">Registrar</button>
+                <button class="custom-button" [disabled]="form.invalid">Guardar</button>
             </div>
         </form>
     </div>

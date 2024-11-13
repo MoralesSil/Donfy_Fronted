@@ -22,16 +22,18 @@ export class ListardonationComponent {
 
   constructor(private dnt: DonationsService) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.dnt.list().subscribe((data) => {
-      this.dataSource=new MatTableDataSource(data)
+      console.log(data);  
+      this.dataSource = new MatTableDataSource(data);
     });
-
-    this.dnt.getList().subscribe((data)=>{
-      this.dataSource=new MatTableDataSource(data);
-    })
+  
+    this.dnt.getList().subscribe((data) => {
+      console.log(data);  
+      this.dataSource = new MatTableDataSource(data);
+    });
   }
-
+  
   eliminar(id:number){
     if (confirm('¿Estás seguro de que deseas eliminar este donativo?')){
       this.dnt.delete(id).subscribe(data=>{

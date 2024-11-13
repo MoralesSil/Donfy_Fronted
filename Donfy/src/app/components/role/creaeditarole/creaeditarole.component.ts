@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Observable, startWith, map  } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-creaeditarole',
@@ -37,7 +38,8 @@ export class CreaeditaroleComponent implements OnInit {
     private formBuilder:FormBuilder,
     private rS:RoleService,
     private router:Router,
-    private uS:UsersService
+    private uS:UsersService,
+    private snackBar: MatSnackBar
     ){}
   
     ngOnInit(): void {
@@ -64,12 +66,12 @@ export class CreaeditaroleComponent implements OnInit {
     aceptar(): void {
       this.ro.rol = this.form.value.hrol;
       const selectedUser = this.listaUsuarios.find(user => user.username === this.form.value.husername);
-  
+    
       if (selectedUser) {
         // Comprueba si el usuario ya tiene un rol asignado
         this.rS.list().subscribe(roles => {
           const userHasRole = roles.some(role => role.user?.username === selectedUser.username);
-  
+    
           if (userHasRole) {
             this.mensajeError = `El usuario ${selectedUser.username} ya tiene un rol asignado y no se le puede asignar otro.`;
           } else {
@@ -80,6 +82,14 @@ export class CreaeditaroleComponent implements OnInit {
                 this.rS.list().subscribe(data => {
                   this.rS.setList(data);
                 });
+                
+                // Muestra el Snackbar de éxito
+                this.snackBar.open('Registro exitoso', 'Cerrar', {
+                  duration: 3000, // Duración del Snackbar en milisegundos
+                  horizontalPosition: 'center',
+                  verticalPosition: 'bottom'
+                });
+                
                 this.router.navigate(['Roles']);
               },
               error: (err) => {
