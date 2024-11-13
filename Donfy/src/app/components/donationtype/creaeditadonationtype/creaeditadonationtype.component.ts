@@ -13,6 +13,7 @@ import { DonationType } from '../../../models/DonationType';
 import { DonationtypeService } from '../../../services/donationtype.service';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-creaeditadonationtype',
@@ -38,7 +39,8 @@ export class CreaeditadonationtypeComponent implements OnInit {
     private dtS: DonationtypeService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -59,21 +61,52 @@ export class CreaeditadonationtypeComponent implements OnInit {
       this.donaciontipo.idTipoDonation = this.form.value.hcodigo;
       this.donaciontipo.nombreTipoDonation = this.form.value.htipodonacion;
 
-      if (this.edicion) {
-        this.dtS.update(this.donaciontipo).subscribe(() => {
-          this.dtS.list().subscribe((data) => {
-            this.dtS.setList(data);
-          });
-          this.router.navigate(['DonationType']);
-        });
-      } else {
-        this.dtS.insert(this.donaciontipo).subscribe(() => {
-          this.dtS.list().subscribe((d) => {
-            this.dtS.setList(d);
-          });
-          this.router.navigate(['DonationType/']);
-        });
-      }
+      // Validación para verificar si el nombre ya existe
+      this.dtS.list().subscribe((data) => {
+        const nombreExiste = data.some(
+          (tipo) =>
+            tipo.nombreTipoDonation.toLowerCase() ===
+              this.donaciontipo.nombreTipoDonation.toLowerCase() &&
+            tipo.idTipoDonation !== this.donaciontipo.idTipoDonation
+        );
+
+        if (nombreExiste) {
+          // Mostrar snackbar si el nombre ya existe
+          this.snackBar.open(
+            'Este tipo de donación ya está registrado',
+            'Cerrar',
+            {
+              duration: 3000,
+              verticalPosition: 'bottom',
+            }
+          );
+        } else {
+          // Proceder con la operación (insertar o actualizar) si no hay duplicado
+          if (this.edicion) {
+            this.dtS.update(this.donaciontipo).subscribe(() => {
+              this.dtS.list().subscribe((data) => {
+                this.dtS.setList(data);
+              });
+              this.snackBar.open('Modificación exitosa', 'Cerrar', {
+                duration: 3000,
+                verticalPosition: 'bottom',
+              });
+              this.router.navigate(['DonationType/listar']);
+            });
+          } else {
+            this.dtS.insert(this.donaciontipo).subscribe(() => {
+              this.dtS.list().subscribe((d) => {
+                this.dtS.setList(d);
+              });
+              this.snackBar.open('Registro exitoso', 'Cerrar', {
+                duration: 3000,
+                verticalPosition: 'bottom',
+              });
+              this.router.navigate(['DonationType/listar']);
+            });
+          }
+        }
+      });
     }
   }
   init() {
