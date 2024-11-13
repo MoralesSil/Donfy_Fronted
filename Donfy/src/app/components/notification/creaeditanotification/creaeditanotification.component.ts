@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Params } from '@angular/router';
 import { Notifications } from '../../../models/Notifications';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-creaeditanotification',
@@ -37,8 +38,9 @@ export class CreaeditanotificationComponent implements OnInit {
   edicion: boolean = false;
   headerTitle: string = '';
 
-  tiposNotificacion$!: Observable<NotificationType[]>; // Usando `!` para indicar que será inicializado más tarde
-  usuarios$!: Observable<Users[]>; // Usando `!` para indicar que será inicializado más tarde
+  tiposNotificacion$!: Observable<NotificationType[]>; 
+  usuarios$!: Observable<Users[]>; 
+  listaNotificaciones: Notifications[] = []; 
 
   constructor(
     private notificationsService: NotificationsService,
@@ -46,82 +48,95 @@ export class CreaeditanotificationComponent implements OnInit {
     private notificationTypeService: NotificationTypeService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
-  ) { }
-
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
+  ) { 
+    this.form = this.formBuilder.group({
+      idNotificacion: [{ value: '', disabled: false }],
+      mensaje: ['', Validators.required],
+      estado: ['', Validators.required],
+      tipoNotificacion: ['', Validators.required],
+      usuarioId: ['', Validators.required],
+    });
+  }
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id']; // Obtener el id de los parámetros de la URL
-      this.edicion = this.id !== null && this.id > 0; // Si el id es válido, estamos en edición
-      this.initForm();
-    });    
+      this.id = +params['id'];
+      this.edicion = this.id !== null && this.id > 0;
+      if (this.edicion) {
+        this.initForm();
+      }
+    });
 
     this.route.url.subscribe(urlSegments => {
-      const currentPath = urlSegments.join('/'); 
+      const currentPath = urlSegments.join('/');
       if (currentPath.includes('Agregar')) {
         this.headerTitle = 'Registrar Nueva Notificación';
       } else if (currentPath.includes('Modificar')) {
         this.headerTitle = 'Actualizar Notificación';
       }
     });
-    // Obtener los tipos de notificación
+
     this.tiposNotificacion$ = this.notificationTypeService.list();
-    this.tiposNotificacion$.subscribe(data => {
-      //console.log('Tipos de notificación recibidos: ', data);
-      // Actualizar los valores en el formulario
-      this.form.get('tipoNotificacion')?.setValue(data[0]?.idTipoNotificacion); // Establecer un valor predeterminado si es necesario
-    });
-  
-    // Obtener los usuarios
     this.usuarios$ = this.usersService.list();
-    this.usuarios$.subscribe(data => {
-      //console.log('Usuarios recibidos: ', data);
-      // Actualizar los valores en el formulario
-      this.form.get('usuarioId')?.setValue(data[0]?.id); // Establecer un valor predeterminado si es necesario
+
+    this.notificationsService.list().subscribe(data => {
+      this.listaNotificaciones = data; 
     });
   }
-  
 
   initForm(): void {
     if (this.edicion) {
-      this.notificationsService.listId(this.id).subscribe((data) => {
-        this.form = this.formBuilder.group({
-          idNotificacion: [data.idNotificacion],
-          mensaje: [data.mensaje, Validators.required],
-          estado: [data.estado, Validators.required],
-          tipoNotificacion: [data.tipoNotificacion.idTipoNotificacion, Validators.required],
-          usuarioId: [data.usuarios.id, Validators.required],
+      this.notificationsService.listId(this.id).subscribe(data => {
+        this.form.setValue({
+          idNotificacion: data.idNotificacion,
+          mensaje: data.mensaje,
+          estado: data.estado,
+          tipoNotificacion: data.tipoNotificacion.idTipoNotificacion,
+          usuarioId: data.usuarios.id
         });
       });
-    } else {
-      this.form = this.formBuilder.group({
-        idNotificacion: [''],
-        mensaje: ['', Validators.required],
-        estado: ['', Validators.required],
-        tipoNotificacion: ['', Validators.required],
-        usuarioId: ['', Validators.required],
-      });
     }
-  }  
+  }
 
   aceptar(): void {
     if (this.form.valid) {
-      const notification = { ...this.form.value };
-
-      if (this.edicion) {
-        this.notificationsService.update(notification).subscribe(() => {
-          this.notificationsService.list().subscribe((data) => {
-            this.notificationsService.setList(data);
-          });
+      this.tiposNotificacion$.subscribe(tipos => {
+        const tipoNotificacion = tipos.find(tipo => tipo.idTipoNotificacion === this.form.value.tipoNotificacion);
+  
+        if (!tipoNotificacion) {
+          console.error('Tipo de notificación no encontrado');
+          return;
+        }
+  
+        this.usersService.listId(this.form.value.usuarioId).subscribe((usuario: Users) => {
+          const notification: Notifications = {
+            idNotificacion: this.form.value.idNotificacion,
+            mensaje: this.form.value.mensaje,
+            estado: this.form.value.estado,   
+            tipoNotificacion: tipoNotificacion, 
+            usuarios: usuario 
+          };
+  
+          if (this.edicion) {
+            this.notificationsService.update(notification).subscribe(() => {
+              this.notificationsService.list().subscribe((data) => {
+                this.notificationsService.setList(data);
+              });
+              this.snackBar.open('Notificación actualizada con éxito', 'Cerrar', { duration: 3000 });
+            });
+          } else {
+            this.notificationsService.insert(notification).subscribe(() => {
+              this.notificationsService.list().subscribe((data) => {
+                this.notificationsService.setList(data);
+              });
+              this.snackBar.open('Notificación registrada con éxito', 'Cerrar', { duration: 3000 });
+            });
+          }
+  
+          this.router.navigate(['Notifications']);
         });
-      } else {
-        this.notificationsService.insert(notification).subscribe(() => {
-          this.notificationsService.list().subscribe((data) => {
-            this.notificationsService.setList(data);
-          });
-        });
-      }
-      this.router.navigate(['Notifications']);
+      });
     }
   }
 }

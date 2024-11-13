@@ -13,6 +13,8 @@ import { DonationsService } from '../../../services/donations.service'; // Aseg�
 import { DonationtypeService } from '../../../services/donationtype.service'; // Asegúrate de que este servicio esté definido
 import { DonationType } from '../../../models/DonationType';
 import { Observable } from 'rxjs';
+import { UsersService } from '../../../services/users.service';  // Asegúrate de que la ruta sea correcta
+import { Users } from '../../../models/Users';
 
 @Component({
   selector: 'app-creaeditadonation',
@@ -39,19 +41,24 @@ export class CreaeditadonationComponent implements OnInit {
   headerTitle: string = '';
   tiposDonativo$!: Observable<DonationType[]>; // Observable de tipos de donativo
 
+  // Variables para almacenar los usuarios y ONGs
+  usuariosReceptores$!: Observable<Users[]>; // Observable con los usuarios que son ONGs
+  usuariosDonantes$!: Observable<Users[]>; // Observable con los usuarios donantes
+
+  // Inyectar el servicio UsersService
   constructor(
     private donationsService: DonationsService,
     private donationTypeService: DonationtypeService,
+    private usersService: UsersService,  // Aquí inyectamos UsersService
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    // Obtener id desde la URL para saber si estamos en edición
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id']; // Obtener el id de los parámetros de la URL
-      this.edicion = this.id !== null && this.id > 0; // Si el id es válido, estamos en edición
+      this.id = +params['id']; 
+      this.edicion = this.id !== null && this.id > 0; 
       this.initForm();
     });
 
@@ -62,38 +69,37 @@ export class CreaeditadonationComponent implements OnInit {
       } else if (currentPath.includes('Edit')) {
         this.headerTitle = 'Actualizar Donación';
       }
+      this.tiposDonativo$ = this.donationTypeService.list(); 
+
+      // Obtener usuarios con rol ONG
+      //this.usuariosReceptores$ = this.usersService.listByRole('ONG');  // Obtener usuarios con rol ONG
+      //this.usuariosDonantes$ = this.usersService.listByRole('DONANTE');  // Obtener usuarios con rol DONANTE
     });
 
-    // Obtener los tipos de donativo
-    this.tiposDonativo$ = this.donationTypeService.list();  // Obtener los tipos de donativo
-
-    // Establecer el valor inicial de 'tipoDonativo' si es necesario
     this.tiposDonativo$.subscribe(data => {
       this.form.get('tipoDonativo')?.setValue(data[0]?.idTipoDonation);
     });
 
-    // Suscribirse a los cambios en el tipo de donativo
     this.form.get('tipoDonativo')?.valueChanges.subscribe(value => {
       this.updateFieldValidators(value);
     });
   }
 
-  // Método para inicializar el formulario
   initForm(): void {
     if (this.edicion) {
       this.donationsService.listId(this.id).subscribe((data) => {
         this.form = this.formBuilder.group({
           idDonacion: [data.idDonation],
           tipoDonativo: [data.donationType.idTipoDonation, Validators.required],
-          ongReceptora: [data.userReceptor, Validators.required],
+          ongReceptora: [data.userReceptor.id, Validators.required],
           monto: [data.montoDonado],
           descripcion: [data.descripcion, Validators.required],
-          nombreDonativo: [data.nombre, Validators.required],
+          nombreDonativo: [data.nombre],
           fechaRecojo: [data.fechaRecojo],
-          direccionRecojo: [data.direccionRecojo]
+          direccionRecojo: [data.direccionRecojo],
+          usuarioDonante: [data.user.id, Validators.required] // Receptor de la donación
         });
 
-        // Actualizar las validaciones y visibilidad de campos
         this.updateFieldValidators(data.donationType.idTipoDonation.toString());
       });
     } else {
@@ -101,19 +107,18 @@ export class CreaeditadonationComponent implements OnInit {
         idDonacion: [''],
         tipoDonativo: ['', Validators.required],
         ongReceptora: ['', Validators.required],
-        monto: [''],
+        monto: [0],
         descripcion: ['', Validators.required],
         nombreDonativo: ['', Validators.required],
         fechaRecojo: [''],
-        direccionRecojo: ['']
+        direccionRecojo: [''],
+        usuarioDonante: ['', Validators.required] // Receptor de la donación
       });
 
-      // Establecer las validaciones iniciales
       this.updateFieldValidators(this.form.get('tipoDonativo')?.value);
     }
   }
 
-  // Método para actualizar las validaciones de los campos según el tipo de donativo
   updateFieldValidators(tipoDonativo: string): void {
     const monto = this.form.get('monto');
     const descripcion = this.form.get('descripcion');
@@ -132,38 +137,60 @@ export class CreaeditadonationComponent implements OnInit {
       direccionRecojo?.setValidators([Validators.required]);
     }
 
-    // Actualizar la validez de los campos después de cambiar los validadores
     monto?.updateValueAndValidity();
     descripcion?.updateValueAndValidity();
     nombreDonativo?.updateValueAndValidity();
     direccionRecojo?.updateValueAndValidity();
   }
 
-  // Método para manejar el envío del formulario
   aceptar(): void {
     if (this.form.valid) {
-      this.donation.donationType = this.form.value.tipoDonativo;
-      this.donation.userReceptor = this.form.value.ongReceptora;
-      this.donation.montoDonado = this.form.value.monto;
-      this.donation.descripcion = this.form.value.descripcion;
-      this.donation.nombre = this.form.value.nombreDonativo;
-      this.donation.fechaRecojo = this.form.value.fechaRecojo;
-      this.donation.direccionRecojo = this.form.value.direccionRecojo;
+      // Asignación de donationType usando un enfoque similar al ejemplo de tipoNotificacion
+      this.tiposDonativo$.subscribe(tipos => {
+        const tipoDonativo = tipos.find(tipo => tipo.idTipoDonation === this.form.value.tipoDonativo);
+        if (tipoDonativo) {
+          this.donation.donationType = tipoDonativo;
 
-      if (this.edicion) {
-        this.donationsService.update(this.donation).subscribe(() => {
-          this.donationsService.list().subscribe((data) => {
-            this.donationsService.setList(data);
+          // Obtener el usuario receptor completo
+          this.usersService.listId(this.form.value.ongReceptora).subscribe((usuarioReceptor: Users) => {
+            this.donation.userReceptor = usuarioReceptor;
+    
+            // Obtener el usuario logueado y asignarlo como donante
+            this.usersService.usuario('currentUsername').subscribe((usuarioDonanteId: number) => {
+              this.usersService.listId(usuarioDonanteId).subscribe((usuarioDonante: Users) => {
+                this.donation.user = usuarioDonante;
+    
+                // Asignación de otros campos de la donación
+                this.donation.montoDonado = this.form.value.monto;
+                this.donation.descripcion = this.form.value.descripcion;
+                this.donation.nombre = this.form.value.nombreDonativo;
+                this.donation.fechaRecojo = this.form.value.fechaRecojo;
+                this.donation.direccionRecojo = this.form.value.direccionRecojo;
+    
+                // Crear o actualizar la donación
+                if (this.edicion) {
+                  this.donationsService.update(this.donation).subscribe(() => {
+                    // Actualizar la lista de donaciones después de modificar
+                    this.donationsService.list().subscribe((data) => {
+                      this.donationsService.setList(data);
+                    });
+                  });
+                } else {
+                  this.donationsService.insert(this.donation).subscribe(() => {
+                    // Actualizar la lista de donaciones después de registrar
+                    this.donationsService.list().subscribe((data) => {
+                      this.donationsService.setList(data);
+                    });
+                  });
+                }
+    
+                // Navegar a la lista de donaciones
+                this.router.navigate(['Donations']);
+              });
+            });
           });
-        });
-      } else {
-        this.donationsService.insert(this.donation).subscribe(() => {
-          this.donationsService.list().subscribe((data) => {
-            this.donationsService.setList(data);
-          });
-        });
-      }
-      this.router.navigate(['Donations']);
+        }
+      });
     }
   }
-}
+}  

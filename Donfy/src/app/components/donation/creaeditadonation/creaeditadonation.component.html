@@ -1,9 +1,10 @@
 <div class="container">
     <div class="header">
-        <h1>{{headerTitle}}</h1>
+        <h1>{{ headerTitle }}</h1>
     </div>
     <div class="form-container">
         <form [formGroup]="form" (submit)="aceptar()">
+
             <div class="input-field">
                 <mat-form-field class="input-field" *ngIf="tiposDonativo$ | async as tipos">
                     <mat-label>Tipo de Donativo</mat-label>
@@ -15,12 +16,18 @@
                 </mat-form-field>
             </div>
 
+            <!-- Siempre visible, combo con usuarios con rol 'ONG' -->
             <div class="input-field">
                 <mat-form-field class="example-full-width">
                     <mat-label>ONG Receptora</mat-label>
-                    <input matInput placeholder="Nombre de la ONG" formControlName="ongReceptora">
+                    <mat-select formControlName="ongReceptora">
+                        <mat-option *ngFor="let usuario of usuariosReceptores$ | async" [value]="usuario.id">
+                            {{ usuario.nombreONG }}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
+
 
             <!-- Mostrar Monto solo si el tipo de donativo es 'MONETARIO' (ID de 'MONETARIO' es 2)-->
             <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 2">
@@ -64,7 +71,7 @@
             </div>
 
             <div class="button-container">
-                <button mat-flat-button color="primary" [disabled]="form.invalid">Registrar Donación</button>
+                <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar</button>
             </div>
         </form>
     </div>

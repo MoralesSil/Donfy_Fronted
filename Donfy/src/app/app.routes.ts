@@ -19,120 +19,121 @@ import { seguridadGuard } from './guard/seguridad.guard';
 import { FormulariopagoComponent } from './components/formulariopago/formulariopago.component';
 import { HomeComponent } from './components/home/home.component';
 
-export const routes: Routes = 
-[
-    {
-        path: '',
-        redirectTo: 'landing',
-        pathMatch: 'full',
-    },
-    {
-        path:'landing',
-        component: LandingComponent
-    },
-    { 
-        path: 'NotificationType',
-        component: NotificationtypeComponent,
-        children:[
-            {
-                path:'New',
-                component:CreaeditaNotificationtypeComponent
-            },
-            {
-                path:'Ediciones/:id',
-                component:CreaeditaNotificationtypeComponent
-            }
-        ],
-        canActivate: [seguridadGuard],
-    },
-    { 
-        path: 'Users',
-        component: UserComponent,
-        children:[
-            {
-                path:'New',
-                component:CreaeditaUserComponent
-            },
-            {
-                path:'Ediciones/:id',
-                component:CreaeditaUserComponent
-            }
-        ],
-        canActivate: [seguridadGuard],
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-    },
-    {
-        path: 'registrar',
-        component: RegisterComponent,
-    },
-    {
-        path:'home',
-        component: HomeComponent
-    },
-    {
-        path: 'DonationType',
-        component: DonationtypeComponent,
-        canActivate: [seguridadGuard],
-    },
-    {
-        path: 'DonationType/listar',
-        component: ListardonationtypeComponent,
-        canActivate: [seguridadGuard],
-      },
-      {
-        path: 'DonationType/nuevo',
-        component: CreaeditadonationtypeComponent,
-        canActivate: [seguridadGuard],
-      },
-      {
-        path:'DonationType/editar/:id',
-        component:CreaeditadonationtypeComponent,
-        canActivate: [seguridadGuard],
-      },
-      
-      {
-        path: 'Donations',
-        component:DonationComponent,
-        children: [
-            {
-                path:'nuevo',component:CreaeditadonationComponent
-            },
-            {
-                path:'Edit/id',component:CreaeditadonationComponent
-            }
-        ],
-        canActivate: [seguridadGuard],
-      },
-      {
-        path:'Roles',
-        component:RoleComponent,
-        children:[
-            {
-                path:'nuevo',component:CreaeditaroleComponent
-            }
-        ],
-        canActivate: [seguridadGuard],
-      },
-      {
-        path: 'pago',
-        component: FormulariopagoComponent,
-        //canActivate: [seguridadGuard],
-    },
-    {
-        path: 'Notifications',
-        component: NotificationComponent,
-        children: [
-            {
-                path: 'Agregar',
-                component: CreaeditanotificationComponent
-            },
-            {
-                path: 'Modificar/:id',
-                component: CreaeditanotificationComponent
-            }
-        ]
-    },
-];
+export const routes: Routes =
+    [
+        {
+            path: '',
+            redirectTo: 'landing',
+            pathMatch: 'full',
+        },
+        {
+            path: 'landing',
+            component: LandingComponent
+        },
+        {
+            path: 'NotificationType',
+            component: NotificationtypeComponent,
+            children: [
+                {
+                    path: 'New',
+                    component: CreaeditaNotificationtypeComponent
+                },
+                {
+                    path: 'Ediciones/:id',
+                    component: CreaeditaNotificationtypeComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'Users',
+            component: UserComponent,
+            children: [
+                {
+                    path: 'New',
+                    component: CreaeditaUserComponent
+                },
+                {
+                    path: 'Ediciones/:id',
+                    component: CreaeditaUserComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'login',
+            component: LoginComponent,
+        },
+        {
+            path: 'registrar',
+            component: RegisterComponent,
+        },
+        {
+            path: 'home',
+            component: HomeComponent
+        },
+        {
+            path: 'DonationType',
+            component: DonationtypeComponent,
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'DonationType/listar',
+            component: ListardonationtypeComponent,
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'DonationType/nuevo',
+            component: CreaeditadonationtypeComponent,
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'DonationType/editar/:id',
+            component: CreaeditadonationtypeComponent,
+            canActivate: [seguridadGuard],
+        },
+
+        {
+            path: 'Donations',
+            component: DonationComponent,
+            children: [
+                {
+                    path: 'nuevo', component: CreaeditadonationComponent
+                },
+                {
+                    path: 'Edit/:id', component: CreaeditadonationComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'Roles',
+            component: RoleComponent,
+            children: [
+                {
+                    path: 'nuevo', component: CreaeditaroleComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'pago',
+            component: FormulariopagoComponent,
+            //canActivate: [seguridadGuard],
+        },
+        {
+            path: 'Notifications',
+            component: NotificationComponent,
+            children: [
+                {
+                    path: 'Agregar',
+                    component: CreaeditanotificationComponent
+                },
+                {
+                    path: 'Modificar/:id',
+                    component: CreaeditanotificationComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+    ];

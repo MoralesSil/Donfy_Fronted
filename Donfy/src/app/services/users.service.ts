@@ -15,10 +15,10 @@ const base_url2 = environment.base
 export class UsersService {
   private url = `${base_url}/Users`;
   private url2 = `${base_url2}`;
-  
+
   private listaCambio = new Subject<Users[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   insert(u: Users) {
     return this.http.post(`${this.url2}/registrar`, u);
@@ -33,7 +33,7 @@ export class UsersService {
             seenUsernames.add(user.username);
             return true;
           }
-          return false; 
+          return false;
         });
       })
     );
@@ -47,16 +47,16 @@ export class UsersService {
     return this.listaCambio.asObservable();
   }
 
-  delete(id:number) {
+  delete(id: number) {
     return this.http.delete(`${this.url}/${id}`)
   }
 
-  listId(id:number){
+  listId(id: number) {
     return this.http.get<Users>(`${this.url2}/${id}`)
   }
 
-  update(u:Users){
-    return this.http.put(this.url,u);
+  update(u: Users) {
+    return this.http.put(this.url, u);
   }
 
   usuario(username: string): Observable<number> {
