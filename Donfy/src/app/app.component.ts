@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterModule } from '@angular/router';
 import { NotificationtypeComponent } from "./components/notificationtype/notificationtype.component";
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -37,8 +37,23 @@ export class AppComponent {
   username: string = '';
   saldo: number = 0
   
+  isSmallScreen: boolean = false;
+  isMenuOpen: boolean = false;
   constructor(private loginService: LoginService,private uS: UsersService) {}
   
+  // Detectar el tamaño de la pantalla
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isSmallScreen = window.innerWidth <= 768;
+    if (!this.isSmallScreen) {
+      this.isMenuOpen = false; 
+    }
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   cerrar() {
     sessionStorage.clear();
   }
@@ -56,7 +71,6 @@ export class AppComponent {
     return this.loginService.verificar();
   }
     
-
   isDonador() {
     return this.role === 'DONADOR';
   }
@@ -67,5 +81,9 @@ export class AppComponent {
 
   isOng() {
     return this.role === 'ONG';
+  }
+  
+  ngOnInit() {
+    this.isSmallScreen = window.innerWidth <= 768;
   }
 }

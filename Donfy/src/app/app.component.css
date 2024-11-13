@@ -1,3 +1,4 @@
+/* Estilos principales para la barra de navegación */
 .toolbar {
     background-color: #004229;
     color: #ffffff;
@@ -30,6 +31,7 @@
     font-family: 'Lato', sans-serif;
 }
 
+/* Menú de navegación horizontal (pantallas grandes) */
 .menu-navegacion {
     display: flex;
     justify-content: center;
@@ -50,6 +52,7 @@
     border-radius: 4px;
 }
 
+/* Estilo del lado derecho de la barra de navegación */
 .toolbar-right {
     display: flex;
     align-items: center;
@@ -86,9 +89,106 @@
     color: white;
     font-size: 1.5rem;
 }
-
 .toolbar-right button:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(238, 229, 229, 0.1);
     border-radius: 4px;
 }
 
+/* Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .toolbar-center {
+        display: none;
+    }
+
+    .toolbar-right {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-right: 0;
+        gap: 1rem; 
+    }
+
+    .menu-navegacion-hamburguesa {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background-color: #ffffff; 
+        width: 250px;
+        padding: 1rem;
+        position: absolute;
+        top: 65px;
+        right: 0;
+        z-index: 10;
+        display: none;
+        border-radius: 8px; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    }
+
+    .menu-navegacion-hamburguesa.open {
+        display: block;
+    }
+
+    .menu-navegacion-hamburguesa button {
+        background: transparent;
+        color: #004229;
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-family: 'Lato', sans-serif;
+        width: 100%;
+        text-align: left;
+        padding: 12px 16px; 
+        border-radius: 5px; 
+        transition: all 0.3s ease;
+    }
+
+    .menu-navegacion-hamburguesa button:hover {
+        background-color: #004229; 
+        color: white; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    }
+
+    .menu-navegacion-hamburguesa button:active {
+        background-color: #00351b; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+    }
+
+    .toolbar-right .acciones {
+        margin-left: 1rem;
+    }
+
+    mat-menu {
+        background-color: #F5F5F5; 
+    }
+
+    mat-menu button {
+        background-color: transparent;
+        color: #004229;
+        font-size: 1rem;
+    }
+
+    mat-menu button:hover {
+        background-color: #004229;
+        color: white;
+    }
+
+    .submenu-left {
+        transform: translateX(-250px); 
+        transition: transform 0.3s ease; 
+        width: 250px; 
+        margin: 0 auto; 
+    }
+
+    .submenu-left.open {
+        transform: translateX(0);
+    }
+
+    .open + button {
+        margin-bottom: 10px;
+    }
+
+    .submenu-left mat-menu {
+        width: 250px; 
+        margin: 0 auto; 
+    }
+}

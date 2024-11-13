@@ -36,7 +36,6 @@
 .menu-navegacion a:hover {
     background-color: rgba(255, 255, 255, 0.2); 
 }
-
 @media (max-width: 768px) {
     .hamburguesa {
         display: block; 
@@ -49,24 +48,41 @@
     .menu-navegacion.vertical {
         display: flex; 
         flex-direction: column; 
-        background-color: #FBEDBC; 
+        background-color: #ffffff; 
         position: absolute; 
         top: 60px; 
+        gap: 0.8rem; 
         left: 70%; 
         transform: translateX(-50%); 
-        width: 80%; 
+        width: 250px; 
         max-width: 400px; 
         z-index: 1000;
         border-radius: 8px; 
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
+        padding: 8px; 
+        font-family: 'Lato', sans-serif;
     }
 
     .menu-navegacion li {
-        padding: 10px; 
+        padding: 8px 12px; 
+        border-radius: 4px;
+        transition: all 0.3s ease;
     }
 
     .menu-navegacion a {
-        color: #004229;
+        color: #004229; 
+        text-decoration: none;
+        display: block;
+        padding: 8px 12px;
+    }
+
+    .menu-navegacion li:hover {
+        background-color: #004229; 
+        transform: translateY(-4px); 
+    }
+
+    .menu-navegacion a:hover {
+        color: white; 
     }
 }
 

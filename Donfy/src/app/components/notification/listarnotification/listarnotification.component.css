@@ -1,9 +1,9 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    background-color: #f7f9fc;
-    color: #004229;
+    color: #333333; /* Gris oscuro para el texto */
 }
 
 .container {
@@ -12,65 +12,98 @@ body {
     padding: 20px;
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 h1 {
     text-align: center;
-    color: #004229;
+    color: #333333; /* Gris oscuro */
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-.notification {
-    background: #FBEDBC;
+.notification-card {
+    background: #e9ecef; /* Gris muy claro */
     margin: 10px 0;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+    position: relative;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-.notification:hover {
-    background-color: #e9eff5;
-}
-
-.header {
+.card-header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+    background: #e9ecef; /* Gris claro */
+    border-bottom: none;
 }
 
 .type {
-    background: #004229;
-    color: #FBEDBC;
+    background: #004229; /* Verde oscuro para el tipo de notificación */
+    color: #ffffff; /* Texto blanco para mayor contraste */
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
+    border: none;
 }
 
 .status {
     font-size: 12px;
-    color: #004229;
+    color: #888888; /* Gris medio para el estado */
+    border: none;
 }
 
 .status.read {
-    color: #6c757d;
+    color: #6c757d; /* Gris claro para el estado "leído" */
 }
 
-.message {
+.card-message {
     font-size: 16px;
     margin: 10px 0;
-    color: #004229;
+    color: #333333; /* Gris oscuro */
+    border: none;
 }
 
-.footer {
+.card-footer {
     font-size: 14px;
-    color: #004229;
+    color: #777777; /* Gris más claro para el pie de la tarjeta */
+    border: none;
 }
 
 .user {
     font-weight: bold;
+    color: #333333; /* Gris oscuro para el nombre del usuario */
+    border: none;
+}
+
+.icons {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.icons button {
+    margin-left: 10px;
+    background: transparent;
+    border: none;
+    color: #333333; /* Gris oscuro */
+    cursor: pointer;
+}
+
+.icons button:hover {
+    color: #004229; /* Verde oscuro al pasar el cursor */
+}
+
+.status-bottom-right {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #888888; /* Gris medio */
+    border: none;
 }

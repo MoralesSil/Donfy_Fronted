@@ -60,5 +60,5 @@ export class UsersService {
 
   usuario(username: string): Observable<number> {
     return this.http.get<number>(`${this.url2}/user/id/${username}`);
-  }
+  } 
 }
