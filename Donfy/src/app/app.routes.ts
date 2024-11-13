@@ -128,6 +128,7 @@ export const routes: Routes =
                     path: 'Modificar/:id',
                     component: CreaeditanotificationComponent
                 }
-            ]
+            ],
+            canActivate: [seguridadGuard],
         },
     ];
