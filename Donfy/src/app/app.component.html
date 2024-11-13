@@ -5,29 +5,29 @@
   </div>
   <div class="toolbar-center" *ngIf="verificar()">
     <div class="menu-navegacion">
-      <button mat-button routerLink="/reportes">Inicio</button>
+      <button mat-button routerLink="/home">Inicio</button>
 
-      <button mat-button [matMenuTriggerFor]="menuUsuario" *ngIf="isDonador()">Usuarios</button>
+      <button mat-button [matMenuTriggerFor]="menuUsuario" *ngIf="isAdministrador()">Usuarios</button>
       <mat-menu #menuUsuario="matMenu">
         <button mat-menu-item routerLink="/Users">Información de Usuario</button>
         <button mat-menu-item routerLink="/Roles">Roles de Usuario</button>
       </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="menuNotificaciones" *ngIf="isAdministrador()">Notificaciones</button>
+      <button mat-button [matMenuTriggerFor]="menuNotificaciones">Notificaciones</button>
       <mat-menu #menuNotificaciones="matMenu">
-        <button mat-menu-item routerLink="/NotificationType">Tipo de Notificaciones</button>
-        <button mat-menu-item routerLink="/Notifications">Notificaciones</button>
+        <button mat-menu-item routerLink="/NotificationType" *ngIf="isAdministrador()">Tipo de Notificaciones</button>
+        <button mat-menu-item routerLink="/Notifications" *ngIf="isDonador()">Notificaciones</button>
       </mat-menu>
 
       <button mat-button [matMenuTriggerFor]="menuDonaciones">Donaciones</button>
       <mat-menu #menuDonaciones="matMenu">
-        <button mat-menu-item routerLink="/DonationType">Tipo de Donaciones</button>
-        <button mat-menu-item routerLink="/Donations">Donaciones</button>
+        <button mat-menu-item routerLink="/DonationType" *ngIf="isAdministrador()">Tipo de Donaciones</button>
+        <button mat-menu-item routerLink="/Donations" *ngIf="isDonador()">Donaciones</button>
       </mat-menu>
 
       <button mat-button>ONG's</button>
 
-      <button mat-button routerLink="/comprobante">Comprobantes</button>
+      <button mat-button routerLink="/comprobante" *ngIf="isDonador() || isAdministrador()">Comprobantes</button>
     </div>
   </div>
   <div class="toolbar-right" >

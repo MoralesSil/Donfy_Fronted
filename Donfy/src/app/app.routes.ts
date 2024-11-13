@@ -17,6 +17,7 @@ import { RoleComponent } from './components/role/role.component';
 import { CreaeditaroleComponent } from './components/role/creaeditarole/creaeditarole.component';
 import { seguridadGuard } from './guard/seguridad.guard';
 import { FormulariopagoComponent } from './components/formulariopago/formulariopago.component';
+import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = 
 [
@@ -68,6 +69,10 @@ export const routes: Routes =
         component: RegisterComponent,
     },
     {
+        path:'home',
+        component: HomeComponent
+    },
+    {
         path: 'DonationType',
         component: DonationtypeComponent,
         canActivate: [seguridadGuard],
@@ -114,7 +119,7 @@ export const routes: Routes =
       {
         path: 'pago',
         component: FormulariopagoComponent,
-        canActivate: [seguridadGuard],
+        //canActivate: [seguridadGuard],
     },
     {
         path: 'Notifications',

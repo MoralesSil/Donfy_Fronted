@@ -1,44 +1,50 @@
 <div class="modal-overlay">
     <div class="login-container">
       <div class="login-left">
-        <img src="assets/img/Fondo-Login.png" alt="Imagen de fondo" class="login-image">
+        <img src="assets/img/pago.jpg" alt="" class="login-image">
       </div>
       <div class="login-right">
         <div class="login-header">
           <div class="header-top">
             <div class="logo">
-              <img src="assets/img/icono.png" alt="Logo Donfy" class="donfy-logo">
+              <img src="assets/img/icono.png" alt="" class="donfy-logo">
               <span class="donfy-title">DonFy</span>
             </div>
-            <button class="close-btn" routerLinkActive="router-link-active">&times;</button>
+            <button class="close-btn" [routerLink]="['/home']" routerLinkActive="router-link-active">&times;</button>
           </div>
           <h2 class="welcome-title">Formulario de Recarga</h2>
         </div>
+  
+        <!-- Información de saldo actual y saldo después de recarga -->
+        <div class="saldo-info">
+          <p>Saldo actual: {{ saldoActual | currency:'PEN' }}</p>
+          <p>Nuevo saldo (después de recarga): {{ nuevoSaldo | currency:'PEN' }}</p>
+        </div>
+  
         <div class="login-form">
-          <!-- Campo para ingresar el monto -->
           <div class="form-group">
             <label for="amount">Monto a recargar</label>
-            <input type="number" id="amount" placeholder="Ingresa el monto a recargar" min="1" />
+            <input type="number" id="amount" placeholder="S/ Ingresa el monto a recargar" min="1" 
+                   [(ngModel)]="montoRecarga" />
           </div>
   
-          <!-- Campos de tarjeta (solo visuales, no validados) -->
           <div class="form-group">
             <label for="card-number">Número de tarjeta</label>
-            <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" />
+            <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" pattern="\d{4} \d{4} \d{4} \d{4}" />
           </div>
   
           <div class="form-group">
             <label for="expiry-date">Fecha de vencimiento</label>
-            <input type="text" id="expiry-date" placeholder="MM/AA" />
+            <input type="month" id="expiry-date" placeholder="MM/AA" />
           </div>
   
           <div class="form-group">
             <label for="cvv">CVV</label>
-            <input type="text" id="cvv" placeholder="XXX" />
+            <input type="text" id="cvv" placeholder="XXX" maxlength="3" pattern="\d{3}" />
           </div>
   
-          <!-- Botón para realizar la recarga -->
-          <button class="btn-login">Recargar Saldo</button>
+          <!-- Button that triggers recargar function -->
+          <button class="btn-login" (click)="recargar()">Recargar Saldo</button>
         </div>
       </div>
     </div>

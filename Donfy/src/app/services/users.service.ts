@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable, Subject } from 'rxjs';
 import { Users } from '../models/Users';
 import { JwtRequest } from '../models/jwtRequest';
+import { SaldoXusuarioDTO } from '../models/SaldoXusuarioDTO';
 const base_url = environment.base
 
 const base_url2 = environment.base
@@ -60,5 +61,10 @@ export class UsersService {
 
   usuario(username: string): Observable<number> {
     return this.http.get<number>(`${this.url2}/user/id/${username}`);
+  }
+
+  saldo(username: string): Observable<SaldoXusuarioDTO[]> {
+    return this.http.get<SaldoXusuarioDTO[]>(
+      `${this.url}/saldo?username=${username}`);
   }
 }

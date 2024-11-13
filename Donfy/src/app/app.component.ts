@@ -11,6 +11,7 @@ import { DonationtypeComponent } from './components/donationtype/donationtype.co
 import { LoginService } from './services/login.service';
 import { Users } from './models/Users';
 import { UsersService } from './services/users.service';
+import { SaldoXusuarioDTO } from './models/SaldoXusuarioDTO';
 
 @Component({
   selector: 'app-root',
@@ -35,9 +36,10 @@ export class AppComponent {
   title = 'Donfy';
   role: string = '';
   username: string = '';
-  saldo: number = 0
+  saldo: number = 0;
+  saldoLoaded: boolean = false;  // Variable para evitar que se ejecute en bucle
   
-  constructor(private loginService: LoginService,private uS: UsersService) {}
+  constructor(private loginService: LoginService, private uS: UsersService) {}
   
   cerrar() {
     sessionStorage.clear();
@@ -46,17 +48,21 @@ export class AppComponent {
   verificar() {
     this.role = this.loginService.showRole();
     this.username = this.loginService.showUsername();
-    /*if (this.loginService.showSaldo() !== null && this.loginService.showSaldo() !== "") {
-      this.uS.usuario(this.loginService.showSaldo()).subscribe((id: number) => { 
-        this.uS.listId(id).subscribe((user: Users) => {
-          this.saldo = user.saldo;
-        });
+    if (this.username && !this.saldoLoaded) {
+      this.uS.saldo(this.username).subscribe((data: SaldoXusuarioDTO[]) => {
+        if (data.length > 0) {
+          this.saldo = data[0].saldo;
+          this.saldoLoaded = true; // Cambiar el estado para evitar futuras ejecuciones
+        }
       });
-    }*/
+    }
     return this.loginService.verificar();
   }
-    
 
+  resetSaldoLoaded() {
+    this.saldoLoaded = false;  // Reset saldoLoaded flag when called
+  }
+    
   isDonador() {
     return this.role === 'DONADOR';
   }
@@ -69,3 +75,4 @@ export class AppComponent {
     return this.role === 'ONG';
   }
 }
+
