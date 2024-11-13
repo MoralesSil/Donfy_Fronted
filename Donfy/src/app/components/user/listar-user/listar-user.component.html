@@ -1,7 +1,8 @@
 <div class="container">
     <h1 class="title">Lista de Usuarios</h1>
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Buscar...">
+        <input matInput (keyup)="filtro($event)" type="text" class="search-input" placeholder="Buscar...">
+
     </div>
     <div class="tabla">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
@@ -85,6 +86,10 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      <mat-paginator [pageSizeOptions]="[2, 8, 10]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+        </mat-paginator>
     </div>
   </div>
   

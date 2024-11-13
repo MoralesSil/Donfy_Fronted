@@ -37,7 +37,7 @@ export class AppComponent {
   role: string = '';
   username: string = '';
   saldo: number = 0;
-  saldoLoaded: boolean = false;  // Variable para evitar que se ejecute en bucle
+  saldoLoaded: boolean = false;
   
   constructor(private loginService: LoginService, private uS: UsersService) {}
   
@@ -52,7 +52,7 @@ export class AppComponent {
       this.uS.saldo(this.username).subscribe((data: SaldoXusuarioDTO[]) => {
         if (data.length > 0) {
           this.saldo = data[0].saldo;
-          this.saldoLoaded = true; // Cambiar el estado para evitar futuras ejecuciones
+          this.saldoLoaded = true;
         }
       });
     }
@@ -60,7 +60,7 @@ export class AppComponent {
   }
 
   resetSaldoLoaded() {
-    this.saldoLoaded = false;  // Reset saldoLoaded flag when called
+    this.saldoLoaded = false;
   }
     
   isDonador() {
