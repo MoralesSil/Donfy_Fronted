@@ -6,11 +6,10 @@
     <span class="counter-label">Total de registros:</span>
     <span class="counter-value">{{ totalRegistros }}</span>
   </div>
-  
+
   <div class="search-container">
-    <input type="text" class="search-input" placeholder="Buscar..." />
-    <button class="new-button">Buscar</button>
-  </div>
+  <input type="text" class="search-input" placeholder="Buscar..." (input)="applyFilter($event)" />
+</div>
   <div class="tabla">
     <table
       mat-table
