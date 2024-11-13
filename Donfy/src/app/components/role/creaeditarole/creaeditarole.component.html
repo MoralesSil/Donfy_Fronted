@@ -2,13 +2,19 @@
   <div class="form-container">
     <h1>Registro Roles</h1>
     <form [formGroup]="form" (ngSubmit)="aceptar()">
-      <mat-form-field class="example-full-width">
-        <mat-label>Rol</mat-label>
-        <input matInput placeholder="Ejem. Donador" formControlName="hrol">
-        <mat-error *ngIf="form.get('hrol')?.hasError('required')">
-          Este campo es obligatorio.
-        </mat-error>
-      </mat-form-field>
+      <div class="input-field">
+        <mat-form-field class="tipo">
+            <mat-label>Roles</mat-label>
+            <mat-select formControlName="hrol" >
+            @for (qgtypes of listaRoles; track qgtypes) {
+                <mat-option [value]="qgtypes.value">{{qgtypes.viewValue}}</mat-option>
+            }
+            </mat-select>
+            <mat-error *ngIf="form.get('hrol')?.hasError('required')">
+                Los Roles son obligatorios.
+            </mat-error>
+        </mat-form-field>
+    </div>
     
       <mat-form-field class="example-full-width">
         <mat-label>Usuario</mat-label>

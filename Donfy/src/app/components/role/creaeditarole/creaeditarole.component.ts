@@ -12,6 +12,7 @@ import { Observable, startWith, map  } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-creaeditarole',
@@ -22,7 +23,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatButtonModule,
     MatAutocompleteModule,
-    CommonModule
+    CommonModule,
+    MatSelectModule
   ],
   templateUrl: './creaeditarole.component.html',
   styleUrls: ['./creaeditarole.component.css']
@@ -32,7 +34,13 @@ export class CreaeditaroleComponent implements OnInit {
   ro:Role=new Role();
   listaUsuarios: Users[]=[];
   filteredUsuarios!: Observable<Users[]>;
-  mensajeError: string = '';  
+  mensajeError: string = '';
+  
+  listaRoles:{value:string;viewValue:string}[]=[
+    {value:'DONADOR',viewValue:'DONADOR'},
+    {value:'ONG',viewValue:'ONG'},
+    {value:'ADMINISTRADOR',viewValue:'ADMINISTRADOR'}
+  ]
 
   constructor(
     private formBuilder:FormBuilder,
