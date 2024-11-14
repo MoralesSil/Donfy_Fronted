@@ -49,6 +49,10 @@ export class ListarroleComponent implements OnInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.Paginator;
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   eliminar(id: number): void {
     this.rS.delete(id).subscribe(() => {

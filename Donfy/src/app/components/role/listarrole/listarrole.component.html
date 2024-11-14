@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="title">Roles</h1>
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Buscar...">
+      <input type="text" class="search-input" placeholder="Buscar..." (input)="applyFilter($event)" />
         <button class="new-button" [routerLink]="['/Roles/nuevo']" routerLinkActive="router-link-active">Nuevo</button>
     </div>
     <div class="tabla">
