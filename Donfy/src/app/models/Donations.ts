@@ -10,7 +10,7 @@ export class Donations{
     montoDonado:number=0
     eliminado:boolean=false
     direccionRecojo:string=""
-    user:Users=new Users()
-    userReceptor:Users=new Users()
+    users:Users=new Users()
+    usersReceptor:Users=new Users()
     donationType:DonationType=new DonationType()
 }

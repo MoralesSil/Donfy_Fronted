@@ -28,12 +28,14 @@
                 </mat-form-field>
             </div>
 
-
-            <!-- Mostrar Monto solo si el tipo de donativo es 'MONETARIO' (ID de 'MONETARIO' es 2)-->
+            <!-- Monto (solo si es tipo MONETARIO) -->
             <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 2">
                 <mat-form-field class="example-full-width">
                     <mat-label>Monto</mat-label>
                     <input matInput placeholder="Ejm. 100.00" formControlName="monto" type="number">
+                    <mat-error *ngIf="form.get('monto')?.hasError('min')">
+                        El monto debe ser mayor que 0.
+                    </mat-error>
                 </mat-form-field>
             </div>
 
@@ -53,12 +55,19 @@
                 </mat-form-field>
             </div>
 
+            <!-- Fecha de Recojo -->
             <div class="example-full-width">
                 <mat-form-field class="example-full-width">
                     <mat-label>Fecha de Recojo</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="fechaRecojo">
+                    <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="fechaRecojo" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="form.get('fechaRecojo')?.hasError('required')">
+                        La fecha de recojo es obligatoria.
+                    </mat-error>
+                    <mat-error *ngIf="form.get('fechaRecojo')?.hasError('matDatepickerMin')">
+                        La fecha no puede ser antes de hoy.
+                    </mat-error>
                 </mat-form-field>
             </div>
 

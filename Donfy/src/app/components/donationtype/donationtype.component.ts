@@ -13,8 +13,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-donationtype',
   standalone: true,
   imports: [
-    ListardonationtypeComponent,
-    RouterOutlet,
+    //ListardonationtypeComponent,
+    //RouterOutlet,
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,

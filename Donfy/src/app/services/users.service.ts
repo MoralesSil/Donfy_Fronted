@@ -67,4 +67,8 @@ export class UsersService {
     return this.http.get<SaldoXusuarioDTO[]>(
       `${this.url}/saldo?username=${username}`);
   }
+  // Método para obtener usuarios con rol ONG
+  getONGs(): Observable<Users[]> {
+    return this.http.get<Users[]>(`${this.url}/busquedas`);
+  }
 }

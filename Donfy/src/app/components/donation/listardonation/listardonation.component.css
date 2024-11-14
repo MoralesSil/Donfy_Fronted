@@ -12,52 +12,35 @@ body {
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     font-size: 3.5em;
-    color: #004229; 
+    color: #004229;
     margin: 2% 0;
-}
-
-/*.search-container {
-    display: flex;
-    justify-content: center;
-    margin: 4% 0;
-}*/
-
-.search-input {
-    padding: 10px;
-    border: 1px solid #004229;
-    border-radius: 4px;
-    width: 60%;
-    margin-right: 10px;
-}
-
-.new-button {
-    padding: 10px 20px;
-    background-color: #004229;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Lato', sans-serif;
-}
-
-.new-button:hover {
-    background-color: #006d5b;
 }
 
 .tabla {
     margin: 4% auto;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
+    width: 100%; /* Ensure tabla takes up the full width of the container */
 }
 
 .custom-table {
-    width: 100%;
-    max-width: 600px;
+    width: 100%; /* Table takes up 100% of the container width */
     border-collapse: collapse;
     margin: 0 auto;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    table-layout: auto; /* Allow table to adjust columns dynamically */
 }
 
+/* Header and cell styling */
+.mat-header-cell, .mat-cell {
+    padding: 10px;
+    text-align: left;
+    word-wrap: break-word; /* Prevent text from overflowing */
+}
+
+/* Custom Styling for Header Cells */
 .tabla .mat-header-cell {
     background-color: #004229;
     color: white;
@@ -66,6 +49,50 @@ body {
     padding: 10px;
 }
 
-.mat-cell {
-    padding: 10px;
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    .custom-table {
+        font-size: 14px; /* Smaller font size on tablets */
+    }
+
+    .mat-header-cell, .mat-cell {
+        padding: 8px; /* Reduced padding on tablets */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .custom-table {
+        font-size: 12px; /* Smaller font size on mobile */
+        display: block;
+        width: 100%;
+        min-width: 700px; /* Increased minimum width for mobile to make it a bit wider */
+        max-width: 1000px; /* Optional: max width to avoid it stretching too much */
+        overflow-x: auto; /* Enable horizontal scroll */
+    }
+
+    .mat-header-cell, .mat-cell {
+        padding: 6px; /* Reduced padding on mobile */
+        text-align: left;
+    }
+
+    /* Ensure that each row stays readable */
+    .mat-row {
+        display: block; /* Display each row as block for mobile */
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .mat-cell {
+        border-top: 1px solid #ddd;
+    }
+    
+    /* Hide header row for mobile and make it scrollable */
+    .mat-header-row {
+        display: none; /* Hide header row for mobile */
+    }
+
+    .tabla {
+        overflow-x: auto; /* Horizontal scroll container */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
+    }
 }

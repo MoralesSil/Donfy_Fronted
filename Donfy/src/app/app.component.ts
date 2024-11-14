@@ -1,24 +1,25 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterModule } from '@angular/router';
-import { NotificationtypeComponent } from "./components/notificationtype/notificationtype.component";
+//import { NotificationtypeComponent } from "./components/notificationtype/notificationtype.component";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule} from '@angular/common';
-import { DonationtypeComponent } from './components/donationtype/donationtype.component';
+//import { DonationtypeComponent } from './components/donationtype/donationtype.component';
 import { LoginService } from './services/login.service';
 import { UsersService } from './services/users.service';
 import { SaldoXusuarioDTO } from './models/SaldoXusuarioDTO';
+import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet, 
-    NotificationtypeComponent,
-    DonationtypeComponent, 
+    //NotificationtypeComponent,
+    //DonationtypeComponent, 
     MatToolbarModule,
     MatMenuModule,
     RouterLink,

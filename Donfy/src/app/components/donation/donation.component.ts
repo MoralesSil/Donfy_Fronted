@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { ListardonationComponent } from "./listardonation/listardonation.component";
+import { ListardonationComponent } from './listardonation/listardonation.component';
 
 @Component({
   selector: 'app-donation',
