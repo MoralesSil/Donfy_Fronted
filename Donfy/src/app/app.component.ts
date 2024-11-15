@@ -1,13 +1,11 @@
 import { Component, HostListener, ChangeDetectionStrategy, inject, TemplateRef } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterModule, Router } from '@angular/router';
-import { NotificationtypeComponent } from "./components/notificationtype/notificationtype.component";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { DonationtypeComponent } from './components/donationtype/donationtype.component';
 import { LoginService } from './services/login.service';
 import { UsersService } from './services/users.service';
 import { SaldoXusuarioDTO } from './models/SaldoXusuarioDTO';
@@ -19,8 +17,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterOutlet, 
-    NotificationtypeComponent,
-    DonationtypeComponent, 
     MatToolbarModule,
     MatMenuModule,
     RouterLink,

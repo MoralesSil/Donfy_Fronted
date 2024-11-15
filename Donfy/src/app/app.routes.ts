@@ -18,6 +18,8 @@ import { CreaeditaroleComponent } from './components/role/creaeditarole/creaedit
 import { seguridadGuard } from './guard/seguridad.guard';
 import { FormulariopagoComponent } from './components/formulariopago/formulariopago.component';
 import { HomeComponent } from './components/home/home.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
+import { DonantexfechaComponent } from './components/reportes/donantexfecha/donantexfecha.component';
 
 export const routes: Routes =
     [
@@ -119,7 +121,7 @@ export const routes: Routes =
         {
             path: 'pago',
             component: FormulariopagoComponent,
-            //canActivate: [seguridadGuard],
+            canActivate: [seguridadGuard],
         },
         {
             path: 'Notifications',
@@ -136,4 +138,16 @@ export const routes: Routes =
             ],
             canActivate: [seguridadGuard],
         },
+        {
+            path: 'reportes',
+            component: ReportesComponent,
+            children: [
+                {
+                    path: 'donanteXfecha',
+                    component: DonantexfechaComponent
+                },
+            ],
+            canActivate: [seguridadGuard],
+        },
+
     ];

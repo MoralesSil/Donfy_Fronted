@@ -5,6 +5,7 @@ import { map, Observable, Subject } from 'rxjs';
 import { Users } from '../models/Users';
 import { JwtRequest } from '../models/jwtRequest';
 import { SaldoXusuarioDTO } from '../models/SaldoXusuarioDTO';
+import { DonanteXFechaDTO } from '../models/DonanteXFechaDTO';
 const base_url = environment.base
 
 const base_url2 = environment.base
@@ -66,5 +67,10 @@ export class UsersService {
   saldo(username: string): Observable<SaldoXusuarioDTO[]> {
     return this.http.get<SaldoXusuarioDTO[]>(
       `${this.url}/saldo?username=${username}`);
+  }
+
+  getDonanteXfecha(startDate: string, endDate: string): Observable<DonanteXFechaDTO[]> {
+    return this.http.get<DonanteXFechaDTO[]>(
+      `${this.url}/donantePorFecha?startDate=${startDate}&endDate=${endDate}`);
   }
 }
