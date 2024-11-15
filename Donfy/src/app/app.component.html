@@ -5,7 +5,6 @@
     <span class="donfy">Donfy</span>
   </div>
 
-  <!-- Menú de navegación visible solo en pantallas grandes -->
   <div class="toolbar-center" *ngIf="verificar() && !isSmallScreen">
     <div class="menu-navegacion">
       <button mat-button routerLink="/home">Inicio</button>
@@ -17,45 +16,49 @@
         <button mat-menu-item routerLink="/Roles">Roles de Usuario</button>
       </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="menuNotificaciones">Notificaciones</button>
+      <button mat-button [matMenuTriggerFor]="menuNotificaciones" *ngIf="isAdministrador()">Notificaciones</button>
       <mat-menu #menuNotificaciones="matMenu">
-        <button mat-menu-item routerLink="/NotificationType" *ngIf="isAdministrador()">Tipo de Notificaciones</button>
-        <button mat-menu-item routerLink="/Notifications" *ngIf="isDonador()">Notificaciones</button>
+        <button mat-menu-item routerLink="/NotificationType" >Tipo de Notificaciones</button>
+        <button mat-menu-item routerLink="/Notifications">Notificaciones</button>
       </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="menuDonaciones">Donaciones</button>
+      <button mat-button [matMenuTriggerFor]="menuDonaciones" *ngIf="isAdministrador()">Donaciones</button>
       <mat-menu #menuDonaciones="matMenu">
-        <button mat-menu-item routerLink="/DonationType" *ngIf="isAdministrador()">Tipo de Donaciones</button>
-        <button mat-menu-item routerLink="/Donations" *ngIf="isDonador()">Donaciones</button>
+        <button mat-menu-item routerLink="/DonationType">Tipo de Donaciones</button>
+        <button mat-menu-item routerLink="/Donations">Donaciones</button>
       </mat-menu>
 
       <button mat-button>ONG's</button>
       <button mat-button routerLink="/comprobante" *ngIf="isDonador() || isAdministrador()">Comprobantes</button>
 
+      <button mat-button [matMenuTriggerFor]="menuReportes" *ngIf="isAdministrador()">Reportes</button>
+      <mat-menu #menuReportes="matMenu">
+        <button mat-menu-item routerLink="/reportes/donanteXfecha">Donante por fecha</button>
+        <button mat-menu-item routerLink="/Notifications">Reporte 2</button>
+      </mat-menu>
     </div>
   </div>
 
-  <!-- Menú de navegación (hamburguesa) visible solo en pantallas pequeñas -->
   <div *ngIf="isSmallScreen" class="toolbar-right">
     <button mat-icon-button class="acciones" (click)="toggleMenu()">
       <mat-icon>menu</mat-icon>
     </button>
     <div *ngIf="isMenuOpen" class="menu-navegacion-hamburguesa">
-      <button mat-button routerLink="/reportes">Inicio</button>
+      <button mat-button routerLink="/home">Inicio</button>
 
-      <button mat-button [matMenuTriggerFor]="menuUsuarios">Usuarios</button>
+      <button mat-button [matMenuTriggerFor]="menuUsuarios" *ngIf="isAdministrador()">Usuarios</button>
       <mat-menu #menuUsuarios="matMenu">
         <button mat-menu-item routerLink="/Users">Información de Usuario</button>
         <button mat-menu-item routerLink="/Roles">Roles de Usuario</button>
       </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="menuNotificaciones">Notificaciones</button>
+      <button mat-button [matMenuTriggerFor]="menuNotificaciones" *ngIf="isAdministrador()">Notificaciones</button>
       <mat-menu #menuNotificaciones="matMenu">
         <button mat-menu-item routerLink="/NotificationType">Tipo de Notificaciones</button>
         <button mat-menu-item routerLink="/Notifications">Notificaciones</button>
       </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="menuDonaciones">Donaciones</button>
+      <button mat-button [matMenuTriggerFor]="menuDonaciones" *ngIf="isAdministrador()">Donaciones</button>
       <mat-menu #menuDonaciones="matMenu">
         <button mat-menu-item routerLink="/DonationType">Tipo de Donaciones</button>
         <button mat-menu-item routerLink="/Donations">Donaciones</button>
@@ -66,7 +69,6 @@
     </div>
   </div>
 
-  <!-- Menú derecho con saldo y botones -->
   <div class="toolbar-right">
     <div *ngIf="isDonador()">
       <span>S/</span><span style="margin-left: -5;">{{ saldo | number: '1.2-2' }}</span>
@@ -80,9 +82,19 @@
       <mat-icon>account_circle</mat-icon>
     </button>
     <span style="margin-left: -5;">{{ username }}</span>
-    <button mat-icon-button class="acciones" routerLink="/landing" (click)="cerrar()">
+
+    <button mat-icon-button class="acciones" (click)="cerrar(confirmLogoutDialog)">
       <mat-icon>exit_to_app</mat-icon>
     </button>
+    
+    <ng-template #confirmLogoutDialog>
+      <h2 mat-dialog-title>Cerrar Sesión</h2>
+      <mat-dialog-content>¿Estás seguro de que deseas cerrar sesión?</mat-dialog-content>
+      <mat-dialog-actions>
+        <button mat-button mat-dialog-close>No</button>
+        <button mat-button [mat-dialog-close]="'confirm'" cdkFocusInitial>Sí</button>
+      </mat-dialog-actions>
+    </ng-template>
   </div>
 </mat-toolbar>
 
