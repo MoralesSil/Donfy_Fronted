@@ -59,8 +59,6 @@ export class DonantexfechaComponent implements OnInit{
           },
         ];
       });
-    }
-  }
-  
+    } 
+  } 
 }
-
