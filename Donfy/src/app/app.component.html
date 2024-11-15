@@ -76,7 +76,7 @@
       <span>S/</span><span>{{ saldo | number: '1.2-2' }}</span>
       <button mat-flat-button class="recargar-button" extended>Retirar</button>
     </div>
-    <button mat-icon-button class="acciones" routerLink="/pago" routerLink="/Users/Ediciones/:username">
+    <button mat-icon-button class="acciones" [routerLink]="['/Users/Ediciones', username]">
       <mat-icon>account_circle</mat-icon>
     </button>
     <span style="margin-left: -5;">{{ username }}</span>

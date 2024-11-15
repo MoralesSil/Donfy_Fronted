@@ -10,6 +10,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { Users } from '../../../models/Users';
 import { UsersService } from '../../../services/users.service';
 import { MatIcon } from '@angular/material/icon';
+import { Role } from '../../../models/Role';
+import { RoleService } from '../../../services/role.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-creaedita-user',
@@ -31,6 +34,7 @@ import { MatIcon } from '@angular/material/icon';
 export class CreaeditaUserComponent implements OnInit{
   form:FormGroup=new FormGroup({});
   users:Users=new Users();
+  Role:Role=new Role();
   id: number = 0;
   username:string=""
   edicion: boolean = false;
@@ -38,7 +42,9 @@ export class CreaeditaUserComponent implements OnInit{
 
   constructor(
     private uS:UsersService,
+    private r:RoleService,
     private formBuilder:FormBuilder,
+    private loginService:LoginService,
     private router:Router,
     private route:ActivatedRoute
   ){}
@@ -76,11 +82,19 @@ export class CreaeditaUserComponent implements OnInit{
       this.users.telefono = this.form.value.telefono;
       
       if(this.edicion){
-        this.uS.update(this.users).subscribe(data=>{
-          this.uS.list().subscribe((data)=>{
-            this.uS.setList(data);
+        this.uS.usuario(this.username).subscribe((id: number) => {
+          this.users.id = id;
+          this.uS.update(this.users).subscribe(data=>{
+            this.uS.list().subscribe((data)=>{
+              this.uS.setList(data);
+              this.uS.listId(id).subscribe((user: Users) => {
+                this.Role.user.id = user.id;
+                this.Role.rol = this.loginService.showRole();
+                this.guardarRole(this.Role);
+              });
+            })
           })
-        })
+        });
       }else{
         this.uS.insert(this.users).subscribe(d=>{
           this.uS.list().subscribe(d=>{
@@ -89,7 +103,7 @@ export class CreaeditaUserComponent implements OnInit{
         });
       }
     }
-    this.router.navigate(['/Users/Ediciones/:username'])
+    this.router.navigate(['/home'])
   }
 
   init(){
@@ -106,5 +120,18 @@ export class CreaeditaUserComponent implements OnInit{
         })
       })
     }
+  }
+
+  guardarRole(role: Role) {
+    this.r.insert(role).subscribe(
+      (response) => {
+        const roleResponse = response as Role;  // Forzamos el tipo a Role
+        console.log('Role guardado exitosamente:', roleResponse);
+        this.Role = roleResponse;  // Asigna la respuesta al Role en el componente
+      },
+      (error) => {
+        console.error('Error al guardar el Role:', error);
+      }
+    );
   }
 }
