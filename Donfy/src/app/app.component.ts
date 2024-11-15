@@ -1,20 +1,22 @@
-import { Component, HostListener } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterModule } from '@angular/router';
+import { Component, HostListener, ChangeDetectionStrategy, inject, TemplateRef } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterModule, Router } from '@angular/router';
 import { NotificationtypeComponent } from "./components/notificationtype/notificationtype.component";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { DonationtypeComponent } from './components/donationtype/donationtype.component';
 import { LoginService } from './services/login.service';
 import { UsersService } from './services/users.service';
 import { SaldoXusuarioDTO } from './models/SaldoXusuarioDTO';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterOutlet, 
     NotificationtypeComponent,
@@ -26,7 +28,8 @@ import { SaldoXusuarioDTO } from './models/SaldoXusuarioDTO';
     MatBadgeModule,
     MatIconModule,
     RouterModule,
-    CommonModule
+    CommonModule,
+    MatDialogModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
@@ -40,9 +43,13 @@ export class AppComponent {
   
   isSmallScreen: boolean = false;
   isMenuOpen: boolean = false;
-  constructor(private loginService: LoginService,private uS: UsersService) {}
-  
-  // Detectar el tamaño de la pantalla
+  readonly dialog = inject(MatDialog);
+
+  constructor(
+    private loginService: LoginService, 
+    private uS: UsersService,
+    private router: Router) {}
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isSmallScreen = window.innerWidth <= 768;
@@ -55,8 +62,17 @@ export class AppComponent {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  cerrar() {
-    sessionStorage.clear();
+  cerrar(dialogTemplate: TemplateRef<any>) {
+    const dialogRef = this.dialog.open(dialogTemplate, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        sessionStorage.clear();
+        this.router.navigate(['/landing']); 
+      }
+    });
   }
 
   verificar() {
