@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Users } from '../../../models/Users';
 import { UsersService } from '../../../services/users.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-creaedita-user',
@@ -21,7 +22,8 @@ import { UsersService } from '../../../services/users.service';
     MatButtonModule, 
     ReactiveFormsModule,
     CommonModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatIcon
   ],
   templateUrl: './creaedita-user.component.html',
   styleUrl: './creaedita-user.component.css'
@@ -30,6 +32,7 @@ export class CreaeditaUserComponent implements OnInit{
   form:FormGroup=new FormGroup({});
   users:Users=new Users();
   id: number = 0;
+  username:string=""
   edicion: boolean = false;
   isPasswordVisible = false;
 
@@ -42,8 +45,8 @@ export class CreaeditaUserComponent implements OnInit{
 
   ngOnInit(): void{
     this.route.params.subscribe((data:Params)=>{
-      this.id=data['id'];
-      this.edicion=data['id']!=null;
+      this.username=data['username'];
+      this.edicion=data['username']!=null;
       this.init()
     });
 
@@ -86,12 +89,12 @@ export class CreaeditaUserComponent implements OnInit{
         });
       }
     }
-    this.router.navigate(['/Users/Ediciones/:id'])
+    this.router.navigate(['/Users/Ediciones/:username'])
   }
 
   init(){
     if(this.edicion) {
-      this.uS.listId(this.id).subscribe((data)=>{
+      this.uS.gusuario(this.username).subscribe((data)=>{
         this.form=new FormGroup({
           nombres: new FormControl(data.nombre),
           apellidos: new FormControl(data.apellidos),

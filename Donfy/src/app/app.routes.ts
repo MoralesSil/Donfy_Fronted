@@ -54,7 +54,7 @@ export const routes: Routes =
                     component: CreaeditaUserComponent
                 },
                 {
-                    path: 'Ediciones/:id',
+                    path: 'Ediciones/:username',
                     component: CreaeditaUserComponent
                 }
             ],
