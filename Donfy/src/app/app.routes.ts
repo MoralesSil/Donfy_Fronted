@@ -20,6 +20,7 @@ import { FormulariopagoComponent } from './components/formulariopago/formulariop
 import { HomeComponent } from './components/home/home.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
 import { DonantexfechaComponent } from './components/reportes/donantexfecha/donantexfecha.component';
+import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/monto-anual-ong.component';
 
 export const routes: Routes =
     [
@@ -149,6 +150,10 @@ export const routes: Routes =
                     path: 'donanteXfecha',
                     component: DonantexfechaComponent
                 },
+                {
+                    path:'MontoAnualOng',
+                    component:MontoAnualOngComponent
+                }
             ],
             canActivate: [seguridadGuard],
         },
