@@ -50,7 +50,7 @@ export class MontoAnualOngComponent implements OnInit {
           {
             data: sumas,  // Usamos los valores de "suma"
             label: 'Monto Donado Por ONG',
-            backgroundColor: '#4682B4',
+            backgroundColor: ['#35f842','#f4c216','#373da0','#95b5ea'],
             borderColor: 'rgba(173, 216, 230, 1)',
             borderWidth: 1,
           },

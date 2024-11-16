@@ -21,6 +21,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
 import { DonantexfechaComponent } from './components/reportes/donantexfecha/donantexfecha.component';
 import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/monto-anual-ong.component';
+import { DonationstadisticsComponent } from './components/reportes/donationstadistics/donationstadistics.component';
 
 export const routes: Routes =
     [
@@ -153,6 +154,10 @@ export const routes: Routes =
                 {
                     path:'MontoAnualOng',
                     component:MontoAnualOngComponent
+                },
+                {
+                    path:'DonationEstadisticas',
+                    component:DonationstadisticsComponent
                 }
             ],
             canActivate: [seguridadGuard],

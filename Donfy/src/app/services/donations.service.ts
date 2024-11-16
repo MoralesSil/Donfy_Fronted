@@ -5,6 +5,7 @@ import { Donations } from '../models/Donations';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs';
 import { DonationSummaryYearONGDTO } from '../models/DonationSummaryYearONGDTO';
+import { DonationStatisticsDTO } from '../models/DonationStatisticsDTO';
 
 const base_url=environment.base
 
@@ -42,5 +43,8 @@ export class DonationsService {
   geSumaOngYear(year: number): Observable<DonationSummaryYearONGDTO[]> {
     return this.http.get<DonationSummaryYearONGDTO[]>(
       `${this.url}/MontoAnualporONG?year=${year}`);
+  }
+  getEstadisticas():Observable<DonationStatisticsDTO[]>{
+    return this.http.get<DonationStatisticsDTO[]>(`${this.url}/donation-statistics`)
   }
 }
