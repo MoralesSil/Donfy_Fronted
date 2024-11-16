@@ -63,13 +63,19 @@ export class UsersService {
   usuario(username: string): Observable<number> {
     return this.http.get<number>(`${this.url2}/user/id/${username}`);
   }
+  gusuario(username: string) {
+    return this.http.get<Users>(`${this.url}/${username}`);
+  }
 
   saldo(username: string): Observable<SaldoXusuarioDTO[]> {
     return this.http.get<SaldoXusuarioDTO[]>(
       `${this.url}/saldo?username=${username}`);
   }
+<<<<<<< HEAD
 
   //Reporte Angie
+=======
+>>>>>>> main
   getDonanteXfecha(startDate: string, endDate: string): Observable<DonanteXFechaDTO[]> {
     return this.http.get<DonanteXFechaDTO[]>(
       `${this.url}/donantePorFecha?startDate=${startDate}&endDate=${endDate}`);

@@ -1,0 +1,38 @@
+<div class="title-container" style="text-align: center;">
+    <h1 style="color: #004229; font-size: 2em; margin-bottom: 10px;">
+      Monto Anual Por ONG
+    </h1>
+    <p style="font-size: 1.1em; color: #004229; font-weight: bold;">
+      Reporte Rodrigo Gabriel Quispe Giraldo - U202212252
+    </p>
+  </div>
+  
+  <div class="date-range" style="text-align: center; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+    <label for="year" style="font-weight: bold;">Año:</label>
+    <input 
+      type="number" 
+      id="year" 
+      [(ngModel)]="year" 
+      min="1900" 
+      max="2100" 
+      step="1" 
+      placeholder="YYYY" 
+      style="padding: 5px; width: 80px; display: inline-block;"
+    />
+    <button (click)="generarReporte()" style="padding: 5px 10px; font-weight: bold;">
+      Generar Reporte
+    </button>
+  </div>
+  
+  <div class="chart-container" style="text-align: center;">
+    <canvas 
+      baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [type]="barChartType"
+      style="width: 100%; height: 400px;">
+    </canvas>
+  </div>
+  

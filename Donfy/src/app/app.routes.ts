@@ -20,7 +20,9 @@ import { FormulariopagoComponent } from './components/formulariopago/formulariop
 import { HomeComponent } from './components/home/home.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
 import { DonantexfechaComponent } from './components/reportes/donantexfecha/donantexfecha.component';
-import { TrendsDonationsDTO } from './models/TrendsDonationsDTO';
+import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/monto-anual-ong.component';
+import { DonationstadisticsComponent } from './components/reportes/donationstadistics/donationstadistics.component';
+import { TendenciasdonacionesmesComponent } from './components/reportes/tendenciasdonacionesmes/tendenciasdonacionesmes.component';
 
 export const routes: Routes =
     [
@@ -57,7 +59,7 @@ export const routes: Routes =
                     component: CreaeditaUserComponent
                 },
                 {
-                    path: 'Ediciones/:id',
+                    path: 'Ediciones/:username',
                     component: CreaeditaUserComponent
                 }
             ],
@@ -115,6 +117,9 @@ export const routes: Routes =
             children: [
                 {
                     path: 'nuevo', component: CreaeditaroleComponent
+                },
+                {
+                    path:'Edit/:id', component:CreaeditaroleComponent
                 }
             ],
             canActivate: [seguridadGuard],
@@ -149,8 +154,16 @@ export const routes: Routes =
                 },
                 {
                     path: 'trendsDonaciones',
-                    component: TrendsDonationsDTO
+                    component: TendenciasdonacionesmesComponent
                 },
+                {
+                    path:'MontoAnualOng',
+                    component:MontoAnualOngComponent
+                },
+                {
+                    path:'DonationEstadisticas',
+                    component:DonationstadisticsComponent
+                }
             ],
             canActivate: [seguridadGuard],
         },

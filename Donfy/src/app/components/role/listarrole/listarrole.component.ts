@@ -24,7 +24,7 @@ export class ListarroleComponent implements OnInit {
   dataSource:MatTableDataSource<Role>=new MatTableDataSource();
   @ViewChild(MatPaginator) Paginator!: MatPaginator;
 
-  displayedColumns: string[]=['cd1','cd2','cd3']
+  displayedColumns: string[]=['cd1','cd2','cd3','cd4', 'cd5']
   totalRegistros: number = 0;
 
   constructor(
@@ -33,7 +33,6 @@ export class ListarroleComponent implements OnInit {
 
   ngOnInit(): void {
     this.rS.list().subscribe((data) => {
-      // Ordena los datos por idTipoDonation de forma ascendente
       data.sort((a, b) => a.id - b.id);
       this.dataSource = new MatTableDataSource(data);
       this.totalRegistros = data.length;
@@ -41,7 +40,6 @@ export class ListarroleComponent implements OnInit {
     });
     
     this.rS.getList().subscribe(data => {
-      // Ordena los datos por idTipoDonation de forma ascendente
       data.sort((a, b) => a.id - b.id);
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.Paginator;
@@ -50,6 +48,18 @@ export class ListarroleComponent implements OnInit {
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.Paginator;
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  eliminar(id: number): void {
+    this.rS.delete(id).subscribe(() => {
+      this.rS.list().subscribe((data) => {
+        this.rS.setList(data);
+      });
+    });
   }
 
 }
