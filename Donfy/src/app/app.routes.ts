@@ -20,6 +20,7 @@ import { FormulariopagoComponent } from './components/formulariopago/formulariop
 import { HomeComponent } from './components/home/home.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
 import { DonantexfechaComponent } from './components/reportes/donantexfecha/donantexfecha.component';
+import { TrendsDonationsDTO } from './models/TrendsDonationsDTO';
 
 export const routes: Routes =
     [
@@ -145,6 +146,10 @@ export const routes: Routes =
                 {
                     path: 'donanteXfecha',
                     component: DonantexfechaComponent
+                },
+                {
+                    path: 'trendsDonaciones',
+                    component: TrendsDonationsDTO
                 },
             ],
             canActivate: [seguridadGuard],

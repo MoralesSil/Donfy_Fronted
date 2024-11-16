@@ -53,7 +53,7 @@ export class DonantexfechaComponent implements OnInit{
           {
             data: sumas,  // Usamos los valores de "suma"
             label: 'Cantidad de Donaciones',
-            backgroundColor: '#4682B4',
+            backgroundColor: '#006644',
             borderColor: 'rgba(173, 216, 230, 1)',
             borderWidth: 1,
           },

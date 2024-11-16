@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Donations } from '../models/Donations';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs';
+import { TrendsDonationsDTO } from '../models/TrendsDonationsDTO';
 
 const base_url=environment.base
 
@@ -37,5 +38,12 @@ export class DonationsService {
   }
   update(dnt:Donations){
     return this.http.put(this.url,dnt);
+  }
+
+  // Reporte Angie  
+  getTendencias(): Observable<TrendsDonationsDTO[]> {
+    return this.http.get<TrendsDonationsDTO[]>(
+      `${this.url}/tendenciasDonacionesMes`
+    );
   }
 }
