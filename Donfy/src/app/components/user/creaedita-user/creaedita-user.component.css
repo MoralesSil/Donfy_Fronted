@@ -1,107 +1,112 @@
-.titulo {
-    margin-bottom: 2rem;
-    text-align: left;
-    padding-left: 5rem; 
-    margin-top: 1em;
-    margin-bottom: 0rem;
-}
-
-.header h1 {
-    font-size: 2.5rem;
-    color: #004229; /* Puedes cambiar este color si lo deseas */
+body, html {
     margin: 0;
-    font-family: 'Lato', sans-serif;
-    font-weight: 600;
-}
-
-.top-container {
+    padding: 0;
     width: 100%;
-    max-width: 90%;
-    background-color: #004229; 
-    margin: 0 auto;
-    padding: 5rem;
-    margin-bottom: 0rem;
-}
-
-.container {
-    width: 100%;
-    max-width: 90%;
-    margin: 0 auto;
-    background-color: #D9D9D9; 
-    padding: 3em;
-}
-
-.middle-content {
-    position: relative;
-    height: 100px;
-    margin-bottom: -6.5rem;
-}
-
-.image-container {
-    position: absolute;
-    left: 10%; 
-    top: -7rem;
-}
-
-.profile-image {
-    width: 13rem;
-    height: 13rem; 
-    border-radius: 50%;
-    object-fit: cover; 
-}
-
-.input-field{
-    margin-top: 3rem;
-}
-
-.form-group-row {
+    height: 100%;
     display: flex;
-    margin-bottom: 2.5rem;
-    margin-top: 2rem;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #F5F4F4;
 }
 
-.form-group {
-    flex: 1; 
-    margin-right: 5rem; 
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 100vh;
+    padding-top: 15vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.form-group:last-child {
-    margin-right: 0; 
+.profile-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
-label {
-    color: #3D3B3B; /* Color de los labels */
-    font-family: 'Lato', sans-serif; /* Tipografía para los labels */
-    font-weight: 600; /* Peso de la fuente */
-}
-
-input {
-    width: 100%; /* Asegurar que los inputs ocupen el 100% del ancho */
-    background: transparent; /* Sin fondo */
-    border: none; /* Sin borde */
-    border-bottom: 1px solid #5A5757; /* Línea inferior */
-    color: #5A5757; /* Color del texto del input */
-    padding: 10px 0; /* Espaciado vertical para los inputs */
-}
-
-input:focus {
-    outline: none; /* Eliminar el contorno al enfocar */
-    border-bottom: 1px solid #3D3B3B; /* Color de la línea inferior al enfocar */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center; /* Centrar el contenido horizontalmente */
 }
 
 .button-container {
-    margin-top: 20px; /* Espacio superior para el botón */
+    display: flex;
+    justify-content: space-between; /* Espacia los botones */
+    gap: 10px; /* Espacio entre los botones */
 }
 
-.btn-register {
-    background-color: #3D3B3B; /* Color de fondo del botón */
-    color: white; /* Color del texto del botón */
-    border: none; /* Sin borde */
-    padding: 10px 20px; /* Espaciado interior del botón */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
-    transition: background-color 0.3s ease; /* Transición suave para el color */
+.profile-icon {
+    font-size: 48px !important; /* Tamaño fijo y mayor para el icono */
+    width: 48px; /* Ancho del contenedor para el icono */
+    height: 48px; /* Altura del contenedor para el icono */
+    color: #004229; /* Color verde oscuro */
+    margin-right: 10px;
+    line-height: 48px; /* Alineación vertical */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn-register:hover {
-    background-color: #5A5757; /* Color de fondo al pasar el cursor */
+.profile-header h2 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 2em; /* Tamaño ajustado para el título */
+    color: #004229; /* Color del texto */
+    margin: 0;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-image-container {
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-form {
+    width: 100%;
+}
+
+.form-field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    text-align: center; /* Centrar el botón */
+}
+
+button[mat-raised-button] {
+    padding: 15px 25px;
+    font-size: 1.1em;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+    color: white;
+    background-color: #004229 !important; /* Fondo verde oscuro */
+    border-radius: 5px;
+    text-transform: none;
+    transition: background-color 0.3s ease;
+}
+
+button[mat-raised-button]:hover {
+    background-color: #006d5b !important; /* Verde más claro en el hover */
 }

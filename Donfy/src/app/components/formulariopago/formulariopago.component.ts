@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Role } from '../../models/Role';
 import { RoleService } from '../../services/role.service';
-import { AppComponent } from '../../app.component';  // Import AppComponent
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-formulariopago',
@@ -22,11 +22,12 @@ import { AppComponent } from '../../app.component';  // Import AppComponent
   styleUrls: ['./formulariopago.component.css']
 })
 export class FormulariopagoComponent implements OnInit {
+  role: string = '';
   saldoActual: number = 0;
   nuevoSaldo: number = 0;
   montoRecarga: number = 0;
   user: Users = new Users();
-  Role: Role = new Role(); // Initialize an empty Users object
+  Role: Role = new Role();
 
   constructor(
     private usersService: UsersService,

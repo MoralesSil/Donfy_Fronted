@@ -18,6 +18,11 @@ import { CreaeditaroleComponent } from './components/role/creaeditarole/creaedit
 import { seguridadGuard } from './guard/seguridad.guard';
 import { FormulariopagoComponent } from './components/formulariopago/formulariopago.component';
 import { HomeComponent } from './components/home/home.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
+import { DonantexfechaComponent } from './components/reportes/donantexfecha/donantexfecha.component';
+import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/monto-anual-ong.component';
+import { DonationstadisticsComponent } from './components/reportes/donationstadistics/donationstadistics.component';
+import { MonetarybydonadoranualComponent } from './components/reportes/monetarybydonadoranual/monetarybydonadoranual.component';
 
 export const routes: Routes =
     [
@@ -54,7 +59,7 @@ export const routes: Routes =
                     component: CreaeditaUserComponent
                 },
                 {
-                    path: 'Ediciones/:id',
+                    path: 'Ediciones/:username',
                     component: CreaeditaUserComponent
                 }
             ],
@@ -112,6 +117,9 @@ export const routes: Routes =
             children: [
                 {
                     path: 'nuevo', component: CreaeditaroleComponent
+                },
+                {
+                    path:'Edit/:id', component:CreaeditaroleComponent
                 }
             ],
             canActivate: [seguridadGuard],
@@ -119,7 +127,7 @@ export const routes: Routes =
         {
             path: 'pago',
             component: FormulariopagoComponent,
-            //canActivate: [seguridadGuard],
+            canActivate: [seguridadGuard],
         },
         {
             path: 'Notifications',
@@ -136,4 +144,28 @@ export const routes: Routes =
             ],
             canActivate: [seguridadGuard],
         },
+        {
+            path: 'reportes',
+            component: ReportesComponent,
+            children: [
+                {
+                    path: 'donanteXfecha',
+                    component: DonantexfechaComponent
+                },
+                {
+                    path:'MontoAnualOng',
+                    component:MontoAnualOngComponent
+                },
+                {
+                    path:'DonationEstadisticas',
+                    component:DonationstadisticsComponent
+                },
+                {
+                    path: 'monetarioanualpordonante',
+                    component:MonetarybydonadoranualComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+
     ];

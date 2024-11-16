@@ -1,0 +1,26 @@
+<div class="title-container" style="text-align: center;">
+    <h1 style="color: #004229; font-size: 2.5em; margin-bottom: 10px;">
+        Reporte Monetario de Donaciones por Donante (Anual)
+    </h1>
+    <p style="font-size: 1.2em; color: #004229; font-weight: bold;">
+        Reporte Camila Fernanda Morales Farias - U202210327
+    </p>
+</div>
+
+<!-- Contenedor para seleccionar el año -->
+<div class="year-selector" style="text-align: center; margin-bottom: 20px;">
+    <label for="yearSelect" style="font-size: 1.2em; color: #004229;">Seleccionar Año: </label>
+    <input type="number" id="yearSelect" [(ngModel)]="year" min="2000" max="2100" placeholder="Ingresa el año"
+        style="font-size: 1.1em; padding: 5px; width: 150px;">
+    <button (click)="generarReporte()"
+        style="font-size: 1.1em; padding: 5px 10px; margin-left: 10px; background-color: #004229; color: white; border: none; cursor: pointer;">
+        Generar Reporte
+    </button>
+</div>
+
+<!-- Contenedor para el gráfico -->
+<div class="chart-container" style="text-align: center; width: 100%; max-width: 700px; margin: auto;">
+    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+        [type]="barChartType" [legend]="barChartLegend" style="width: 100%; height: 400px;">
+    </canvas>
+</div>

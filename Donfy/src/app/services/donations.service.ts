@@ -4,6 +4,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Donations } from '../models/Donations';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs';
+import { DonationSummaryYearONGDTO } from '../models/DonationSummaryYearONGDTO';
+import { DonationStatisticsDTO } from '../models/DonationStatisticsDTO';
+import { DonationSummaryDTO } from '../models/DonationSummaryDTO';
+import { LoginService } from './login.service';
 
 const base_url = environment.base
 
@@ -15,7 +19,7 @@ export class DonationsService {
   private url = `${base_url}/Donations`;
   private listaCambio = new Subject<Donations[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private loginService: LoginService) {}
 
   list() {
     return this.http.get<Donations[]>(this.url);
@@ -54,4 +58,22 @@ export class DonationsService {
   markAsDeleted(id: number): Observable<void> {
     return this.http.put<void>(`${this.url}/FiltrarDonativosActivos/${id}`, {});
   }
+  geSumaOngYear(year: number): Observable<DonationSummaryYearONGDTO[]> {
+    return this.http.get<DonationSummaryYearONGDTO[]>(
+      `${this.url}/MontoAnualporONG?year=${year}`);
+  }
+  getEstadisticas():Observable<DonationStatisticsDTO[]>{
+    return this.http.get<DonationStatisticsDTO[]>(`${this.url}/donation-statistics`);
+  }
+  getMonetaryByDonor(anio: number): Observable<DonationSummaryDTO[]> {
+    const username = this.loginService.showUsername(); // Obtén el username desde el LoginService
+    if (!username) {
+      throw new Error('No se pudo obtener el nombre de usuario del token.');
+    }
+
+    return this.http.get<DonationSummaryDTO[]>(
+      `${this.url}/ResumenMonetarioDeDonacionesPorDonante?anio=${anio}&username=${username}`
+    );
+  }
+  
 }
