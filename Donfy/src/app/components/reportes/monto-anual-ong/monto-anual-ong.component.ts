@@ -21,6 +21,7 @@ import { DonationsService } from '../../../services/donations.service';
   styleUrl: './monto-anual-ong.component.css'
 })
 export class MontoAnualOngComponent implements OnInit {
+  hasData: boolean = false; 
   year:number=0
   donaciones: any[] = [];
   barChartOptions: ChartOptions = {
@@ -40,23 +41,27 @@ export class MontoAnualOngComponent implements OnInit {
   generarReporte(): void {
     if (this.year) {
       this.dS.geSumaOngYear(this.year).subscribe((data) => {
-        this.donaciones = data.map((item) => item.nombreONG); 
-        this.barChartLabels = this.donaciones; 
-        
-        // Aquí asignamos los valores de "suma" para cada usuario
-        const sumas = data.map((item) => item.montoDonado);
-        
-        this.barChartData = [
-          {
-            data: sumas,  // Usamos los valores de "suma"
-            label: 'Monto Donado Por ONG',
-            backgroundColor: ['#35f842','#f4c216','#373da0','#95b5ea'],
-            borderColor: 'rgba(173, 216, 230, 1)',
-            borderWidth: 1,
-          },
-        ];
+        if (data && data.length > 0) {
+          this.hasData = true; // Si hay datos, actualiza `hasData` a `true`
+          this.donaciones = data.map((item) => item.nombreONG); 
+          this.barChartLabels = this.donaciones; 
+          
+          const sumas = data.map((item) => item.montoDonado);
+          
+          this.barChartData = [
+            {
+              data: sumas,
+              label: 'Monto Donado Por ONG',
+              backgroundColor: ['#35f842','#f4c216','#373da0','#95b5ea'],
+              borderColor: 'rgba(173, 216, 230, 1)',
+              borderWidth: 1,
+            },
+          ];
+        } else {
+          this.hasData = false; // No hay datos, se muestra el mensaje
+        }
       });
-    } 
-  } 
+    }
+  }
 
 }

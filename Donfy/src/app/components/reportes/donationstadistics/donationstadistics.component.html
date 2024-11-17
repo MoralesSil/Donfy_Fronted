@@ -1,19 +1,23 @@
 <div class="title-container" style="text-align: center;">
-    <h1 style="color: #004229; font-size: 2.5em; margin-bottom: 10px;">
-      Estadísticas de las Donaciones
-    </h1>
-    <p style="font-size: 1.2em; color: #004229; font-weight: bold;">
-      Reporte Rodrigo Gabriel Quispe Giraldo - U202212252
-    </p>
-  </div>
-  <div class="chart-container" style="text-align: center; width: 100%; max-width: 800px; margin: auto;">
-    <canvas 
-      baseChart
-      [datasets]="barChartData"
-      [labels]="barChartLabels"
-      [options]="barChartOptions"
-      [type]="barChartType"
-      style="width: 100%; height: 400px;">
-    </canvas>
-  </div>
-  
+  <h1 style="color: #004229; font-size: 2.5em; margin-bottom: 10px;">
+    Estadísticas de las Donaciones
+  </h1>
+  <p style="font-size: 1.2em; color: #004229; font-weight: bold;">
+    Reporte Rodrigo Gabriel Quispe Giraldo - U202212252
+  </p>
+</div>
+
+<div *ngIf="!hasData" style="text-align: center; color: #004229; font-weight: bold; margin-top: 20px;">
+  No se encontraron datos para generar este reporte.
+</div>
+
+<div *ngIf="hasData" class="chart-container" style="text-align: center; width: 100%; max-width: 800px; margin: auto;">
+  <canvas 
+    baseChart
+    [datasets]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [type]="barChartType"
+    style="width: 100%; height: 400px;">
+  </canvas>
+</div>

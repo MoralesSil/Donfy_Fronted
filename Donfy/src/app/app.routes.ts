@@ -22,7 +22,12 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { DonantexfechaComponent } from './components/reportes/donantexfecha/donantexfecha.component';
 import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/monto-anual-ong.component';
 import { DonationstadisticsComponent } from './components/reportes/donationstadistics/donationstadistics.component';
+<<<<<<< HEAD
 import { MonetarybydonadoranualComponent } from './components/reportes/monetarybydonadoranual/monetarybydonadoranual.component';
+=======
+import { VouchersComponent } from './components/vouchers/vouchers.component';
+import { CreaeditavouchersComponent } from './components/vouchers/creaeditavouchers/creaeditavouchers.component';
+>>>>>>> Rodrigo
 import { TendenciasdonacionesmesComponent } from './components/reportes/tendenciasdonacionesmes/tendenciasdonacionesmes.component';
 import { FormularioretiroComponent } from './components/formularioretiro/formularioretiro.component';
 import { DonationstypemonthComponent } from './components/reportes/donationstypemonth/donationstypemonth.component';
@@ -125,6 +130,19 @@ export const routes: Routes =
                 },
                 {
                     path:'Edit/:id', component:CreaeditaroleComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'Vouchers',
+            component: VouchersComponent,
+            children: [
+                {
+                    path: 'nuevo', component: CreaeditavouchersComponent
+                },
+                {
+                    path: 'Edit/:id', component: CreaeditavouchersComponent
                 }
             ],
             canActivate: [seguridadGuard],

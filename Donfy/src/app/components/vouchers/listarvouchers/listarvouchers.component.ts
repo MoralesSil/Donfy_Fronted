@@ -1,48 +1,46 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
-import { Role } from '../../../models/Role';
-import { RoleService } from '../../../services/role.service';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { CommonModule } from '@angular/common';
+import { Vouchers } from '../../../models/Vouchers';
+import { VouchersService } from '../../../services/vouchers.service';
 
 @Component({
-  selector: 'app-listarrole',
+  selector: 'app-listarvouchers',
   standalone: true,
   imports: [
     MatTableModule,
     RouterModule,
     MatButtonModule,
     MatIcon,
-    MatPaginatorModule,
-    CommonModule
+    MatPaginatorModule
   ],
-  templateUrl: './listarrole.component.html',
-  styleUrl: './listarrole.component.css'
+  templateUrl: './listarvouchers.component.html',
+  styleUrl: './listarvouchers.component.css'
 })
-export class ListarroleComponent implements OnInit {
-  dataSource:MatTableDataSource<Role>=new MatTableDataSource();
+export class ListarvouchersComponent {
+  dataSource:MatTableDataSource<Vouchers>=new MatTableDataSource();
   @ViewChild(MatPaginator) Paginator!: MatPaginator;
 
-  displayedColumns: string[]=['cd1','cd2','cd3','cd4', 'cd5']
+  displayedColumns: string[]=['cd1','cd2','cd3','cd4', 'cd5','cd6','cd7','cd8']
   totalRegistros: number = 0;
 
   constructor(
-    private rS:RoleService,
+    private vS:VouchersService,
   ){}
 
   ngOnInit(): void {
-    this.rS.list().subscribe((data) => {
-      data.sort((a, b) => a.id - b.id);
+    this.vS.list().subscribe((data) => {
+      data.sort((a, b) => a.idComprobante - b.idComprobante);
       this.dataSource = new MatTableDataSource(data);
       this.totalRegistros = data.length;
       this.dataSource.paginator = this.Paginator;
     });
     
-    this.rS.getList().subscribe(data => {
-      data.sort((a, b) => a.id - b.id);
+    this.vS.getList().subscribe(data => {
+      data.sort((a, b) => a.idComprobante - b.idComprobante);
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.Paginator;
       this.totalRegistros = data.length; // Actualizar el total de registros aquí
@@ -57,9 +55,9 @@ export class ListarroleComponent implements OnInit {
   }
 
   eliminar(id: number): void {
-    this.rS.delete(id).subscribe(() => {
-      this.rS.list().subscribe((data) => {
-        this.rS.setList(data);
+    this.vS.delete(id).subscribe(() => {
+      this.vS.list().subscribe((data) => {
+        this.vS.setList(data);
       });
     });
   }

@@ -1,8 +1,8 @@
 <div class="container">
-    <h1 class="title">Roles</h1>
+    <h1 class="title">Vouchers</h1>
     <div class="search-container">
       <input type="text" class="search-input" placeholder="Buscar..." (input)="applyFilter($event)" />
-        <button class="new-button" [routerLink]="['/Roles/nuevo']" routerLinkActive="router-link-active">Nuevo</button>
+        <button class="new-button" [routerLink]="['/Vouchers/nuevo']" routerLinkActive="router-link-active">Nuevo</button>
     </div>
     <div class="tabla">
       <table
@@ -19,7 +19,7 @@
           >
             Id
           </th>
-          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.idComprobante }}</td>
         </ng-container>
   
         <!-- Columna de Rol -->
@@ -29,41 +29,79 @@
             *matHeaderCellDef
             style="background-color: #004229; color: white"
           >
-            Rol
+            Fecha Emision
           </th>
           <td mat-cell *matCellDef="let element">
-            {{ element.rol }}
+            {{ element.fechaEmision }}
           </td>
         </ng-container>
+        <!-- Columna de Rol -->
+        <ng-container matColumnDef="cd3">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              style="background-color: #004229; color: white"
+            >
+              Total
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.total }}
+            </td>
+          </ng-container>
+          <!-- Columna de Rol -->
+        <ng-container matColumnDef="cd4">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              style="background-color: #004229; color: white"
+            >
+              Nombre Donante
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.nombreDonante }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="cd5">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              style="background-color: #004229; color: white"
+            >
+              Descripcion
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.descripcion }}
+            </td>
+          </ng-container>
   
          <!-- Columna de User -->
-        <ng-container matColumnDef="cd3">
+        <ng-container matColumnDef="cd6">
           <th
             mat-header-cell
             *matHeaderCellDef
             style="background-color: #004229; color: white"
           >
-            Usuario
+            Donaciones
           </th>
           <td mat-cell *matCellDef="let element">
-            {{ element.user.username }}
+            {{ element.donations.nombre }}
           </td>
         </ng-container>
 
         <!-- Eliminar -->
-        <ng-container matColumnDef="cd4">
+        <ng-container matColumnDef="cd7">
           <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Eliminar </th>
           <td mat-cell *matCellDef="let element">
-              <button mat-fab aria-label="Eliminar donativo" (click)="eliminar(element.id)">
+              <button mat-fab aria-label="Eliminar donativo" (click)="eliminar(element.idComprobante)">
                   <mat-icon style="color: #004229">delete</mat-icon>
               </button>
           </td>
       </ng-container>
       <!-- Actualizar -->
-      <ng-container matColumnDef="cd5">
+      <ng-container matColumnDef="cd8">
         <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Actualizar </th>
         <td mat-cell *matCellDef="let element">
-            <button mat-raised-button [routerLink]="['Edit', element.id]">
+            <button mat-raised-button [routerLink]="['Edit', element.idComprobante]">
                 <mat-icon style="color: #004229">edit</mat-icon>
             </button>
         </td>
@@ -73,12 +111,10 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <div *ngIf="dataSource.data.length === 0" class="no-data">
-        <p>No hay datos disponibles para mostrar.</p>
-      </div>
       <mat-paginator [pageSizeOptions]="[4, 8, 10]"
                  showFirstLastButtons
                  aria-label="Select page of periodic elements">
         </mat-paginator>
     </div>
   </div>
+
