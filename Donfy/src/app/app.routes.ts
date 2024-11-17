@@ -24,6 +24,9 @@ import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/mo
 import { DonationstadisticsComponent } from './components/reportes/donationstadistics/donationstadistics.component';
 import { MonetarybydonadoranualComponent } from './components/reportes/monetarybydonadoranual/monetarybydonadoranual.component';
 import { TendenciasdonacionesmesComponent } from './components/reportes/tendenciasdonacionesmes/tendenciasdonacionesmes.component';
+import { DonationstypemonthComponent } from './components/reportes/donationstypemonth/donationstypemonth.component';
+import { ONGsComponent } from './components/ONGs/ongs/ongs.component';
+
 
 export const routes: Routes =
     [
@@ -168,9 +171,17 @@ export const routes: Routes =
                 {
                     path: 'monetarioanualpordonante',
                     component:MonetarybydonadoranualComponent
+                },
+                {
+                    path: 'donationstypeformnth',
+                    component:DonationstypemonthComponent
                 }
             ],
             canActivate: [seguridadGuard],
         },
+        {
+            path:'ONGS',
+            component:ONGsComponent
+        }
 
     ];

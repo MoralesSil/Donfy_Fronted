@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { UsersService } from '../../../services/users.service';  // Asegúrate de que la ruta sea correcta
 import { Users } from '../../../models/Users';
 import { DonationtypeService } from '../../../services/donationtype.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-creaeditadonation',
@@ -52,7 +53,9 @@ export class CreaeditadonationComponent implements OnInit {
     private usersService: UsersService,  // Inyectamos el servicio UsersService
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loginservice: LoginService,
+    private userservice: UsersService
   ) {}
 
   ngOnInit(): void {
@@ -79,16 +82,20 @@ export class CreaeditadonationComponent implements OnInit {
   }
 
   initForm(): void {
+    const username = this.loginservice.showUsername();  // Obtenemos el username del usuario
+    const user_id = this.userservice.getIdByUsername(username)
     this.form = this.formBuilder.group({
-      idDonacion: [''],
-      tipoDonativo: ['', Validators.required],
-      ongReceptora: ['', Validators.required],
+      idDonacion: ['-1'],
+      tipoDonativo: ['NE', Validators.required],
+      ongReceptora: ['NE', Validators.required],
       monto: [0, [Validators.min(0.01)]],
-      descripcion: [''],
-      nombreDonativo: [''],
-      fechaRecojo: ['', Validators.required],
-      direccionRecojo: [''],
-      usuarioDonante: ['', Validators.required]
+      descripcion: ['NE'],
+      nombreDonativo: ['NE'],
+      fechaRecojo: ['NE', Validators.required],
+      direccionRecojo: ['NE'],
+      usuarioDonante: ['NE', Validators.required],
+      Eliminado:[false],
+      users:[user_id]
     });
   
     // Suscripción a los cambios en el campo `tipoDonativo`

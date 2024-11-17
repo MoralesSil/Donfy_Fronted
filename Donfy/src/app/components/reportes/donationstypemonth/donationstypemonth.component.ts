@@ -1,33 +1,32 @@
-import { Component } from '@angular/core';
-import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { BaseChartDirective } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 import { DonationsService } from '../../../services/donations.service';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector: 'app-monetarybydonadoranual',
+  selector: 'app-donationstypemonth',
   standalone: true,
   imports: [
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
     BaseChartDirective,
-    CommonModule  ],
-  templateUrl:'./monetarybydonadoranual.component.html',
-  styleUrl: './monetarybydonadoranual.component.css'
+    CommonModule],
+  templateUrl: './donationstypemonth.component.html',
+  styleUrl: './donationstypemonth.component.css'
 })
-export class MonetarybydonadoranualComponent {
-  year:number=0
+export class DonationstypemonthComponent {
+  month:number=0
   donaciones: any[] = [];
   barChartOptions: ChartOptions = {
     responsive: true,
   };
   barChartLabels: string[] = [];
-  barChartType: ChartType = 'bar';
+  barChartType: ChartType = 'pie';
   barChartLegend = true;
   barChartData: ChartDataset[] = [];
 
@@ -38,18 +37,17 @@ export class MonetarybydonadoranualComponent {
   }
 
   generarReporte(): void {
-    if (this.year) {
-      this.dS.getMonetaryByDonor(this.year).subscribe((data) => {
-        this.donaciones = data.map((item) => item.nombreDonante); 
+    if (this.month) {
+      this.dS.getCantidadDonativosPorTipoYM(this.month).subscribe((data) => {
         this.barChartLabels = this.donaciones; 
         
-        // Aquí asignamos los valores de "suma" para cada usuario
-        const sumas = data.map((item) => item.montoDonado);
+        // Aquí asignamos los valores de "conteo" para cada usuario
+        const conteo = data.map((item) => item.cantidadDonaciones);
         
         this.barChartData = [
           {
-            data: sumas,  // Usamos los valores de "suma"
-            label: 'Monto Anual invertido Por Donador',
+            data: conteo, 
+            label: 'Cantidad de donativos por mes',
             backgroundColor: ['#35f842','#f4c216','#373da0','#95b5ea'],
             borderColor: 'rgba(173, 216, 230, 1)',
             borderWidth: 1,
@@ -60,3 +58,4 @@ export class MonetarybydonadoranualComponent {
   } 
 
 }
+
