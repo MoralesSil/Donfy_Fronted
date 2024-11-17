@@ -23,6 +23,7 @@ import { DonantexfechaComponent } from './components/reportes/donantexfecha/dona
 import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/monto-anual-ong.component';
 import { DonationstadisticsComponent } from './components/reportes/donationstadistics/donationstadistics.component';
 import { TendenciasdonacionesmesComponent } from './components/reportes/tendenciasdonacionesmes/tendenciasdonacionesmes.component';
+import { FormularioretiroComponent } from './components/formularioretiro/formularioretiro.component';
 
 export const routes: Routes =
     [
@@ -127,6 +128,11 @@ export const routes: Routes =
         {
             path: 'pago',
             component: FormulariopagoComponent,
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'retiro',
+            component: FormularioretiroComponent,
             canActivate: [seguridadGuard],
         },
         {

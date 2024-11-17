@@ -1,0 +1,45 @@
+<div class="modal-overlay">
+    <div class="login-container">
+      <div class="login-left">
+        <img src="assets/img/pago.jpg" alt="" class="login-image">
+      </div>
+      <div class="login-right">
+        <div class="login-header">
+          <div class="header-top">
+            <div class="logo">
+              <img src="assets/img/icono.png" alt="" class="donfy-logo">
+              <span class="donfy-title">DonFy</span>
+            </div>
+            <button class="close-btn" [routerLink]="['/home']" routerLinkActive="router-link-active">&times;</button>
+          </div>
+          <h2 class="welcome-title">Formulario de Retiro</h2>
+        </div>
+  
+        <div class="login-form">
+          <div class="form-group">
+            <label for="amount">Monto a retirar</label>
+            <input type="number" id="amount" placeholder="S/ Ingresa el monto a recargar" min="1" 
+                   [(ngModel)]="montoRecarga" />
+          </div>
+  
+          <div class="form-group">
+            <label for="card-number">Número de tarjeta</label>
+            <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" pattern="\d{4} \d{4} \d{4} \d{4}" />
+          </div>
+  
+          <div class="form-group">
+            <label for="expiry-date">Fecha de vencimiento</label>
+            <input type="month" id="expiry-date" placeholder="MM/AA" />
+          </div>
+  
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" placeholder="XXX" maxlength="3" pattern="\d{3}" />
+          </div>
+  
+          <button class="btn-login" (click)="retiro()">Retirar Saldo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
