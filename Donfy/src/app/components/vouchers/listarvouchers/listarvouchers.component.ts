@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -20,7 +20,7 @@ import { VouchersService } from '../../../services/vouchers.service';
   templateUrl: './listarvouchers.component.html',
   styleUrl: './listarvouchers.component.css'
 })
-export class ListarvouchersComponent {
+export class ListarvouchersComponent implements OnInit{
   dataSource:MatTableDataSource<Vouchers>=new MatTableDataSource();
   @ViewChild(MatPaginator) Paginator!: MatPaginator;
 

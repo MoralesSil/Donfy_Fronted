@@ -43,7 +43,7 @@ export class CreaeditavouchersComponent implements OnInit {
 
   myFilter = (d: Date | null): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Ajusta la hora a las 00:00 para comparación
+    today.setHours(0, 0, 0, 0);
     return d ? d > today : false;
   };
 
