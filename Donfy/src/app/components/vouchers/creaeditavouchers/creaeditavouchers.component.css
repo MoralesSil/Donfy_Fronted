@@ -1,0 +1,95 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #F5F4F4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 2.2em;
+    color: #004229;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+::ng-deep .mat-input-element {
+    color: #004229;
+}
+
+::ng-deep .mat-form-field-label {
+    color: #004229 !important;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px 24px;
+    min-width: 140px;
+    background-color: #004229 !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #006d5b !important;
+}
+
+.error-message {
+    color: #D32F2F;
+    font-size: 0.9em;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-align: center;
+    background-color: #ffebee;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Espacia los botones */
+    gap: 10px; /* Espacio entre los botones */
+}

@@ -22,6 +22,8 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { DonantexfechaComponent } from './components/reportes/donantexfecha/donantexfecha.component';
 import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/monto-anual-ong.component';
 import { DonationstadisticsComponent } from './components/reportes/donationstadistics/donationstadistics.component';
+import { VouchersComponent } from './components/vouchers/vouchers.component';
+import { CreaeditavouchersComponent } from './components/vouchers/creaeditavouchers/creaeditavouchers.component';
 
 export const routes: Routes =
     [
@@ -119,6 +121,19 @@ export const routes: Routes =
                 },
                 {
                     path:'Edit/:id', component:CreaeditaroleComponent
+                }
+            ],
+            canActivate: [seguridadGuard],
+        },
+        {
+            path: 'Vouchers',
+            component: VouchersComponent,
+            children: [
+                {
+                    path: 'nuevo', component: CreaeditavouchersComponent
+                },
+                {
+                    path: 'Edit/:id', component: CreaeditavouchersComponent
                 }
             ],
             canActivate: [seguridadGuard],

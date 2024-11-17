@@ -1,0 +1,120 @@
+<div class="container">
+    <h1 class="title">Vouchers</h1>
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Buscar..." (input)="applyFilter($event)" />
+        <button class="new-button" [routerLink]="['/Vouchers/nuevo']" routerLinkActive="router-link-active">Nuevo</button>
+    </div>
+    <div class="tabla">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 custom-table"
+      >
+        <!-- Columna de ID -->
+        <ng-container matColumnDef="cd1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="background-color: #004229; color: white"
+          >
+            Id
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.idComprobante }}</td>
+        </ng-container>
+  
+        <!-- Columna de Rol -->
+        <ng-container matColumnDef="cd2">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="background-color: #004229; color: white"
+          >
+            Fecha Emision
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaEmision }}
+          </td>
+        </ng-container>
+        <!-- Columna de Rol -->
+        <ng-container matColumnDef="cd3">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              style="background-color: #004229; color: white"
+            >
+              Total
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.total }}
+            </td>
+          </ng-container>
+          <!-- Columna de Rol -->
+        <ng-container matColumnDef="cd4">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              style="background-color: #004229; color: white"
+            >
+              Nombre Donante
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.nombreDonante }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="cd5">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              style="background-color: #004229; color: white"
+            >
+              Descripcion
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.descripcion }}
+            </td>
+          </ng-container>
+  
+         <!-- Columna de User -->
+        <ng-container matColumnDef="cd6">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="background-color: #004229; color: white"
+          >
+            Donaciones
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.donations.nombre }}
+          </td>
+        </ng-container>
+
+        <!-- Eliminar -->
+        <ng-container matColumnDef="cd7">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Eliminar </th>
+          <td mat-cell *matCellDef="let element">
+              <button mat-fab aria-label="Eliminar donativo" (click)="eliminar(element.idComprobante)">
+                  <mat-icon style="color: #004229">delete</mat-icon>
+              </button>
+          </td>
+      </ng-container>
+      <!-- Actualizar -->
+      <ng-container matColumnDef="cd8">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Actualizar </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-raised-button [routerLink]="['Edit', element.idComprobante]">
+                <mat-icon style="color: #004229">edit</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+  
+        <!-- Filas de la tabla -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[4, 8, 10]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
+  </div>
+

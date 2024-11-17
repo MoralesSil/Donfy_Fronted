@@ -1,0 +1,108 @@
+<div class="container">
+    <div class="form-container">
+      <h1>Registro Vouchers</h1>
+      <form [formGroup]="form" (ngSubmit)="aceptar()">
+        <!-- Campo Id -->
+        <div class="input-field">
+          <mat-form-field class="example-full-width" *ngIf="edicion">
+            <mat-label>Id</mat-label>
+            <input matInput formControlName="hidComprobante" readonly />
+            <mat-error *ngIf="form.controls['hidComprobante'].hasError('required') && form.controls['hidComprobante'].touched">
+              El Id es requerido.
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <!-- Campo Fecha Emisión -->
+        <div class="input-field">
+          <mat-form-field class="example-full-width">
+            <mat-label>Fecha Emisión</mat-label>
+            <input
+              matInput
+              [matDatepicker]="hpicker"
+              [min]="today"
+              [matDatepickerFilter]="myFilter"
+              formControlName="hfechaEmision"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="hpicker"></mat-datepicker-toggle>
+            <mat-datepicker #hpicker></mat-datepicker>
+            <mat-error *ngIf="form.get('hfechaEmision')?.hasError('required')">
+              Las fechas son obligatorias.
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <!-- Campo Total -->
+        <div class="input-field">
+          <mat-form-field class="example-full-width">
+            <mat-label>Total</mat-label>
+            <input matInput placeholder="Ejem. total" formControlName="htotal" />
+            <mat-error *ngIf="form.get('htotal')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="form.get('htotal')?.hasError('min')">
+              El total debe ser mayor a 0.
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <!-- Campo Nombre Donante -->
+        <div class="input-field">
+          <mat-form-field class="example-full-width">
+            <mat-label>Nombre Donante</mat-label>
+            <input matInput placeholder="Ejem. Rodrigo" formControlName="hnombreDonante" />
+            <mat-error *ngIf="form.get('hnombreDonante')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="form.get('hnombreDonante')?.hasError('minlength')">
+              El nombre debe tener al menos 3 caracteres.
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <!-- Campo Descripción -->
+        <div class="input-field">
+          <mat-form-field class="example-full-width">
+            <mat-label>Descripción</mat-label>
+            <input matInput placeholder="Ejem. descripción" formControlName="hdescripcion" />
+            <mat-error *ngIf="form.get('hdescripcion')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="form.get('hdescripcion')?.hasError('minlength')">
+              La descripción debe tener al menos 5 caracteres.
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <!-- Campo Donativo -->
+        <div class="input-field">
+          <mat-form-field class="example-full-width">
+            <mat-label>Donativo</mat-label>
+            <mat-select formControlName="hdonations">
+              <mat-option *ngFor="let user of listaDonativos" [value]="user.idDonation">
+                {{ user.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['hdonations'].hasError('required') && form.controls['hdonations'].touched">
+              El Donativo es requerido.
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <!-- Botones -->
+        <div class="button-container">
+          <button mat-flat-button color="primary" [disabled]="form.invalid">Registrar</button>
+          <button
+            mat-flat-button
+            color="primary"
+            [routerLink]="['/Vouchers']"
+            style="background-color: #004d00;"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
