@@ -85,6 +85,19 @@ div > span {
     width: auto;
 }
 
+.no-data {
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2rem;
+    color: #004229;
+    margin: 2em auto;
+    padding: 0.5em 1em;
+    border: none;
+    box-shadow: none;
+  }
+  
+  
+
 @media (max-width: 768px) {
     .date-range {
         flex-direction: column;

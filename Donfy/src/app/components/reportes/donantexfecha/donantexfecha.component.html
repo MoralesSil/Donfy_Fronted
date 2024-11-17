@@ -12,6 +12,10 @@
       
       <button (click)="generarReporte()">Generar Reporte</button>
   </div>
+
+  <div class="no-data" *ngIf="barChartLabels.length === 0 && startDate && endDate">
+    <p>No se encontraron datos.</p>
+  </div>
     
   <div class="chart-container" *ngIf="users.length > 0">
       <canvas

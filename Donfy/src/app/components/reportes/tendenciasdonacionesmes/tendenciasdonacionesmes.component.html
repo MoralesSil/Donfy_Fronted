@@ -1,1 +1,22 @@
-<p>tendenciasdonacionesmes works!</p>
+<div class="container">
+    <h1>Tendencias de Donaciones Ultimos 6 Meses</h1>
+
+    <div class="chart-container" *ngIf="barChartLabels.length > 0">
+      <canvas
+        baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [type]="barChartType"
+      ></canvas>
+    </div>
+  
+    <div class="no-data" *ngIf="barChartLabels.length === 0">
+      <p>No se encontraron datos para mostrar tendencias de donaciones.</p>
+    </div>
+    <div>
+      <span>Reporte de Angie Morales Silverio - U202118704</span>
+    </div>
+</div>
+  

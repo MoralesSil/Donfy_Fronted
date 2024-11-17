@@ -71,11 +71,8 @@ export class UsersService {
     return this.http.get<SaldoXusuarioDTO[]>(
       `${this.url}/saldo?username=${username}`);
   }
-<<<<<<< HEAD
 
   //Reporte Angie
-=======
->>>>>>> main
   getDonanteXfecha(startDate: string, endDate: string): Observable<DonanteXFechaDTO[]> {
     return this.http.get<DonanteXFechaDTO[]>(
       `${this.url}/donantePorFecha?startDate=${startDate}&endDate=${endDate}`);

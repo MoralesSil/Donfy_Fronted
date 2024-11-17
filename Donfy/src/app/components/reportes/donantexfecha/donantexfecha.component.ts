@@ -37,28 +37,40 @@ export class DonantexfechaComponent implements OnInit{
   constructor(private uS: UsersService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    
+    this.generarReporte();
   }
 
   generarReporte(): void {
     if (this.startDate && this.endDate) {
       this.uS.getDonanteXfecha(this.startDate, this.endDate).subscribe((data) => {
-        this.users = data.map((item) => item.nombre); 
-        this.barChartLabels = this.users; 
-        
-        // Aquí asignamos los valores de "suma" para cada usuario
-        const sumas = data.map((item) => item.suma);
-        
-        this.barChartData = [
-          {
-            data: sumas,  // Usamos los valores de "suma"
-            label: 'Cantidad de Donaciones',
-            backgroundColor: '#006644',
-            borderColor: 'rgba(173, 216, 230, 1)',
-            borderWidth: 1,
-          },
-        ];
+        if (data.length > 0) {
+          this.users = data.map((item) => item.nombre);
+          this.barChartLabels = this.users;
+
+          const sumas = data.map((item) => item.suma);
+  
+          this.barChartData = [
+            {
+              data: sumas,
+              label: 'Cantidad de Donaciones',
+              backgroundColor: '#006644',
+              borderColor: 'rgba(173, 216, 230, 1)',
+              borderWidth: 1,
+            },
+          ];
+        } else {
+          // Si es q no hay datos
+          this.users = [];
+          this.barChartLabels = [];
+          this.barChartData = [];
+        }
       });
-    } 
-  } 
+    } else {
+      //Si no hay fechas seleccionada se resetea
+      this.users = [];
+      this.barChartLabels = [];
+      this.barChartData = [];
+    }
+  }
+  
 }
