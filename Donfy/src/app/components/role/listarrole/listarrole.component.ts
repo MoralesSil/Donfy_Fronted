@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { Role } from '../../../models/Role';
 import { RoleService } from '../../../services/role.service';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-listarrole',
@@ -15,7 +16,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     RouterModule,
     MatButtonModule,
     MatIcon,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CommonModule
   ],
   templateUrl: './listarrole.component.html',
   styleUrl: './listarrole.component.css'

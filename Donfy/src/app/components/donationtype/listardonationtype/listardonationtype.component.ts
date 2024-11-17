@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+import { DonationsService } from '../../../services/donations.service';
 
 @Component({
   selector: 'app-listardonationtype',
@@ -16,7 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     RouterModule,
     MatButtonModule,
     MatIcon,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CommonModule
   ],
   templateUrl: './listardonationtype.component.html',
   styleUrls: ['./listardonationtype.component.css']
@@ -29,7 +32,11 @@ export class ListardonationtypeComponent implements OnInit {
   displayedColumns: string[]=['c1','c2','accion01','accion02']
   totalRegistros: number = 0;
 
-  constructor(private dtS:DonationtypeService,private SnackBar: MatSnackBar){}
+  constructor(
+    private dtS:DonationtypeService,
+    private SnackBar: MatSnackBar,
+    private dS:DonationsService
+  ){}
 
   ngOnInit(): void {
     this.dtS.list().subscribe((data) => {
@@ -58,19 +65,37 @@ export class ListardonationtypeComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  eliminar(id: number) {
-    this.dtS.delete(id).subscribe(() => {
-      this.SnackBar.open('Se eliminó con éxito', 'Cerrar', {
-        duration: 3000, // Duración del snackbar en milisegundos
-        horizontalPosition: 'center', // Posición horizontal
-        verticalPosition: 'bottom' // Posición vertical
-      });
-        this.dtS.list().subscribe(data => {
-        data.sort((a, b) => a.idTipoDonation - b.idTipoDonation);
-        this.dataSource = new MatTableDataSource(data);
-        this.totalRegistros = data.length; // Actualiza el total de registros
-        this.dataSource.paginator = this.Paginator; // Mantiene la paginación
-      });
+  eliminar(id: number): void {
+    this.dS.list().subscribe((donations) => {
+      const donacionesAsociadas = donations.filter(
+        (donation) => donation.donationType.idTipoDonation === id
+      );
+  
+      if (donacionesAsociadas.length > 0) {
+        // Si hay donaciones asociadas, muestra un snackBar y no elimina
+        this.SnackBar.open(
+          'No se puede eliminar porque está asociado a una donación.',
+          'Cerrar',
+          {
+            duration: 3000,
+            verticalPosition: 'bottom',
+          }
+        );
+      } else {
+        // Si no hay donaciones asociadas, procede con la eliminación
+        this.dtS.delete(id).subscribe(() => {
+          this.dtS.list().subscribe((data) => {
+            data.sort((a, b) => a.idTipoDonation - b.idTipoDonation);
+            this.dataSource = new MatTableDataSource(data);
+            this.totalRegistros = data.length;
+            this.dataSource.paginator = this.Paginator;
+          });
+          this.SnackBar.open('Tipo de donación eliminado con éxito', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'bottom',
+          });
+        });
+      }
     });
   }
 }
