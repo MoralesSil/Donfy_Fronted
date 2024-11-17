@@ -28,9 +28,13 @@
         <button mat-menu-item routerLink="/Donations">Donaciones</button>
       </mat-menu>
 
-      <button mat-button>ONG's</button>
+      <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Notifications">Mis Notificaciones</button>
+      <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Donations">Mis Donaciones</button>
+      <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Vouchers">Mis vouchers</button>
 
-      <button mat-button routerLink="/Vouchers" *ngIf="isDonador() || isAdministrador()">Vouchers</button>
+      <button mat-button routerLink="/Vouchers" *ngIf="isAdministrador()">Vouchers</button>
+
+      <button mat-button *ngIf="isDonador() ||isAdministrador()">ONG's</button>
 
       <button mat-button [matMenuTriggerFor]="menuReportes" *ngIf="isAdministrador()">Reportes</button>
       <mat-menu #menuReportes="matMenu">
@@ -39,36 +43,6 @@
         <button mat-menu-item routerLink="/reportes/MontoAnualOng">Monto Anual por ONG</button>
         <button mat-menu-item routerLink="/reportes/DonationEstadisticas">Estadisticas Donaciones</button>
       </mat-menu>
-    </div>
-  </div>
-
-  <div *ngIf="isSmallScreen" class="toolbar-right">
-    <button mat-icon-button class="acciones" (click)="toggleMenu()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <div *ngIf="isMenuOpen" class="menu-navegacion-hamburguesa">
-      <button mat-button routerLink="/home">Inicio</button>
-
-      <button mat-button [matMenuTriggerFor]="menuUsuarios" *ngIf="isAdministrador()">Usuarios</button>
-      <mat-menu #menuUsuarios="matMenu">
-        <button mat-menu-item routerLink="/Users">Información de Usuario</button>
-        <button mat-menu-item routerLink="/Roles">Roles de Usuario</button>
-      </mat-menu>
-
-      <button mat-button [matMenuTriggerFor]="menuNotificaciones" *ngIf="isAdministrador()">Notificaciones</button>
-      <mat-menu #menuNotificaciones="matMenu">
-        <button mat-menu-item routerLink="/NotificationType">Tipo de Notificaciones</button>
-        <button mat-menu-item routerLink="/Notifications">Notificaciones</button>
-      </mat-menu>
-
-      <button mat-button [matMenuTriggerFor]="menuDonaciones" *ngIf="isAdministrador()">Donaciones</button>
-      <mat-menu #menuDonaciones="matMenu">
-        <button mat-menu-item routerLink="/DonationType">Tipo de Donaciones</button>
-        <button mat-menu-item routerLink="/Donations">Donaciones</button>
-      </mat-menu>
-
-      <button mat-button>ONG's</button>
-      <button mat-button routerLink="/Vouchers"*ngIf="isDonador() ||isAdministrador()">Vouchers</button>
     </div>
   </div>
 
@@ -89,6 +63,50 @@
     <button mat-icon-button class="acciones" (click)="cerrar(confirmLogoutDialog)">
       <mat-icon>exit_to_app</mat-icon>
     </button>
+
+    <div *ngIf="isSmallScreen" class="toolbar-right">
+      <button mat-icon-button class="acciones" (click)="toggleMenu()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div *ngIf="isMenuOpen" class="menu-navegacion-hamburguesa">
+        <button mat-button routerLink="/home">Inicio</button>
+  
+        <button mat-button [matMenuTriggerFor]="menuUsuario" *ngIf="isAdministrador()">Usuarios</button>
+        <mat-menu #menuUsuario="matMenu">
+  
+          <button mat-menu-item routerLink="/Users">Información de Usuario</button>
+          <button mat-menu-item routerLink="/Roles">Roles de Usuario</button>
+        </mat-menu>
+  
+        <button mat-button [matMenuTriggerFor]="menuNotificaciones" *ngIf="isAdministrador()">Notificaciones</button>
+        <mat-menu #menuNotificaciones="matMenu">
+          <button mat-menu-item routerLink="/NotificationType" >Tipo de Notificaciones</button>
+          <button mat-menu-item routerLink="/Notifications">Notificaciones</button>
+        </mat-menu>
+  
+        <button mat-button [matMenuTriggerFor]="menuDonaciones" *ngIf="isAdministrador()">Donaciones</button>
+        <mat-menu #menuDonaciones="matMenu">
+          <button mat-menu-item routerLink="/DonationType">Tipo de Donaciones</button>
+          <button mat-menu-item routerLink="/Donations">Donaciones</button>
+        </mat-menu>
+  
+        <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Notifications">Mis Notificaciones</button>
+        <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Donations">Mis Donaciones</button>
+        <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Vouchers">Mis vouchers</button>
+  
+        <button mat-button routerLink="/Vouchers" *ngIf="isAdministrador()">Vouchers</button>
+  
+        <button mat-button *ngIf="isDonador() ||isAdministrador()">ONG's</button>
+  
+        <button mat-button [matMenuTriggerFor]="menuReportes" *ngIf="isAdministrador()">Reportes</button>
+        <mat-menu #menuReportes="matMenu">
+          <button mat-menu-item routerLink="/reportes/donanteXfecha">Donante por fecha</button>
+          <button mat-menu-item routerLink="/reportes/trendsDonaciones">Tendencias de Donaciones 6 meses</button>
+          <button mat-menu-item routerLink="/reportes/MontoAnualOng">Monto Anual por ONG</button>
+          <button mat-menu-item routerLink="/reportes/DonationEstadisticas">Estadisticas Donaciones</button>
+        </mat-menu>
+      </div>
+    </div>
     
     <ng-template #confirmLogoutDialog>
       <h2 mat-dialog-title>Cerrar Sesión</h2>

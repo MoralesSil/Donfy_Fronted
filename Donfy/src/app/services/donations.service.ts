@@ -44,13 +44,13 @@ export class DonationsService {
   update(dnt: Donations) {
     return this.http.put(this.url, dnt);
   }
-  getDonationsByUser(username: String): Observable<Donations[]> {
+  getDonationsByUser(username: number): Observable<Donations[]> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<Donations[]>(`${this.url}/DonativosPorDonador?username=${username}`, { headers });
+    return this.http.get<Donations[]>(`${this.url}/Users/${username}/DonativosporUsuario`, { headers });
   }
   // Método para obtener donaciones por ONG (filtrado por username)
   getDonationsByOngUsername(ongUsername: string): Observable<Donations[]> {
