@@ -81,4 +81,9 @@ export class UsersService {
     return this.http.get<DonanteXFechaDTO[]>(
       `${this.url}/donantePorFecha?startDate=${startDate}&endDate=${endDate}`);
   }
+
+  getIdByUsername(username: string): Observable<number> {
+    return this.http.get<number>(`${this.url}/buscar/${username}`);
+  }
+
 }
