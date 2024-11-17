@@ -8,7 +8,7 @@
             <div class="input-field">
                 <mat-form-field class="input-field" *ngIf="tiposDonativo$ | async as tipos">
                     <mat-label>Tipo de Donativo</mat-label>
-                    <mat-select formControlName="tipoDonativo">
+                    <mat-select formControlName="donationType">
                         <mat-option *ngFor="let tipo of tipos" [value]="tipo.idTipoDonation">
                             {{ tipo.nombreTipoDonation }}
                         </mat-option>
@@ -20,7 +20,7 @@
             <div class="input-field">
                 <mat-form-field class="example-full-width">
                     <mat-label>ONG Receptora</mat-label>
-                    <mat-select formControlName="ongReceptora">
+                    <mat-select formControlName="usersReceptor">
                         <mat-option *ngFor="let usuario of usuariosReceptores$ | async" [value]="usuario.id">
                             {{ usuario.nombreONG }}
                         </mat-option>
@@ -31,18 +31,25 @@
             <!-- Monto (solo si es tipo MONETARIO) -->
             <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 2">
                 <mat-form-field class="example-full-width">
-                    <mat-label>Monto</mat-label>
+                    <mat-label>montoDonado </mat-label>
                     <input matInput placeholder="Ejm. 100.00" formControlName="monto" type="number">
                     <mat-error *ngIf="form.get('monto')?.hasError('min')">
                         El monto debe ser mayor que 0.
                     </mat-error>
+                </mat-form-field>
+            </div>         
+            <!-- Mostrar y la más molestosa jsj es 1)-->
+            <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 1">
+                <mat-form-field class="example-full-width">
+                    <mat-label>estado</mat-label>
+                    <textarea matInput placeholder="Descripción del donativo" formControlName="descripcion"></textarea>
                 </mat-form-field>
             </div>
 
             <!-- Mostrar Descripción solo si el tipo es 'FISICO' (ID de 'FISICO' es 1)-->
             <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 1">
                 <mat-form-field class="example-full-width">
-                    <mat-label>Descripción</mat-label>
+                    <mat-label>descripcion</mat-label>
                     <textarea matInput placeholder="Descripción del donativo" formControlName="descripcion"></textarea>
                 </mat-form-field>
             </div>
@@ -50,7 +57,7 @@
             <!-- Mostrar Nombre del Donativo solo si el tipo es 'FISICO'-->
             <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 1">
                 <mat-form-field class="example-full-width">
-                    <mat-label>Nombre del Donativo</mat-label>
+                    <mat-label>nombre</mat-label>
                     <input matInput placeholder="Ejm. Juguetes" formControlName="nombreDonativo">
                 </mat-form-field>
             </div>
@@ -58,7 +65,7 @@
             <!-- Fecha de Recojo -->
             <div class="example-full-width">
                 <mat-form-field class="example-full-width">
-                    <mat-label>Fecha de Recojo</mat-label>
+                    <mat-label>fechaRcojo</mat-label>
                     <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="fechaRecojo" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -74,7 +81,7 @@
             <!-- Mostrar Dirección de Recojo solo si el tipo es 'FISICO'-->
             <div class="input-field" *ngIf="form.get('tipoDonativo')?.value === 1">
                 <mat-form-field class="example-full-width">
-                    <mat-label>Dirección de Recojo</mat-label>
+                    <mat-label>direccionRecojo</mat-label>
                     <input matInput placeholder="Ejm. Av. Ejemplo 123" formControlName="direccionRecojo">
                 </mat-form-field>
             </div>
