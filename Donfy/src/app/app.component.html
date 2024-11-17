@@ -34,7 +34,7 @@
 
       <button mat-button routerLink="/Vouchers" *ngIf="isAdministrador()">Vouchers</button>
 
-      <button mat-button *ngIf="isDonador() ||isAdministrador()">ONG's</button>
+      <button mat-button *ngIf="isDonador() ||isAdministrador()" routerLink="/ong">ONG's</button>
 
       <button mat-button [matMenuTriggerFor]="menuReportes" *ngIf="isAdministrador()">Reportes</button>
       <mat-menu #menuReportes="matMenu">
@@ -98,7 +98,7 @@
   
         <button mat-button routerLink="/Vouchers" *ngIf="isAdministrador()">Vouchers</button>
   
-        <button mat-button *ngIf="isDonador() ||isAdministrador()">ONG's</button>
+        <button mat-button *ngIf="isDonador() ||isAdministrador()" routerLink="/ong">ONG's</button>
   
         <button mat-button [matMenuTriggerFor]="menuReportes" *ngIf="isAdministrador()">Reportes</button>
         <mat-menu #menuReportes="matMenu">
