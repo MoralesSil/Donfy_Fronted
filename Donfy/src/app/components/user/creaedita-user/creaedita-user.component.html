@@ -5,12 +5,13 @@
     </div>
 
     <div class="profile-content">
-        <!-- Sección de imagen -->
         <div class="profile-image-container">
-            <img src="assets/img/logoVerdeNavegacion.png" alt="Imagen de perfil" class="profile-image">
+            <img *ngIf="form.value.imagenUrl; else defaultIcon" [src]="form.value.imagenUrl" alt="Imagen de perfil" class="profile-image">
+            <ng-template #defaultIcon>
+                <mat-icon class="profile-icon">account_circle</mat-icon>
+            </ng-template>
         </div>
 
-        <!-- Formulario -->
         <form [formGroup]="form" (ngSubmit)="guardarCambios()" class="profile-form">
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Nombres</mat-label>
@@ -40,6 +41,11 @@
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>DNI</mat-label>
                 <input matInput formControlName="dni" maxlength="8" readonly>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>URL de la imagen de perfil</mat-label>
+                <input matInput formControlName="imagenUrl" placeholder="Ingrese la URL de la imagen">
             </mat-form-field>
 
             <div class="button-container">
