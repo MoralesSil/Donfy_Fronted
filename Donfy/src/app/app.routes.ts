@@ -23,6 +23,7 @@ import { DonantexfechaComponent } from './components/reportes/donantexfecha/dona
 import { MontoAnualOngComponent } from './components/reportes/monto-anual-ong/monto-anual-ong.component';
 import { DonationstadisticsComponent } from './components/reportes/donationstadistics/donationstadistics.component';
 import { MonetarybydonadoranualComponent } from './components/reportes/monetarybydonadoranual/monetarybydonadoranual.component';
+import { DonationstypemonthComponent } from './components/reportes/donationstypemonth/donationstypemonth.component';
 
 export const routes: Routes =
     [
@@ -163,6 +164,10 @@ export const routes: Routes =
                 {
                     path: 'monetarioanualpordonante',
                     component:MonetarybydonadoranualComponent
+                },
+                {
+                    path: 'donationstypeformnth',
+                    component:DonationstypemonthComponent
                 }
             ],
             canActivate: [seguridadGuard],

@@ -8,6 +8,7 @@ import { DonationSummaryYearONGDTO } from '../models/DonationSummaryYearONGDTO';
 import { DonationStatisticsDTO } from '../models/DonationStatisticsDTO';
 import { DonationSummaryDTO } from '../models/DonationSummaryDTO';
 import { LoginService } from './login.service';
+import { DonationforTypemothDTO } from '../models/DonationforTypemothDTO';
 
 const base_url = environment.base
 
@@ -75,5 +76,9 @@ export class DonationsService {
       `${this.url}/ResumenMonetarioDeDonacionesPorDonante?anio=${anio}&username=${username}`
     );
   }
+
+  getCantidadDonativosPorTipoYM(mes: number): Observable<DonationforTypemothDTO[]> {
+    return this.http.get<DonationforTypemothDTO[]>(`${this.url}/cantidadDonativosfisicosPorMonth?mes=${mes}`);
+  }  
   
 }

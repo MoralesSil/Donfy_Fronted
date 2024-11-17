@@ -1,0 +1,98 @@
+.date-range {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2em 0;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    color: #333333;
+}
+
+.date-range label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-right: 1em;
+}
+
+.date-range input {
+    padding: 0.5em;
+    border-radius: 0.5em;
+    border: 1px solid #E5E5E5;
+    background-color: #F2F2F2;
+    color: #808080;
+    font-size: 1rem;
+    font-family: 'Lato', sans-serif;
+    margin-right: 1em;
+    width: 45%;
+}
+
+.date-range button {
+    background-color: #004229;
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.7em 1.5em;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.date-range button:hover {
+    background-color: #006644;
+}
+
+.chart-container {
+    margin-top: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+canvas {
+    max-width: 100%;
+    border-radius: 0.5em;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para el gráfico */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .date-range {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .date-range label,
+    .date-range input {
+        width: 100%;
+        margin-bottom: 1em;
+    }
+
+    .date-range button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .date-range input {
+        padding: 0.5em;
+        font-size: 0.9rem;
+    }
+
+    .date-range button {
+        padding: 0.6em 1.2em;
+        font-size: 0.9rem;
+    }
+
+    .chart-container {
+        margin-top: 2em;
+    }
+}
+
+.no-data-message {
+    color: red;
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: 20px;
+}  

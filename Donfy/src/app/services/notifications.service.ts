@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 import { Notifications } from '../models/Notifications';
 
 const base_url = environment.base
@@ -42,5 +42,17 @@ export class NotificationsService {
 
   update(nft:Notifications){
     return this.http.put(this.url,nft);
+  }
+  getNotificationsByUser(username: String): Observable<Notification[]> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<Notification[]>(`${this.url}/BuscarNotificacionesporUsernameDonador?username=${username}`);
+  }
+  // Método para obtener donaciones por ONG (filtrado por username)
+  getNotificationsByOngUsername(ongUsername: string): Observable<Notification[]> {
+    return this.http.get<Notification[]>(`${this.url}/BuscarNotificacionesporUsernameONG?ongUsername=${ongUsername}`);
   }
 }

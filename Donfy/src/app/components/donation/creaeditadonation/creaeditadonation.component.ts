@@ -80,15 +80,16 @@ export class CreaeditadonationComponent implements OnInit {
 
   initForm(): void {
     this.form = this.formBuilder.group({
-      idDonacion: [''],
-      tipoDonativo: ['', Validators.required],
-      ongReceptora: ['', Validators.required],
+      idDonacion: ['-1'],
+      tipoDonativo: ['NE', Validators.required],
+      ongReceptora: ['NE', Validators.required],
       monto: [0, [Validators.min(0.01)]],
-      descripcion: [''],
-      nombreDonativo: [''],
-      fechaRecojo: ['', Validators.required],
-      direccionRecojo: [''],
-      usuarioDonante: ['', Validators.required]
+      descripcion: ['NE'],
+      nombreDonativo: ['NE'],
+      fechaRecojo: ['NE', Validators.required],
+      direccionRecojo: ['NE'],
+      usuarioDonante: ['NE', Validators.required],
+      Eliminado:[false],
     });
   
     // Suscripción a los cambios en el campo `tipoDonativo`
