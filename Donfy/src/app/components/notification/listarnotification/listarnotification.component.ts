@@ -38,7 +38,7 @@ export class ListarnotificationComponent {
       this.notificationsService.getNotificationsByUser(username).subscribe({
         next: (data: any[]) => {
           this.dataSource.data = data.map(notification => ({
-            idNotificacion: notification.id,
+            idNotificacion: notification.id, //quitarlo, no debe mostrar
             mensaje: notification.message,
             estado: notification.state,
             tipoNotificacion: notification.notificationType,
@@ -54,7 +54,7 @@ export class ListarnotificationComponent {
       this.notificationsService.getNotificationsByOngUsername(username).subscribe({
         next: (data: any[]) => {
           this.dataSource.data = data.map(notification => ({
-            idNotificacion: notification.id,
+            idNotificacion: notification.id, //quitarlo, no debe mostrar
             mensaje: notification.message,
             estado: notification.state,
             tipoNotificacion: notification.notificationType,
