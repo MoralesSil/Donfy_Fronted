@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Donations } from '../models/Donations';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs';
+import { TrendsDonationsDTO } from '../models/TrendsDonationsDTO';
 import { DonationSummaryYearONGDTO } from '../models/DonationSummaryYearONGDTO';
 import { DonationStatisticsDTO } from '../models/DonationStatisticsDTO';
 
@@ -40,6 +41,14 @@ export class DonationsService {
   update(dnt:Donations){
     return this.http.put(this.url,dnt);
   }
+
+  // Reporte Angie  
+  getTendencias(): Observable<TrendsDonationsDTO[]> {
+    return this.http.get<TrendsDonationsDTO[]>(
+      `${this.url}/tendenciasDonacionesMes`
+    );
+  }
+
   geSumaOngYear(year: number): Observable<DonationSummaryYearONGDTO[]> {
     return this.http.get<DonationSummaryYearONGDTO[]>(
       `${this.url}/MontoAnualporONG?year=${year}`);
@@ -48,3 +57,4 @@ export class DonationsService {
     return this.http.get<DonationStatisticsDTO[]>(`${this.url}/donation-statistics`)
   }
 }
+

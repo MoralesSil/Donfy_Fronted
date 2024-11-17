@@ -1,21 +1,35 @@
-<div class="date-range">
-    <label for="startDate">Fecha de inicio:</label>
-    <input type="date" id="startDate" [(ngModel)]="startDate" />
-    
-    <label for="endDate">Fecha de fin:</label>
-    <input type="date" id="endDate" [(ngModel)]="endDate" />
-    
-    <button (click)="generarReporte()">Generar Reporte</button>
+<div>
+  <div>
+    <h1>Reporte Donantes por un rango de fecha</h1>
   </div>
   
-  <div class="chart-container" *ngIf="users.length > 0">
-    <canvas
-      baseChart
-      [datasets]="barChartData"
-      [labels]="barChartLabels"
-      [options]="barChartOptions"
-      [legend]="barChartLegend"
-      [type]="barChartType"
-    ></canvas>
+  <div class="date-range">
+      <label for="startDate">Fecha de inicio:</label>
+      <input type="date" id="startDate" [(ngModel)]="startDate" />
+      
+      <label for="endDate">Fecha de fin:</label>
+      <input type="date" id="endDate" [(ngModel)]="endDate" />
+      
+      <button (click)="generarReporte()">Generar Reporte</button>
   </div>
+
+  <div class="no-data" *ngIf="barChartLabels.length === 0 && startDate && endDate">
+    <p>No se encontraron datos.</p>
+  </div>
+    
+  <div class="chart-container" *ngIf="users.length > 0">
+      <canvas
+        baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [type]="barChartType"
+      ></canvas>
+  </div>
+  
+  <div>
+    <span>Reporte de Angie Morales Silverio - U202118704</span>
+  </div>
+</div>
   
