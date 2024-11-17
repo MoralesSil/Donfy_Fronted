@@ -10,8 +10,6 @@ import { SaldoXusuarioDTO } from './models/SaldoXusuarioDTO';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ChangeDetectionStrategy, Component, HostListener, inject, TemplateRef } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
-
 
 @Component({
   selector: 'app-root',
@@ -27,7 +25,7 @@ import { BrowserModule } from '@angular/platform-browser';
     MatIconModule,
     RouterModule,
     CommonModule,
-    MatDialogModule
+    MatDialogModule,
     ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
