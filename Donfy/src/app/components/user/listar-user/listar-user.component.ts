@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
 import { UsersService } from '../../../services/users.service';
 import { Users } from '../../../models/Users';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -13,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   imports: [
     MatTableModule,
     MatIconModule,
-    RouterLink,
     MatPaginatorModule
   ],
   templateUrl: './listar-user.component.html',
