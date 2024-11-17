@@ -174,8 +174,9 @@ export const routes: Routes =
             canActivate: [seguridadGuard],
         },
         {
-            path:'ONGS',
-            component:ONGsComponent
+            path:'ong',
+            component:ONGsComponent,
+            canActivate: [seguridadGuard]
         }
 
     ];

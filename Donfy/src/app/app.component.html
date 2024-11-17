@@ -36,6 +36,8 @@
         <button mat-menu-item routerLink="/reportes/donanteXfecha">Donante por fecha</button>
         <button mat-menu-item routerLink="/reportes/MontoAnualOng">Monto Anual por ONG</button>
         <button mat-menu-item routerLink="/reportes/DonationEstadisticas">Estadisticas Donaciones</button>
+        <button mat-menu-item routerLink="/reportes/monetarioanualpordonante">Donaciones monetarias anuales por Donante</button>
+        <button mat-menu-item routerLink="/reportes/donationstypeformnth">Donaciones físicas mensuales</button>
       </mat-menu>
     </div>
   </div>
@@ -67,6 +69,15 @@
 
       <button mat-button>ONG's</button>
       <button mat-button routerLink="/comprobante">Comprobantes</button>
+
+      <button mat-button [matMenuTriggerFor]="menuReportes" *ngIf="isAdministrador()">Reportes</button>
+      <mat-menu #menuReportes="matMenu">
+        <button mat-menu-item routerLink="/reportes/donanteXfecha">Donante por fecha</button>
+        <button mat-menu-item routerLink="/reportes/MontoAnualOng">Monto Anual por ONG</button>
+        <button mat-menu-item routerLink="/reportes/DonationEstadisticas">Estadisticas Donaciones</button>
+        <button mat-menu-item routerLink="/reportes/monetarioanualpordonante">Donaciones monetarias anuales por Donante</button>
+        <button mat-menu-item routerLink="/reportes/donationstypeformnth">Donaciones físicas mensuales</button>
+      </mat-menu>
     </div>
   </div>
 

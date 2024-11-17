@@ -79,20 +79,20 @@ export class CreaeditadonationComponent implements OnInit {
     const username = this.loginservice.showUsername();
     this.usersService.getIdByUsername(username).subscribe((userId) => {
       this.form = this.formBuilder.group({
-        idDonacion: ['-1'],
-        donationType: ['NE', Validators.required],
-        usersReceptor: ['NE', Validators.required],
+        idDonacion: [-1],
+        donationType: [-1, Validators.required],
+        usersReceptor: [-1, Validators.required],
         montoDonado: [0, [Validators.min(0.01)]],
         descripcion: ['NE'],
         nombre: ['NE'],
         estado:['Pendiente'],
-        fechaRecojo: ['NE', Validators.required],
+        fechaRecojo: ['2025/09/18', Validators.required],
         direccionRecojo: ['NE'],
         users: [userId, Validators.required],
         eliminado: [false],
       });
 
-      this.form.get('tipoDonativo')?.valueChanges.subscribe((tipo) => {
+      this.form.get('donationType')?.valueChanges.subscribe((tipo) => {
         this.updateFieldValidators(tipo);
       });
 
@@ -118,8 +118,10 @@ export class CreaeditadonationComponent implements OnInit {
     });
   }
 
-  updateFieldValidators(tipoDonativo: string | null | undefined): void {
-    if (!tipoDonativo) {
+  updateFieldValidators(donationType: string | null | undefined): void {
+    console.log('Tipo de donativo:', donationType);
+
+    if (!donationType) {
       console.warn('Tipo de donativo no especificado');
       return;
     }
@@ -129,7 +131,7 @@ export class CreaeditadonationComponent implements OnInit {
     const nombreDonativo = this.form.get('nombreDonativo');
     const direccionRecojo = this.form.get('direccionRecojo');
 
-    if (tipoDonativo === 'MONETARIO') {
+    if (donationType === 'MONETARIO') {
       monto?.setValidators([Validators.required, Validators.min(0.01)]);
       descripcion?.setValue('-');
       descripcion?.clearValidators();
@@ -137,7 +139,7 @@ export class CreaeditadonationComponent implements OnInit {
       nombreDonativo?.clearValidators();
       direccionRecojo?.setValue('-');
       direccionRecojo?.clearValidators();
-    } else if (tipoDonativo === 'FISICO') {
+    } else if (donationType === 'FISICO') {
       monto?.setValue(0);
       monto?.clearValidators();
       descripcion?.setValidators([Validators.required]);
@@ -155,7 +157,7 @@ export class CreaeditadonationComponent implements OnInit {
     if (this.form.valid) {
       this.tiposDonativo$.subscribe((tipos) => {
         const tipoDonativo = tipos.find(
-          (tipo) => tipo.idTipoDonation === this.form.value.tipoDonativo
+          (tipo) => tipo.idTipoDonation === this.form.value.idTipoDonation
         );
         if (!tipoDonativo) {
           console.error('Tipo de donativo no encontrado');
@@ -202,6 +204,8 @@ export class CreaeditadonationComponent implements OnInit {
               });
           });
       });
+      console.log('Formulario enviado:', this.form.value);
+      console.log('Tipos de donativo disponibles:', this.tiposDonativo$);
     }
   }
 }
