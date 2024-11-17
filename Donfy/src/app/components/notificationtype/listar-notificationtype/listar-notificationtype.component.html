@@ -1,15 +1,13 @@
 <div class="container">
   <h1 class="title">Tipos de Notificaciones</h1>
   <div class="search-container">
-      <input type="text" class="search-input" placeholder="Buscar...">
-      <button class="new-button" [routerLink]="['/NotificationType/New']" routerLinkActive="router-link-active">Nuevo</button>
+    <input type="text" class="search-input" placeholder="Buscar..." (keyup)="filtro($event)">
+    <button class="new-button" [routerLink]="['/NotificationType/New']" routerLinkActive="router-link-active">Nuevo</button>
   </div>
+
   <div class="tabla">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      class="mat-elevation-z8 custom-table"
-    >
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+    
       <!-- c1 Column -->
       <ng-container matColumnDef="c1">
         <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Id</th>
@@ -18,36 +16,46 @@
         </td>
       </ng-container>
 
-          <!-- c2 Column -->
-          <ng-container matColumnDef="c2">
-              <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Nombre </th>
-              <td mat-cell *matCellDef="let element" class="mat-cell"> {{element.nombre}} </td>
-          </ng-container>
-          
-          <!-- c3 Column -->
-          <ng-container matColumnDef="c3">
-            <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Eliminar</th>
-            <td mat-cell *matCellDef="let element" (click)="eliminar(element.idTipoNotificacion)">
-              <button mat-fab aria-label="Eliminar">
-                <mat-icon style="color: #004229">delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+      <!-- c2 Column -->
+      <ng-container matColumnDef="c2">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Nombre</th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">
+          {{ element.nombre }}
+        </td>
+      </ng-container>
 
-          <!-- c4 Column -->
-          <ng-container matColumnDef="c4">
-            <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Actualizar </th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-raised-button [routerLink]="['Ediciones',element.idTipoNotificacion]">
-                <mat-icon style="color: #004229">edit</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+      <!-- c3 Column -->
+      <ng-container matColumnDef="c3">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Eliminar</th>
+        <td mat-cell *matCellDef="let element" (click)="eliminar(element.idTipoNotificacion)">
+          <button mat-fab aria-label="Eliminar" class="Ediciones">
+            <mat-icon style="color: #004229">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+      <!-- c4 Column -->
+      <ng-container matColumnDef="c4">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Actualizar</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-fab class="Ediciones" [routerLink]="['Ediciones',element.idTipoNotificacion]">
+            <mat-icon style="color: #004229">edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 
+    <div *ngIf="dataSource.data.length === 0" class="no-data">
+      <p>No hay datos disponibles para mostrar.</p>
+    </div>
+
+    <mat-paginator [length]="dataSource.data.length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="pageEvent($event)">
+    </mat-paginator>
   </div>
 </div>

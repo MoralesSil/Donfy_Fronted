@@ -14,5 +14,6 @@ export class Users {
     direccion : string = ""
     nombreONG : string = ""
     saldo : number = 0
+    imagenUrl: string =""
     roles: Role[] = new Array<Role>();
 }

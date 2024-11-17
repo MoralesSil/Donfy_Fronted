@@ -77,6 +77,7 @@ export class UsersService {
     return this.http.get<Users[]>(`${this.url}/busquedas`);
   }
   
+  //Reporte Angie
   getDonanteXfecha(startDate: string, endDate: string): Observable<DonanteXFechaDTO[]> {
     return this.http.get<DonanteXFechaDTO[]>(
       `${this.url}/donantePorFecha?startDate=${startDate}&endDate=${endDate}`);

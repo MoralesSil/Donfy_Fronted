@@ -62,10 +62,10 @@ export class CreaeditaUserComponent implements OnInit {
       username: ['', Validators.required],
       dni: ['', [Validators.required, Validators.pattern("^[0-9]{8}$")]],
       correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
+      telefono: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      imagenUrl: ['', Validators.required]
     });
   }
-
 
   guardarCambios(): void {
     if (this.form.valid) {
@@ -75,6 +75,7 @@ export class CreaeditaUserComponent implements OnInit {
       this.users.dni = this.form.value.dni;
       this.users.correo = this.form.value.correo;
       this.users.telefono = this.form.value.telefono;
+      this.users.imagenUrl = this.form.value.imagenUrl;
 
       if (this.edicion) {
         this.uS.usuario(this.username).subscribe((id: number) => {
@@ -110,7 +111,8 @@ export class CreaeditaUserComponent implements OnInit {
           username: new FormControl(data.username),
           dni: new FormControl(data.dni),
           correo: new FormControl(data.correo),
-          telefono: new FormControl(data.telefono)
+          telefono: new FormControl(data.telefono),
+          imagenUrl: new FormControl(data.imagenUrl)
         });
       });
     }

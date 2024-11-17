@@ -34,6 +34,7 @@
       <button mat-button [matMenuTriggerFor]="menuReportes" *ngIf="isAdministrador()">Reportes</button>
       <mat-menu #menuReportes="matMenu">
         <button mat-menu-item routerLink="/reportes/donanteXfecha">Donante por fecha</button>
+        <button mat-menu-item routerLink="/reportes/trendsDonaciones">Tendencias de Donaciones 6 meses</button>
         <button mat-menu-item routerLink="/reportes/MontoAnualOng">Monto Anual por ONG</button>
         <button mat-menu-item routerLink="/reportes/DonationEstadisticas">Estadisticas Donaciones</button>
       </mat-menu>
