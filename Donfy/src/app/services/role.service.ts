@@ -39,4 +39,8 @@ export class RoleService {
   update(ro:Role){
     return this.http.put(this.url,ro);
   }
+  eliminarRolesNulos() {
+    return this.http.delete(`${this.url}/eliminarNulos`);
+  }
 }
+

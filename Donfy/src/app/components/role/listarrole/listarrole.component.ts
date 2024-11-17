@@ -23,24 +23,26 @@ import { CommonModule } from '@angular/common';
   styleUrl: './listarrole.component.css'
 })
 export class ListarroleComponent implements OnInit {
-  dataSource:MatTableDataSource<Role>=new MatTableDataSource();
+  dataSource: MatTableDataSource<Role> = new MatTableDataSource();
   @ViewChild(MatPaginator) Paginator!: MatPaginator;
 
-  displayedColumns: string[]=['cd1','cd2','cd3','cd4', 'cd5']
+  displayedColumns: string[] = ['cd1', 'cd2', 'cd3', 'cd4', 'cd5'];
   totalRegistros: number = 0;
 
-  constructor(
-    private rS:RoleService,
-  ){}
+  constructor(private rS: RoleService) { }
 
   ngOnInit(): void {
-    this.rS.list().subscribe((data) => {
-      data.sort((a, b) => a.id - b.id);
-      this.dataSource = new MatTableDataSource(data);
-      this.totalRegistros = data.length;
-      this.dataSource.paginator = this.Paginator;
+    // Primero eliminar roles nulos
+    this.rS.eliminarRolesNulos().subscribe(() => {
+      // Después de eliminar los roles nulos, obtén la lista actualizada
+      this.rS.list().subscribe((data) => {
+        data.sort((a, b) => a.id - b.id);
+        this.dataSource = new MatTableDataSource(data);
+        this.totalRegistros = data.length;
+        this.dataSource.paginator = this.Paginator;
+      });
     });
-    
+
     this.rS.getList().subscribe(data => {
       data.sort((a, b) => a.id - b.id);
       this.dataSource = new MatTableDataSource(data);
@@ -48,9 +50,11 @@ export class ListarroleComponent implements OnInit {
       this.totalRegistros = data.length; // Actualizar el total de registros aquí
     });
   }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.Paginator;
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -63,5 +67,4 @@ export class ListarroleComponent implements OnInit {
       });
     });
   }
-
 }
