@@ -69,3 +69,34 @@ body {
 .mat-cell {
     padding: 10px;
 }
+
+.no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: none;
+    border-radius: none;
+    font-size: 1.2em;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+  }
+  
+  .no-data p {
+    margin: 0;
+    font-weight: 600;
+    color: #004229;
+  }
+
+.Ediciones {
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+  
+  .Ediciones:focus, .Ediciones:hover {
+    border: none;
+    box-shadow: none;
+  }
+  
+  
