@@ -1,91 +1,58 @@
-<div class="container">
-    <div class="header">
-        <h1>{{ headerTitle }}</h1>
+<div class="donation-container">
+    <div class="donation-header">
+        <h2>Detalles de la Donación</h2>
     </div>
-    <div class="form-container">
-        <form [formGroup]="form" (submit)="aceptar()">
 
-            <div class="input-field">
-                <mat-form-field class="input-field" *ngIf="tiposDonativo$ | async as tipos">
-                    <mat-label>Tipo de Donativo</mat-label>
-                    <mat-select formControlName="donationType">
-                        <mat-option *ngFor="let tipo of tipos" [value]="tipo.idTipoDonation">
-                            {{ tipo.nombreTipoDonation }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+    <div class="donation-content">
+        <form [formGroup]="form" (ngSubmit)="guardarCambios()" class="donation-form">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Nombre de la Donación</mat-label>
+                <input matInput formControlName="nombre" maxlength="50">
+            </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Seleccione ONG</mat-label>
-                <mat-select formControlName="usersReceptor">
-                    <mat-option *ngFor="let user of (usuariosReceptores$ | async)" [value]="user.id">
-                        {{ user.nombreONG }}
-                    </mat-option>
+            <!-- Cambiar a Monetario -->
+            <mat-form-field *ngIf="mostrarCamposMonetarios" appearance="outline" class="form-field">
+                <mat-label>Monto Donado</mat-label>
+                <input matInput formControlName="montoDonado" type="number" min="0" step="0.01">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Descripción</mat-label>
+                <input matInput formControlName="descripcion" maxlength="200">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field" *ngIf="loginService.showRole() === 'ADMINISTRADOR'">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estado">
+                    <mat-option value="pendiente">Pendiente</mat-option>
+                    <mat-option value="completada">Completada</mat-option>
+                    <mat-option value="cancelada">Cancelada</mat-option>
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Fecha de Recojo</mat-label>
+                <input matInput formControlName="fechaRecojo" [matDatepicker]="picker" [min]="today" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
 
-            <!-- Monto (solo si es tipo MONETARIO) -->
-            <div class="input-field" *ngIf="form.get('donationType')?.value === 2">
-                <mat-form-field class="example-full-width">
-                    <mat-label>monto donado </mat-label>
-                    <input matInput placeholder="Ejm. 100.00" formControlName="montoDonado" type="number">
-                    <mat-error *ngIf="form.get('monto')?.hasError('min')">
-                        El monto debe ser mayor que 0.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <!-- Mostrar y la más molestosa jsj es 1)-->
-            <div class="input-field" *ngIf="form.get('donationType')?.value === 1">
-                <mat-form-field class="example-full-width">
-                    <mat-label>estado</mat-label>
-                    <textarea matInput placeholder="Descripción del donativo" formControlName="estado"></textarea>
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Dirección de Recojo</mat-label>
+                <input matInput formControlName="direccionRecojo" maxlength="100">
+            </mat-form-field>
 
-            <!-- Mostrar Descripción solo si el tipo es 'FISICO' (ID de 'FISICO' es 1)-->
-            <div class="input-field" *ngIf="form.get('donationType')?.value === 1">
-                <mat-form-field class="example-full-width">
-                    <mat-label>descripcion</mat-label>
-                    <textarea matInput placeholder="Descripción del donativo" formControlName="descripcion"></textarea>
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Tipo de Donación</mat-label>
+                <input matInput formControlName="donationType" value="Físico" readonly>
+            </mat-form-field>
 
-            <!-- Mostrar Nombre del Donativo solo si el tipo es 'FISICO'-->
-            <div class="input-field" *ngIf="form.get('donationType')?.value === 1">
-                <mat-form-field class="example-full-width">
-                    <mat-label>nombre</mat-label>
-                    <input matInput placeholder="Ejm. Juguetes" formControlName="nombreDonativo">
-                </mat-form-field>
-            </div>
-
-            <!-- Fecha de Recojo -->
-            <div class="example-full-width">
-                <mat-form-field class="example-full-width">
-                    <mat-label>fecha Recojo</mat-label>
-                    <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="fechaRecojo" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="form.get('fechaRecojo')?.hasError('required')">
-                        La fecha de recojo es obligatoria.
-                    </mat-error>
-                    <mat-error *ngIf="form.get('fechaRecojo')?.hasError('matDatepickerMin')">
-                        La fecha no puede ser antes de hoy.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-
-            <!-- Mostrar Dirección de Recojo solo si el tipo es 'FISICO'-->
-            <div class="input-field" *ngIf="form.get('donationType')?.value === 1">
-                <mat-form-field class="example-full-width">
-                    <mat-label>direccion Recojo</mat-label>
-                    <input matInput placeholder="Ejm. Av. Ejemplo 123" formControlName="direccionRecojo">
-                </mat-form-field>
-            </div>
-
-            <div class="button-container">
-                <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar</button>
+            <!-- Botones -->
+            <div class="form-buttons">
+                <button mat-raised-button class="button-save" type="submit" [disabled]="form.invalid">Guardar
+                    Cambios</button>
+                <button mat-raised-button class="button-change" (click)="alternarCamposMONETARIOSG()">Cambiar a Donación
+                    Monetaria</button>
             </div>
         </form>
     </div>
