@@ -1,93 +1,77 @@
-body {
+/* Importar la fuente Open Sans */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+
+/* Estilos base para el formulario y el contenedor */
+.donation-container, .donation-form {
     font-family: 'Open Sans', sans-serif;
-    color: #004229; 
-    background-color: #f0f0f0;
 }
 
-.container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background-color: #ffffff; 
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); 
+/* Posicionamiento ajustado para evitar superposición con el menú */
+.donation-container {
+    position: relative; /* Usar posición relativa para respetar el flujo de la página */
+    margin: 20px auto; /* Separación del menú, centrado horizontal */
+    width: 70%; /* Ancho mayor para un diseño más espacioso */
+    max-width: 900px; /* Límite máximo para pantallas grandes */
+    background-color: #f9f9f9; /* Fondo claro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra elegante */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 25px; /* Espaciado interno */
 }
 
-.header {
-    text-align: center;
+/* Ajustar el formulario */
+.donation-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo de los campos */
+.form-field {
     margin-bottom: 20px;
 }
 
-.header h1 {
-    font-size: 24px;
-    color: #004229;
-    font-family: 'Lato', sans-serif;
-}
-
-.input-field {
-    margin-bottom: 16px;
-}
-
-mat-form-field {
-    width: 100%;
-    border-radius: 8px; 
-    background-color: #f9f9f9; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease; 
-}
-
-mat-form-field:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-}
-mat-form-field .mat-form-field-label {
-    color: #004229;
-}
-
-mat-form-field input, 
-mat-form-field textarea {
-    color: #004229;
-    border: none; 
-    border-radius: 8px; 
-    padding: 10px;
-    transition: border-color 0.3s, box-shadow 0.3s; 
-}
-
-mat-form-field input:focus, 
-mat-form-field textarea:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 75, 155, 0.5); 
-    background-color: #ffffff;
-}
-
-.button-container {
-    margin-top: 20px;
-}
-
+/* Estilo general de los botones */
 button {
-    width: 100%;
+    margin: 0 10px;
+}
+
+.mat-form-field {
+    margin-bottom: 15px;
+    width: 100%; /* Asegurar que los campos ocupen todo el ancho disponible */
+}
+
+/* Estilos personalizados para los botones */
+button.mat-raised-button {
+    font-family: 'Open Sans', sans-serif;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.button-change {
     background-color: #004229;
-    color: white; 
-    font-family: 'Lato', sans-serif; 
-    border: none;
-    border-radius: 8px; 
-    padding: 10px; 
-    transition: background-color 0.3s, transform 0.2s; 
+    color: white;
 }
 
-button:hover {
-    background-color: #00321a; 
-    transform: scale(1.02); 
+.button-save {
+    background-color: #004229;
+    color: white;
 }
 
-.button-container button {
-    background-color: #004229; 
-    color: white; 
+.button-change:hover, .button-save:hover {
+    background-color: #006643;
 }
 
-.button-container button:hover {
-    background-color: #005b36; 
+/* Botones en la parte inferior */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
 }
-mat-option {
-    background-color: #fff;
-    color: #000;
+
+/* Responsive: Ajustar el formulario en pantallas pequeñas */
+@media (max-width: 768px) {
+    .donation-container {
+        width: 90%; /* Más compacto en pantallas pequeñas */
+        padding: 20px;
+    }
 }

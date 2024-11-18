@@ -1,22 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule, FormsModule, FormGroup, FormControl } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Donations } from '../../../models/Donations'; // Suponiendo que tienes un modelo Donation
 import { DonationsService } from '../../../services/donations.service'; // Asegúrate de que este servicio esté definido
-import { DonationType } from '../../../models/DonationType';
-import { Observable } from 'rxjs';
-import { UsersService } from '../../../services/users.service';  // Asegúrate de que la ruta sea correcta
-import { Users } from '../../../models/Users';
-import { DonationtypeService } from '../../../services/donationtype.service';
 import { LoginService } from '../../../services/login.service';
-import { forkJoin } from 'rxjs';
+import { Users } from '../../../models/Users';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AppComponent } from '../../../app.component';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-creaeditadonation',
@@ -38,179 +35,134 @@ import { forkJoin } from 'rxjs';
 export class CreaeditadonationComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   donation: Donations = new Donations();
+  today = new Date();
   id: number = 0;
+  ongId:number=0;
+  usuarioReceptor: string = "";
+  username: string = "";
   edicion: boolean = false;
-  headerTitle: string = '';
-  tiposDonativo$!: Observable<DonationType[]>;
-  minDate: Date = new Date();
-  usuariosReceptores$!: Observable<Users[]>;
-
+  mostrarCamposONG: boolean = false; // Controla la visibilidad de los campos adicionales
+  mostrarCamposMonetarios: boolean = false;
 
   constructor(
-    private donationsService: DonationsService,
-    private donationTypeService: DonationtypeService,
-    private usersService: UsersService,
+    private dS: DonationsService,
     private formBuilder: FormBuilder,
+    public loginService: LoginService,
     private router: Router,
     private route: ActivatedRoute,
-    private loginservice: LoginService
+    private us:UsersService
   ) { }
 
   ngOnInit(): void {
-
-    this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
-      this.edicion = this.id !== null && this.id > 0;
-      this.initForm();
+    this.route.params.subscribe((data: Params) => {
+      this.usuarioReceptor = data['ongId'];
+      this.edicion = data['ongId'] != null;
+      this.username=data['username'];
+      this.init();
     });
 
-    this.route.url.subscribe((urlSegments) => {
-      const currentPath = urlSegments.join('/');
-      if (currentPath.includes('nuevo')) {
-        this.headerTitle = 'Registrar Nueva Donación';
-      } else if (currentPath.includes('Edit')) {
-        this.headerTitle = 'Actualizar Donación';
-      }
-
-      this.tiposDonativo$ = this.donationTypeService.list();
-      this.usuariosReceptores$ = this.usersService.getONGs()
+    this.form = this.formBuilder.group({
+      nombre: ['', Validators.maxLength(150)],
+      descripcion: ['', Validators.required],
+      estado: ['', Validators.maxLength(20)],
+      fechaRecojo: ['', Validators.required],
+      montoDonado: ['', [Validators.required, Validators.min(0.01)]],
+      direccionRecojo: ['', Validators.maxLength(200)],
+      eliminado: [false],
+      usuarioDonante: ['', Validators.required],
+      donationType: ['FISICO', Validators.required],
+      usuarioReceptor: [this.ongId, Validators.required]
     });
-  }
-
-  initForm(): void {
-    const username = this.loginservice.showUsername();
-    this.usersService.getIdByUsername(username).subscribe((userId) => {
-      this.form = this.formBuilder.group({
-        idDonacion: [-1],
-        donationType: [-1, Validators.required],
-        usersReceptor: [10, Validators.required],
-        montoDonado: [0, [Validators.min(0.01)]],
-        descripcion: ['NE'],
-        nombre: ['NE'],
-        estado: ['Pendiente'],
-        fechaRecojo: ['2025/09/18', Validators.required],
-        direccionRecojo: ['NE'],
-        users: [userId, Validators.required],
-        eliminado: [false],
-      });
-  
-      this.form.get('usersReceptor')?.valueChanges.subscribe({
-        next: (idONG) => {
-          console.log('ID seleccionado:', idONG);
-          this.usuariosReceptores$.subscribe((ongs) => {
-            const ongSeleccionada = ongs.find(ong => ong.id === idONG);
-            if (ongSeleccionada) {
-              console.log('ONG Seleccionada:', ongSeleccionada);
-              console.log('ID de la ONG:', ongSeleccionada.id);
-            } else {
-              console.warn('No se encontró la ONG con el ID:', idONG);
-            }
-          });
-        },
-        error: (err) => {
-          console.error('Error en valueChanges:', err);
-        }
-      });
-      
-      if (this.edicion) {
-        this.donationsService.listId(this.id).subscribe((data) => {
-          this.form.patchValue({
-            idDonacion: data.idDonation,
-            donationType: data.donationType.idTipoDonation,
-            usersReceptor: data.usersReceptor.id,
-            montoDonado: data.montoDonado,
-            descripcion: data.descripcion,
-            nombre: data.nombre,
-            estado: data.estado,
-            fechaRecojo: data.fechaRecojo,
-            direccionRecojo: data.direccionRecojo,
-            users: data.users?.id,
-            eliminado: data.eliminado ? false : true,
-          });
-  
-          this.updateFieldValidators(data.donationType.idTipoDonation.toString());
-        });
-      }
-    });
-  }
-  
-  updateFieldValidators(donationType: string | null | undefined): void {
-    console.log('Tipo de donativo:', donationType);
-
-    if (!donationType) {
-      console.warn('Tipo de donativo no especificado');
-      return;
+    if (this.loginService.showRole() === 'ADMINISTRADOR') {
+      this.agregarCamposADMINISTRADOR();
     }
-
-    const monto = this.form.get('monto');
-    const descripcion = this.form.get('descripcion');
-    const nombreDonativo = this.form.get('nombreDonativo');
-    const direccionRecojo = this.form.get('direccionRecojo');
-
-    if (donationType === '2') {
-      monto?.setValidators([Validators.required, Validators.min(0.01)]);
-      descripcion?.setValue('-');
-      descripcion?.clearValidators();
-      nombreDonativo?.setValue('-');
-      nombreDonativo?.clearValidators();
-      direccionRecojo?.setValue('-');
-      direccionRecojo?.clearValidators();
-
-
-    } else if (donationType === '1') {
-      monto?.setValue(0);
-      monto?.clearValidators();
-      descripcion?.setValidators([Validators.required]);
-      nombreDonativo?.setValidators([Validators.required]);
-      direccionRecojo?.setValidators([Validators.required]);
-    }
-
-    monto?.updateValueAndValidity();
-    descripcion?.updateValueAndValidity();
-    nombreDonativo?.updateValueAndValidity();
-    direccionRecojo?.updateValueAndValidity();
   }
 
-  aceptar(): void {
+  agregarCamposADMINISTRADOR(): void {
+    this.form.addControl('estado', new FormControl('', Validators.required));
+  }
+
+  cambiarAMonetario(): void {
+    this.mostrarCamposMonetarios = !this.mostrarCamposMonetarios;
+    if (this.mostrarCamposMonetarios) {
+      this.agregarCamposMonetarios();
+    } else {
+      this.eliminarCamposMonetarios();
+    }
+  }
+
+  agregarCamposMonetarios(): void {
+    this.form.addControl('montoDonado', new FormControl('', Validators.required));
+  }
+
+  eliminarCamposMonetarios(): void {
+    this.form.removeControl('montoDonado');
+  }
+
+  alternarCamposMONETARIOSG(): void {
+    this.mostrarCamposONG = !this.mostrarCamposONG;
+    if (this.mostrarCamposONG) {
+      this.agregarCamposMonetarios();
+    } else {
+      this.eliminarCamposMonetarios();
+    }
+  }
+
+  guardarCambios(): void {
     if (this.form.valid) {
-      // Get the selected donation type
-      this.tiposDonativo$.subscribe((tipos) => {
-        const tipoDonativo = tipos.find(tipo => tipo.idTipoDonation === this.form.value.donationType);
-        if (!tipoDonativo) {
-          console.error('Tipo de donativo no encontrado');
-          return;
-        }
-        // Proceed with parallel calls for user fetching
-        forkJoin([
-          this.usersService.listId(this.form.value.usersReceptor),
-          this.usersService.getIdByUsername(this.loginservice.showUsername())
-        ]).subscribe(([usuarioReceptor, usuarioDonanteId]) => {
-          this.usersService.listId(usuarioDonanteId).subscribe((usuarioDonante: Users) => {
-            this.donation.users = usuarioDonante;
-            this.donation.usersReceptor = usuarioReceptor;
-            this.donation.donationType = tipoDonativo;
-            this.donation.montoDonado = this.form.value.montoDonado;
-            this.donation.descripcion = this.form.value.descripcion;
-            this.donation.nombre = this.form.value.nombre;
-            this.donation.fechaRecojo = this.form.value.fechaRecojo;
-            this.donation.direccionRecojo = this.form.value.direccionRecojo;
+      this.donation.nombre = this.form.value.nombre;
+      this.donation.descripcion = this.form.value.descripcion;
+      this.donation.fechaRecojo = this.form.value.fechaRecojo;
+      this.donation.direccionRecojo = this.form.value.direccionRecojo;
+      this.donation.users = this.form.value.usuarioDonante;
+      this.donation.usersReceptor = this.form.value.usersReceptor;
+      
+      if(this.loginService.showRole() === "ADMINISTRADOR"){
+        this.donation.estado = this.form.value.estado;
+      }
+      if (this.mostrarCamposONG) {
+        this.donation.montoDonado = this.form.value.montoDonado;
+        this.donation.donationType.nombreTipoDonation = "MONETARIO"
+      }
 
-            // Finalize saving
-            if (this.edicion) {
-              this.donationsService.update(this.donation).subscribe(() => {
-                this.donationsService.list().subscribe((data) => {
-                  this.donationsService.setList(data);
-                });
-              });
-            } else {
-              this.donationsService.insert(this.donation).subscribe(() => {
-                this.donationsService.list().subscribe((data) => {
-                  this.donationsService.setList(data);
-                });
-              });
-            }
+
+      if (this.edicion) {
+        this.dS.listId(this.donation.idDonation).subscribe((data) => {
+          this.donation.idDonation = data.idDonation;
+          this.dS.update(this.donation).subscribe(() => {
+            this.dS.list().subscribe((data) => {
+              this.dS.setList(data);
+              this.router.navigate(['Donations']);
+            });
           });
         });
+      } else {
+        this.dS.insert(this.donation).subscribe(() => {
+          this.dS.list().subscribe((data) => {
+            this.dS.setList(data);
+            this.router.navigate(['Donations']);
+          });
+        });
+      }
+    }
+  }
+
+  init() {
+    if (this.edicion) {
+      this.dS.listId(this.id).subscribe((data) => {
+        const formData: any = {
+          nombre: data.nombre,
+          descripcion: data.descripcion,
+          estado: data.estado,
+          fechaRecojo: data.fechaRecojo,
+          montoDonado: data.montoDonado,
+          direccionRecojo: data.direccionRecojo,
+          usuarioReceptor: data.usersReceptor,
+          usuarioDonante: data.users,
+          tipoDonacion: data.donationType
+        };
+
+        this.form.setValue(formData);
       });
     }
   }
