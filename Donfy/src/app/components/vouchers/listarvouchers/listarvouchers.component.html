@@ -2,8 +2,13 @@
     <h1 class="title">Vouchers</h1>
     <div class="search-container">
       <input type="text" class="search-input" placeholder="Buscar..." (input)="applyFilter($event)" />
-        <button class="new-button" [routerLink]="['/Vouchers/nuevo']" routerLinkActive="router-link-active">Nuevo</button>
-    </div>
+      <button 
+    *ngIf="isAdministrador()" 
+    class="new-button" 
+    [routerLink]="['/Vouchers/nuevo']" 
+    routerLinkActive="router-link-active">
+    Nuevo
+  </button>   </div>
     <div class="tabla">
       <table
         mat-table

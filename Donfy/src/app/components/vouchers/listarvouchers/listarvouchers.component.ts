@@ -6,6 +6,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { Vouchers } from '../../../models/Vouchers';
 import { VouchersService } from '../../../services/vouchers.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-listarvouchers',
@@ -29,9 +30,11 @@ export class ListarvouchersComponent implements OnInit{
 
   constructor(
     private vS:VouchersService,
+    private loginService: LoginService
   ){}
 
   ngOnInit(): void {
+    const role = this.loginService.showRole();
     this.vS.list().subscribe((data) => {
       data.sort((a, b) => a.idComprobante - b.idComprobante);
       this.dataSource = new MatTableDataSource(data);
@@ -61,5 +64,13 @@ export class ListarvouchersComponent implements OnInit{
       });
     });
   }
+
+  isAdministrador(): boolean {
+    const role = this.loginService.showRole();
+    console.log('Rol detectado en isAdministrador:', role);
+    return role === 'ADMINISTRADOR';
+  }
+  
+ 
 
 }
