@@ -77,14 +77,8 @@ export class DonationsService {
     return this.http.get<DonationStatisticsDTO[]>(`${this.url}/donation-statistics`);
   }
   getMonetaryByDonor(anio: number): Observable<DonationSummaryDTO[]> {
-    const username = this.loginService.showUsername(); // Obtén el username desde el LoginService
-    if (!username) {
-      throw new Error('No se pudo obtener el nombre de usuario del token.');
-    }
-
     return this.http.get<DonationSummaryDTO[]>(
-      `${this.url}/ResumenMonetarioDeDonacionesPorDonante?anio=${anio}&username=${username}`
-    );
+      `${this.url}/ResumenMonetarioDeDonacionesPorDonante?anio=${anio}`);
   }
 
   getCantidadDonativosPorTipoYM(mes: number): Observable<DonationforTypemothDTO[]> {

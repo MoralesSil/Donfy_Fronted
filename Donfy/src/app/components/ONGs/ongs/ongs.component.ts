@@ -3,11 +3,13 @@ import { UsersService } from '../../../services/users.service';
 import { Users } from '../../../models/Users';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';  // Asegúrate de importar Router
+import { MatIconModule } from '@angular/material/icon';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-ongs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatIconModule],
   templateUrl:'./ongs.component.html',
   styleUrl: './ongs.component.css'
 })
@@ -18,7 +20,8 @@ export class ONGsComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    public loginService:LoginService
   ) { }
 
   ngOnInit() {

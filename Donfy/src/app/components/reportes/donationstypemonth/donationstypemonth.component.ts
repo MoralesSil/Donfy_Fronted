@@ -20,42 +20,38 @@ import { DonationsService } from '../../../services/donations.service';
   styleUrl: './donationstypemonth.component.css'
 })
 export class DonationstypemonthComponent {
-  month:number=0
-  donaciones: any[] = [];
+  month: number = 0;  // Variable para almacenar el mes seleccionado
+  donaciones: any[] = [];  // Lista de donativos para el gráfico
   barChartOptions: ChartOptions = {
     responsive: true,
   };
-  barChartLabels: string[] = [];
-  barChartType: ChartType = 'pie';
+  barChartLabels: string[] = [];  
+  barChartType: ChartType = 'pie'; 
   barChartLegend = true;
-  barChartData: ChartDataset[] = [];
+  barChartData: ChartDataset[] = [];  
 
   constructor(private dS: DonationsService, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
-      
-  }
+  ngOnInit(): void {}
 
+  // Método para generar el reporte basado en el mes seleccionado
   generarReporte(): void {
     if (this.month) {
       this.dS.getCantidadDonativosPorTipoYM(this.month).subscribe((data) => {
-        this.barChartLabels = this.donaciones; 
-        
-        // Aquí asignamos los valores de "conteo" para cada usuario
+        this.barChartLabels = data.map((item) => String(item.tipoDonation)); 
+
         const conteo = data.map((item) => item.cantidadDonaciones);
-        
+
         this.barChartData = [
           {
-            data: conteo, 
+            data: conteo,  
             label: 'Cantidad de donativos por mes',
-            backgroundColor: ['#35f842','#f4c216','#373da0','#95b5ea'],
+            backgroundColor: ['#35f842','#f4c216','#373da0','#95b5ea'], 
             borderColor: 'rgba(173, 216, 230, 1)',
             borderWidth: 1,
           },
         ];
       });
-    } 
-  } 
-
+    }
+  }
 }
-
