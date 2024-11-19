@@ -42,7 +42,8 @@ export class CreaeditadonationComponent implements OnInit {
   idDonationFisica: number;
   ongs: Users[] = [];
   idOngSeleccionada: number;  // Cambiar a number
-  ongSeleccionada!: Users;
+  ongSeleccionada: Users = new Users;
+  Donacion: Donations = new Donations;
 
   constructor(private fb: FormBuilder,
     private loginService: LoginService,
@@ -50,6 +51,7 @@ export class CreaeditadonationComponent implements OnInit {
     private snackBar: MatSnackBar,
     private donationsService: DonationsService,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
     private router: Router) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.maxLength(50)]],
@@ -68,31 +70,28 @@ export class CreaeditadonationComponent implements OnInit {
 
   ngOnInit(): void {
     this.aplicarValidadores();
-
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state?.['ongData']) {
-      this.ongSeleccionada = navigation.extras.state['ongData'];
-      console.log('ONG seleccionada:', this.ongSeleccionada); // Verifica que los datos estén llegando correctamente
-    }
-
-    // Obtener el idOngSeleccionada desde la URL y convertirlo a number
+  
+    // Obtener el ID de la ONG desde la URL
     const idOngString = this.route.snapshot.paramMap.get('id');
     if (idOngString) {
-      this.idOngSeleccionada = parseInt(idOngString, 10); // Convertir a number
+      this.idOngSeleccionada = parseInt(idOngString, 10); // Convertir el ID a número
     }
-
-    // Usar el id para obtener los detalles de la ONG
-    /*this.userService.listId(this.idOngSeleccionada).subscribe((ong) => {
-      this.ongSeleccionada = ong.nombreONG;
-    });*/
-
-    // Suscribirse al servicio para obtener las ONGs
-    this.userService.getONGs().subscribe((ongs) => {
-      this.ongs = ongs;  // Guardar las ONGs en la propiedad
-    }, (error) => {
-      console.error('Error al obtener las ONGs:', error);
+  
+    // Obtener los detalles de la ONG seleccionada por ID
+    this.userService.listId(this.idOngSeleccionada).subscribe({
+      next: (ong) => {
+        this.ongSeleccionada = ong; // Asignar la ONG seleccionada
+        this.form.patchValue({
+          idOngSeleccionada: this.ongSeleccionada.id,
+        });
+        this.cdr.detectChanges(); // Forzar la actualización de la vista
+      },
+      error: (err) => {
+        console.error('Error al obtener la ONG seleccionada:', err);
+      },
     });
   }
+
 
   alternarCamposMONETARIOSG(): void {
     this.mostrarCamposMonetarios = !this.mostrarCamposMonetarios;
@@ -125,68 +124,64 @@ export class CreaeditadonationComponent implements OnInit {
     this.form.get('montoDonado')?.updateValueAndValidity();
   }
 
-  guardarCambios() {
+  guardarCambios(): void {
     const username = this.loginService.showUsername(); // Obtener el username del usuario logueado
-
+  
     if (!username) {
       this.snackBar.open('No se pudo obtener el nombre de usuario', 'Cerrar', { duration: 3000 });
       return;
     }
-
-    this.userService.getIdByUsername(username).subscribe({
-      next: (userId) => {
-        this.userService.listId(userId).subscribe({
-          next: (usuarioLogueado) => {
-            const ongSeleccionada = this.ongs.find(ong => ong.id === this.idOngSeleccionada);
-
-            if (!ongSeleccionada) {
-              this.snackBar.open('No se pudo encontrar la ONG seleccionada', 'Cerrar', { duration: 3000 });
-              return;
-            }
-
-            const donacion: Donations = {
-              idDonation: 0,
-              nombre: this.mostrarCamposMonetarios ? '' : this.form.get('nombre')?.value,
-              descripcion: this.mostrarCamposMonetarios ? '' : this.form.get('descripcion')?.value,
-              estado: 'pendiente',
-              fechaRecojo: this.mostrarCamposMonetarios
-                ? new Date()
-                : this.form.get('fechaRecojo')?.value,
-              montoDonado: this.mostrarCamposMonetarios
-                ? this.form.get('montoDonado')?.value || 0
-                : 0,
-              eliminado: false,
-              direccionRecojo: this.mostrarCamposMonetarios ? '' : this.form.get('direccionRecojo')?.value,
-              users: usuarioLogueado,
-              usersReceptor: ongSeleccionada,
-              donationType: {
-                idTipoDonation: this.mostrarCamposMonetarios
-                  ? this.idDonationMonetaria
-                  : this.idDonationFisica,
-                nombreTipoDonation: this.mostrarCamposMonetarios ? 'MONETARIO' : 'FISICO'
-              }
+  
+    // Obtener el usuario logueado
+    this.userService.usuario(username).subscribe({
+      next: (usuarioLogueado) => {
+        this.userService.listId(usuarioLogueado).subscribe({
+          next: (a) => {
+            // Configurar los datos de la donación en la instancia existente
+            this.Donacion.idDonation = 0; // Nuevo registro
+            this.Donacion.nombre = this.mostrarCamposMonetarios ? '' : this.form.get('nombre')?.value;
+            this.Donacion.descripcion = this.mostrarCamposMonetarios ? '' : this.form.get('descripcion')?.value;
+            this.Donacion.estado = 'pendiente';
+            this.Donacion.fechaRecojo = this.mostrarCamposMonetarios
+              ? new Date()
+              : this.form.get('fechaRecojo')?.value;
+            this.Donacion.montoDonado = this.mostrarCamposMonetarios
+              ? this.form.get('montoDonado')?.value || 0
+              : 0;
+            this.Donacion.eliminado = false;
+            this.Donacion.direccionRecojo = this.mostrarCamposMonetarios ? '' : this.form.get('direccionRecojo')?.value;
+            console.log('Usuario logueado:', a);
+            console.log('ONG seleccionada:', this.ongSeleccionada);
+            this.Donacion.users = a; // Usuario logueado
+            this.Donacion.usersReceptor = this.ongSeleccionada; // ONG seleccionada
+            this.Donacion.donationType = {
+              idTipoDonation: 6,
+              nombreTipoDonation: "DASDAD"
             };
-
+  
+            console.log('Objeto enviado:', JSON.stringify(this.Donacion));
             // Enviar la donación al backend
-            this.donationsService.insert(donacion).subscribe({
+            this.donationsService.insert(this.Donacion).subscribe({
               next: () => {
                 this.snackBar.open('Donación registrada con éxito', 'Cerrar', { duration: 3000 });
+                this.router.navigate(['/Donations']); // Redirigir tras éxito
               },
               error: () => {
                 this.snackBar.open('Error al registrar la donación', 'Cerrar', { duration: 3000 });
-              }
+              },
             });
           },
           error: () => {
             this.snackBar.open('Error al obtener información del usuario logueado', 'Cerrar', { duration: 3000 });
-          }
+          },
         });
       },
       error: () => {
         this.snackBar.open('Error al obtener el ID del usuario logueado', 'Cerrar', { duration: 3000 });
-      }
+      },
     });
   }
+  
 
   get userRole(): string {
     return this.loginService.showRole();
