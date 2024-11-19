@@ -1,14 +1,24 @@
 <div class="container">
     <h1>Notificaciones</h1>
+
+    <!-- Botón "Nuevo" -->
+    <div class="actions">
+        <button mat-raised-button color="primary" [routerLink]="['/Notifications/agregar']">
+            Nuevo
+        </button>
+    </div>
+
     <div *ngFor="let notification of notifications" class="notification-card">
         <div class="card-header">
             <span class="type">{{ notification.tipoNotificacion.nombre }}</span>
 
             <div class="icons">
-                <button mat-icon-button aria-label="Editar notificación" [routerLink]="['Modificar', notification.idNotificacion]">
+                <button mat-icon-button aria-label="Editar notificación"
+                    [routerLink]="['Modificar', notification.idNotificacion]">
                     <mat-icon style="color: #004229">edit</mat-icon>
                 </button>
-                <button mat-icon-button aria-label="Eliminar notificación" (click)="eliminar(notification.idNotificacion)">
+                <button mat-icon-button aria-label="Eliminar notificación"
+                    (click)="eliminar(notification.idNotificacion)">
                     <mat-icon style="color: #004229">delete</mat-icon>
                 </button>
             </div>

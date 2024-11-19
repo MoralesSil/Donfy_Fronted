@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationsService } from '../../../services/notifications.service';
 import { MatIconModule } from '@angular/material/icon';  // Importar MatIconModule
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Notifications } from '../../../models/Notifications';
 
 @Component({
@@ -19,7 +19,10 @@ import { Notifications } from '../../../models/Notifications';
 export class ListarnotificationComponent {
   notifications: Notifications[] = []; // Array de notificaciones
 
-  constructor(private notificationsService: NotificationsService) {}
+  constructor(
+    private notificationsService: NotificationsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // Cargar la lista de notificaciones al inicio
@@ -34,5 +37,9 @@ export class ListarnotificationComponent {
         this.notifications = this.notifications.filter(notification => notification.idNotificacion !== id);
       });
     }
+  }
+
+  agregarNotificacion(): void {
+    this.router.navigate(['/Notifications/agregar']);
   }
 }

@@ -5,11 +5,11 @@
 
     <div class="donation-content">
         <form [formGroup]="form" (ngSubmit)="guardarCambios()" class="donation-form">
-            <!-- Nombre de la ONG seleccionada -->
+            <!-- Nombre de la ONG seleccionada
             <mat-form-field appearance="fill">
                 <mat-label>ONG Seleccionada</mat-label>
                 <input matInput [value]="ongSeleccionada?.nombreONG" disabled>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <!-- Campos para donativo físico -->
             <div *ngIf="!mostrarCamposMonetarios">
