@@ -36,4 +36,10 @@ export class VouchersService {
   update(vc:Vouchers){
     return this.http.put(this.url,vc);
   }
+
+  //listar vouchers por Usuario
+  listByUser(userId: number) {
+    return this.http.get<Vouchers[]>(`${this.url}/ListarComprobantesPorUsuario/${userId}`);
+  }
+  
 }
