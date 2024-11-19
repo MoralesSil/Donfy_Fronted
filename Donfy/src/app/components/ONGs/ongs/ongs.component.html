@@ -6,7 +6,8 @@
             positivo en Perú.</p>
     </div>
 
-    <div class="cards-container">
+    <!-- Lista de ONGs -->
+    <div *ngIf="ongs.length > 0; else noOngs" class="cards-container">
         <!-- Usando *ngFor para listar las ONGs -->
         <div class="card" *ngFor="let ong of ongs">
             <img [src]="ong.imagenUrl || 'assets/img/default.jpg'" [alt]="ong.nombreONG">
@@ -14,8 +15,22 @@
                 <h3>{{ ong.nombreONG }}</h3>
                 <p>{{ ong.direccion }}</p>
                 <p>{{ ong.ruc }}</p>
-                <button (click)="donar(ong.id)">Donar</button>
+                <!-- Mostrar botón solo si el usuario NO es ADMINISTRADOR -->
+                <button 
+                    mat-raised-button 
+                    *ngIf="loginService.showRole() !== 'ADMINISTRADOR'" 
+                    (click)="navegarADonacion(ong)">
+                    Donar a {{ ong.nombreONG }}
+                </button>
             </div>
         </div>
     </div>
+
+    <!-- Mensaje si no hay ONGs disponibles -->
+    <ng-template #noOngs>
+        <div class="no-ongs">
+            <mat-icon>info</mat-icon>
+            <p>No hay ONGs disponibles en este momento.</p>
+        </div>
+    </ng-template>
 </div>

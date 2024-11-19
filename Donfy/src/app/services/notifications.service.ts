@@ -55,4 +55,8 @@ export class NotificationsService {
   getNotificationsByOngUsername(ongUsername: string): Observable<Notification[]> {
     return this.http.get<Notification[]>(`${this.url}/BuscarNotificacionesporUsernameONG?ongUsername=${ongUsername}`);
   }
+  getNotificationsForUsername(username: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/BuscarNotificacionesporUsername?username=${username}`);
+  }
+
 }

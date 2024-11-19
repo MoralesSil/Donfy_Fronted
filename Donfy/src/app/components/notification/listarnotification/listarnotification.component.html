@@ -1,24 +1,68 @@
 <div class="container">
     <h1>Notificaciones</h1>
-    <div *ngFor="let notification of notifications" class="notification-card">
-        <div class="card-header">
-            <span class="type">{{ notification.tipoNotificacion.nombre }}</span>
 
-            <div class="icons">
-                <button mat-icon-button aria-label="Editar notificación" [routerLink]="['Modificar', notification.idNotificacion]">
-                    <mat-icon style="color: #004229">edit</mat-icon>
-                </button>
-                <button mat-icon-button aria-label="Eliminar notificación" (click)="eliminar(notification.idNotificacion)">
-                    <mat-icon style="color: #004229">delete</mat-icon>
-                </button>
+    <!-- Botón "Nuevo" -->
+    <div class="actions" *ngIf="loginService.showRole() === 'ADMINISTRADOR'">
+        <button mat-raised-button color="primary" [routerLink]="['/Notifications/agregar']">
+            <mat-icon>add</mat-icon>
+            Nuevo
+        </button>
+    </div>    
+
+    <!-- Lista de notificaciones -->
+    <div *ngIf="notifications.length > 0; else noNotifications" class="notifications-list">
+        <div *ngFor="let notification of notifications" class="notification-card">
+            <!-- Cabecera -->
+            <div class="card-header">
+                <div class="info">
+                    <mat-icon>notifications</mat-icon>
+                    <span class="type">{{ notification.tipoNotificacion.nombre }}</span>
+                </div>
+
+                <!-- Acciones -->
+                <div class="icons" *ngIf="loginService.showRole() === 'ADMINISTRADOR'">
+                    <!-- Botón editar -->
+                    <button 
+                        mat-icon-button 
+                        aria-label="Editar notificación"
+                        [routerLink]="['Modificar', notification.idNotificacion]">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    
+                    <!-- Botón eliminar -->
+                    <button 
+                        mat-icon-button 
+                        aria-label="Eliminar notificación"
+                        (click)="eliminar(notification.idNotificacion)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
             </div>
 
-            <span class="status" [class.read]="notification.estado === 'Leído'">{{ notification.estado }}</span>
-        </div>
+            <!-- Mensaje -->
+            <div class="card-message">
+                <mat-icon>message</mat-icon>
+                {{ notification.mensaje }}
+            </div>
 
-        <div class="card-message">{{ notification.mensaje }}</div>
-        <div class="card-footer">
-            <span class="user">Usuario: {{ notification.usuarios.nombre }}</span>
+            <!-- Pie de tarjeta -->
+            <div class="card-footer">
+                <mat-icon>person</mat-icon>
+                <span class="user">Usuario: {{ notification.usuarios.username }}</span>
+
+                <mat-icon>info</mat-icon>
+                <span class="status" [class.read]="notification.estado === 'Leído'">
+                    {{ notification.estado }}
+                </span>
+            </div>
         </div>
     </div>
+
+    <!-- Mensaje si no hay notificaciones -->
+    <ng-template #noNotifications>
+        <div class="no-notifications">
+            <mat-icon>inbox</mat-icon>
+            <p>No hay notificaciones disponibles.</p>
+        </div>
+    </ng-template>
 </div>

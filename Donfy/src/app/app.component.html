@@ -30,7 +30,7 @@
 
       <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Notifications">Mis Notificaciones</button>
       <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Donations">Mis Donaciones</button>
-      <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Vouchers">Mis vouchers</button>
+      <button mat-button *ngIf="isDonador()" routerLink="/Vouchers">Mis vouchers</button>
 
       <button mat-button routerLink="/Vouchers" *ngIf="isAdministrador()||isDonador()">Vouchers</button>
 
@@ -94,7 +94,7 @@
   
         <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Notifications">Mis Notificaciones</button>
         <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Donations">Mis Donaciones</button>
-        <button mat-button *ngIf="isDonador() || isOng()" routerLink="/Vouchers">Mis vouchers</button>
+        <button mat-button *ngIf="isDonador()" routerLink="/Vouchers">Mis vouchers</button>
   
         <button mat-button routerLink="/Vouchers" *ngIf="isAdministrador()||isDonador() ">Vouchers</button>
   

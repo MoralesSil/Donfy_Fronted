@@ -54,8 +54,9 @@ export class DonationsService {
   }
   // Método para obtener donaciones por ONG (filtrado por username)
   getDonationsByOngUsername(ongUsername: string): Observable<Donations[]> {
-    return this.http.get<Donations[]>(`${this.url}/FiltrarDonativosPorONG?ongUsername=${ongUsername}`);
+    return this.http.get<Donations[]>(`${this.url}/FiltrarDonativosPorONG?ong=${ongUsername}`);
   }
+
   // Método para actualizar el estado de eliminado a true
   markAsDeleted(id: number): Observable<void> {
     return this.http.put<void>(`${this.url}/FiltrarDonativosActivos/${id}`, {});
@@ -76,18 +77,12 @@ export class DonationsService {
     return this.http.get<DonationStatisticsDTO[]>(`${this.url}/donation-statistics`);
   }
   getMonetaryByDonor(anio: number): Observable<DonationSummaryDTO[]> {
-    const username = this.loginService.showUsername(); // Obtén el username desde el LoginService
-    if (!username) {
-      throw new Error('No se pudo obtener el nombre de usuario del token.');
-    }
-
     return this.http.get<DonationSummaryDTO[]>(
-      `${this.url}/ResumenMonetarioDeDonacionesPorDonante?anio=${anio}&username=${username}`
-    );
+      `${this.url}/ResumenMonetarioDeDonacionesPorDonante?anio=${anio}`);
   }
 
   getCantidadDonativosPorTipoYM(mes: number): Observable<DonationforTypemothDTO[]> {
     return this.http.get<DonationforTypemothDTO[]>(`${this.url}/cantidadDonativosfisicosPorMonth?mes=${mes}`);
   }  
-  
+
 }

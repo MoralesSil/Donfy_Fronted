@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { Donations } from '../../../models/Donations';
 import { DonationsService } from '../../../services/donations.service';
 import { LoginService } from '../../../services/login.service';
 import { UsersService } from '../../../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listardonation',
@@ -18,53 +18,50 @@ import { UsersService } from '../../../services/users.service';
 })
 export class ListardonationComponent implements OnInit{
   dataSource: MatTableDataSource<Donations> = new MatTableDataSource();
-  displayedColumns: string[] = []; // Inicializamos como un arreglo vacío, lo vamos a modificar dependiendo del rol
-  title: string = "Donativos"; // Título por defecto
 
-  constructor(private dnt: DonationsService, private loginService: LoginService, private uS: UsersService) {}
+
+  displayedColumns: string[] = []; 
+
+  constructor(private dnt: DonationsService, private loginService: LoginService, private uS: UsersService, private router: Router) {}
 
   ngOnInit(): void {
-    console.log("Recargando la lista de donativos...");
-    const role = this.loginService.showRole(); 
-    const username = this.loginService.showUsername();  
-  
+    const role = this.loginService.showRole();
+    const username = this.loginService.showUsername();
     if (role === 'DONADOR') {
       this.displayedColumns = ['nombre', 'descripcion', 'estado', 'monto', 'fechaRecojo', 'direccionRecojo', 'usersReceptor'];
-      
       this.uS.usuario(username).subscribe(userId => {
-        this.dnt.getDonationsByUser(userId).subscribe(donations => {
-          this.dataSource = new MatTableDataSource(donations.filter(d => !d.eliminado));
-          this.title = "Mis Donativos";
+        this.dnt.getDonationsByUser(userId).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data);
         });
       });
-      
     } else if (role === 'ONG') {
       this.displayedColumns = ['nombre', 'descripcion', 'estado', 'monto', 'fechaRecojo', 'direccionRecojo', 'users'];
-      this.dnt.getDonationsByOngUsername(username).subscribe(donations => {
-        this.dataSource = new MatTableDataSource(donations.filter(d => !d.eliminado));
-        this.title = "Donativos Recibidos";
+      this.dnt.getDonationsByOngUsername(username).subscribe(data => {
+        this.dataSource = new MatTableDataSource(data);
       });
     } else {  // ADMINISTRADOR
-      this.displayedColumns = ['id', 'nombre', 'descripcion', 'estado', 'monto', 'fechaRecojo', 'direccionRecojo', 'users', 'usersReceptor'];
-      this.dnt.list().subscribe(donations => {
-        console.log('Datos recibidos:', donations);
-        this.dataSource = new MatTableDataSource(donations.filter(d => !d.eliminado));
+      this.displayedColumns = ['id', 'nombre', 'descripcion', 'estado', 'monto', 'fechaRecojo', 'direccionRecojo', 'users', 'usersReceptor', 'acciones'];
+      this.dnt.list().subscribe(data => {
+        this.dataSource = new MatTableDataSource(data);
       });
-      
     }
   }
-  
 
-  eliminar(id: number) {
+  eliminar(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este donativo?')) {
       this.dnt.listId(id).subscribe(donation => {
         if (donation) {
-          donation.eliminado = true; 
+          donation.eliminado = true; // Marca como eliminado
           this.dnt.update(donation).subscribe(() => {
-            this.ngOnInit(); 
+            this.ngOnInit();
           });
         }
       });
     }
-  }  
+  }
+
+  editar(id: number): void {
+    console.log(`Editando donación con ID: ${id}`);
+    this.router.navigate([`Donations/Edit/${id}`]);
+  }
 }

@@ -20,7 +20,13 @@
 
 <!-- Contenedor para el gráfico -->
 <div class="chart-container" style="text-align: center; width: 100%; max-width: 700px; margin: auto;">
-    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+    <!-- Mostrar gráfico si hay datos -->
+    <canvas *ngIf="barChartData.length > 0" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
         [type]="barChartType" [legend]="barChartLegend" style="width: 100%; height: 400px;">
     </canvas>
+
+    <!-- Mostrar mensaje cuando no haya datos -->
+    <p *ngIf="barChartData.length === 0" style="font-size: 1.5em; color: #004229; font-weight: bold;">
+        No hay datos disponibles para el mes seleccionado.
+    </p>
 </div>

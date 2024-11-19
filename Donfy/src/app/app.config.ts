@@ -16,13 +16,14 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withInterceptorsFromDi()), 
     provideHttpClient(withFetch()), 
-    provideAnimationsAsync(),
     importProvidersFrom(
       JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter,
           allowedDomains: ['localhost:8081'],
           disallowedRoutes: ['http://localhost:8081/login/forget'],
+          //allowedDomains: ['donfy.onrender.com'],
+          //disallowedRoutes: ['donfy.onrender.com/login/forget'],
         },
       })
     ), provideAnimationsAsync()

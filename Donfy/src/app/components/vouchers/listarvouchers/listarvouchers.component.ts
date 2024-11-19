@@ -1,12 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterModule } from '@angular/router';
 import { Vouchers } from '../../../models/Vouchers';
 import { VouchersService } from '../../../services/vouchers.service';
 import { LoginService } from '../../../services/login.service';
+<<<<<<< HEAD
+=======
+import { UsersService } from '../../../services/users.service';
+import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+>>>>>>> main
 
 @Component({
   selector: 'app-listarvouchers',
@@ -16,19 +21,21 @@ import { LoginService } from '../../../services/login.service';
     RouterModule,
     MatButtonModule,
     MatIcon,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CommonModule
   ],
   templateUrl: './listarvouchers.component.html',
-  styleUrl: './listarvouchers.component.css'
+  styleUrls: ['./listarvouchers.component.css']
 })
-export class ListarvouchersComponent implements OnInit{
-  dataSource:MatTableDataSource<Vouchers>=new MatTableDataSource();
-  @ViewChild(MatPaginator) Paginator!: MatPaginator;
+export class ListarvouchersComponent implements OnInit {
+  displayedColumns: string[] = ['cd1', 'cd2', 'cd3', 'cd4', 'cd5', 'cd6'];
+  dataSource = new MatTableDataSource<Vouchers>();
+  role: string = '';
 
-  displayedColumns: string[]=['cd1','cd2','cd3','cd4', 'cd5','cd6','cd7','cd8']
-  totalRegistros: number = 0;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
+<<<<<<< HEAD
     private vS:VouchersService,
     private loginService: LoginService
   ){}
@@ -55,16 +62,37 @@ export class ListarvouchersComponent implements OnInit{
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+=======
+    private vS: VouchersService,
+    private loginService: LoginService,
+    private uS: UsersService
+  ) {}
+
+  ngOnInit(): void {
+    this.role = this.loginService.showRole();
+    this.configureColumns();
+    this.listarVouchers();
+>>>>>>> main
   }
 
-  eliminar(id: number): void {
-    this.vS.delete(id).subscribe(() => {
-      this.vS.list().subscribe((data) => {
-        this.vS.setList(data);
+  configureColumns(): void {
+    if (this.role === 'ADMINISTRADOR') {
+      this.displayedColumns = [...this.displayedColumns, 'cd7', 'cd8'];
+    }
+  }
+
+  listarVouchers(): void {
+    const username = this.loginService.showUsername();
+    this.uS.usuario(username).subscribe(user => {
+      const userId = user;
+      this.vS.listByUser(userId).subscribe(vouchers => {
+        this.dataSource = new MatTableDataSource(vouchers);
+        this.dataSource.paginator = this.paginator;
       });
     });
   }
 
+<<<<<<< HEAD
   isAdministrador(): boolean {
     const role = this.loginService.showRole();
     console.log('Rol detectado en isAdministrador:', role);
@@ -74,3 +102,14 @@ export class ListarvouchersComponent implements OnInit{
  
 
 }
+=======
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  eliminar(idComprobante: number): void {
+    console.log(`Eliminar voucher con ID: ${idComprobante}`);
+  }
+}
+>>>>>>> main
