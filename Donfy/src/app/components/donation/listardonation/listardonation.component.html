@@ -1,65 +1,79 @@
 <div class="container">
-    <h1 class="title">{{ title }}</h1>
-    <div class="tabla">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
-        <!-- Columna ID -->
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Id</th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.idDonation }}</td>
-        </ng-container>
-  
-        <!-- Nombre -->
-        <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Nombre </th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.nombre }}</td>
-        </ng-container>
-  
-  
-        <!-- Descripción -->
-        <ng-container matColumnDef="descripcion">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Descripción </th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.descripcion }}</td>
-        </ng-container>
-  
-        <!-- Estado -->
-        <ng-container matColumnDef="estado">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Estado </th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.estado }}</td>
-        </ng-container>
-  
-        <!-- Monto -->
-        <ng-container matColumnDef="monto">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Monto </th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.montoDonado }}</td>
-        </ng-container>
-  
-        <!-- Fecha de Recojo -->
-        <ng-container matColumnDef="fechaRecojo">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Fecha de Recojo </th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.fechaRecojo }}</td>
-        </ng-container>
-  
-        <!-- Dirección de Recojo -->
-        <ng-container matColumnDef="direccionRecojo">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Dirección de Recojo </th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.direccionRecojo }}</td>
-        </ng-container>
-  
-        <!-- Usuario -->
-        <ng-container matColumnDef="users">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Usuario </th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.users?.username }}</td>
-        </ng-container>
-  
-        <!-- Receptor -->
-        <ng-container matColumnDef="usersReceptor">
-          <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Receptor </th>
-          <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.usersReceptor?.nombreONG }}</td>
-        </ng-container>
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
+  <div class="donation-header">
+    <h2>Donaciones</h2>
   </div>
-  
+  <div class="tabla">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+      <!-- Columna ID -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Id</th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.idDonation }}</td>
+      </ng-container>
+
+      <!-- Nombre -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Nombre </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.nombre }}</td>
+      </ng-container>
+
+      <!-- Descripción -->
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Descripción </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.descripcion }}</td>
+      </ng-container>
+
+      <!-- Estado -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Estado </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.estado }}</td>
+      </ng-container>
+
+      <!-- Monto -->
+      <ng-container matColumnDef="monto">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Monto </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.montoDonado }}</td>
+      </ng-container>
+
+      <!-- Fecha de Recojo -->
+      <ng-container matColumnDef="fechaRecojo">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Fecha de Recojo </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.fechaRecojo }}</td>
+      </ng-container>
+
+      <!-- Dirección de Recojo -->
+      <ng-container matColumnDef="direccionRecojo">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Dirección de Recojo </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.direccionRecojo }}</td>
+      </ng-container>
+
+      <!-- Usuario -->
+      <ng-container matColumnDef="users">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Usuario </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.users?.username }}</td>
+      </ng-container>
+
+      <!-- Receptor -->
+      <ng-container matColumnDef="usersReceptor">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Receptor </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">{{ element.usersReceptor?.nombreONG }}</td>
+      </ng-container>
+
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Acciones </th>
+        <td mat-cell *matCellDef="let element" class="mat-cell">
+          <button mat-icon-button (click)="editar(element.idDonation)">
+            <mat-icon style="color: #004229">edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="eliminar(element.idDonation)">
+            <mat-icon style="color: #004229">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header and Rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

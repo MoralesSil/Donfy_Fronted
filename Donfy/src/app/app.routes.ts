@@ -110,7 +110,7 @@ export const routes: Routes =
             component: DonationComponent,
             children: [
                 {
-                    path: 'nuevo', component: CreaeditadonationComponent
+                    path: 'nuevo/:id', component: CreaeditadonationComponent
                 },
                 {
                     path: 'Edit/:id', component: CreaeditadonationComponent

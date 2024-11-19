@@ -3,20 +3,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { LoginService } from './services/login.service';
 import { UsersService } from './services/users.service';
 import { SaldoXusuarioDTO } from './models/SaldoXusuarioDTO';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ChangeDetectionStrategy, Component, HostListener, inject, TemplateRef } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    RouterOutlet, 
+    RouterOutlet,
     MatToolbarModule,
     MatMenuModule,
     RouterLink,
@@ -26,7 +28,9 @@ import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
     RouterModule,
     CommonModule,
     MatDialogModule,
-    ],
+    MatSelectModule,
+    MatOptionModule,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -36,21 +40,21 @@ export class AppComponent {
   username: string = '';
   saldo: number = 0;
   saldoLoaded: boolean = false;
-  
+
   isSmallScreen: boolean = false;
   isMenuOpen: boolean = false;
   readonly dialog = inject(MatDialog);
 
   constructor(
-    private loginService: LoginService, 
+    private loginService: LoginService,
     private uS: UsersService,
-    private router: Router) {}
+    private router: Router) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isSmallScreen = window.innerWidth <= 768;
     if (!this.isSmallScreen) {
-      this.isMenuOpen = false; 
+      this.isMenuOpen = false;
     }
   }
 
@@ -66,7 +70,7 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'confirm') {
         sessionStorage.clear();
-        this.router.navigate(['/landing']); 
+        this.router.navigate(['/landing']);
       }
     });
   }
@@ -100,7 +104,7 @@ export class AppComponent {
   isOng() {
     return this.role === 'ONG';
   }
-  
+
   ngOnInit() {
     this.isSmallScreen = window.innerWidth <= 768;
   }

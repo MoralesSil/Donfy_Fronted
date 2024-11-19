@@ -3,7 +3,6 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, Subject } from 'rxjs';
 import { Users } from '../models/Users';
-import { JwtRequest } from '../models/jwtRequest';
 import { SaldoXusuarioDTO } from '../models/SaldoXusuarioDTO';
 import { DonanteXFechaDTO } from '../models/DonanteXFechaDTO';
 const base_url = environment.base
