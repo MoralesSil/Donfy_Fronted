@@ -10,7 +10,6 @@
                 <mat-label>ONG Seleccionada</mat-label>
                 <input matInput [value]="ongSeleccionada.nombreONG" disabled>
             </mat-form-field>
-              
 
             <!-- Campos para donativo físico -->
             <div *ngIf="!mostrarCamposMonetarios">
@@ -55,7 +54,7 @@
 
                 <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Fecha de Donación</mat-label>
-                    <input matInput formControlName="fechaDonacion" readonly>
+                    <input matInput formControlName="fechaRecojo" readonly>
                 </mat-form-field>
             </div>
 

@@ -159,7 +159,7 @@ export const routes: Routes =
             component: NotificationComponent,
             children: [
                 {
-                    path: 'Agregar',
+                    path: 'agregar',
                     component: CreaeditanotificationComponent
                 },
                 {
