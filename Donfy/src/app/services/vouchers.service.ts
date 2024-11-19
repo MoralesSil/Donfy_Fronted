@@ -39,7 +39,7 @@ export class VouchersService {
 
   //listar vouchers por Usuario
   listByUser(userId: number) {
-    return this.http.get<Vouchers[]>(`${this.url}/ListarComprobantesPorUsuario?iduser=${userId}`);
+    return this.http.get<Vouchers[]>(`${this.url}/ListarComprobantesPorUsuario/${userId}`);
   }
   
 }
