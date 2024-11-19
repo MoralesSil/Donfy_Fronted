@@ -49,12 +49,15 @@ export class FormularioretiroComponent implements OnInit{
 
   retiro(): void {
     if (this.montoRecarga <= 0) {
-      alert('El monto de recarga debe ser mayor que cero.');
+      alert('El monto a retirar debe ser mayor que cero.');
       return;
     }
-
-    this.nuevoSaldo = this.saldoActual - this.montoRecarga;
-
+  
+    if (this.montoRecarga > this.saldoActual) {
+      alert('No puedes retirar un monto mayor al saldo disponible.');
+      return;
+    }
+  
     const username = this.loginService.showUsername();
     this.usersService.saldo(username).subscribe((data: SaldoXusuarioDTO[]) => {
       if (data.length > 0) {
@@ -66,11 +69,11 @@ export class FormularioretiroComponent implements OnInit{
         this.usersService.listId(userId).subscribe((userData: Users) => {
           this.user = userData;
           this.user.saldo = this.nuevoSaldo;
-
-          console.log('Sending updated user data:', JSON.stringify(this.user));
-
+  
+          console.log('Enviando los datos actualizados del usuario:', JSON.stringify(this.user));
+  
           this.usersService.update(this.user).subscribe(() => {
-            console.log('Saldo updated successfully');
+            console.log('Saldo actualizado correctamente');
             this.Role.rol = "ONG";
             this.usersService.usuario(username).subscribe((id: number) => {
               this.usersService.listId(id).subscribe((user: Users) => {
@@ -83,12 +86,12 @@ export class FormularioretiroComponent implements OnInit{
               });
             });
           }, error => {
-            console.error('Error updating saldo', error);
+            console.error('Error al actualizar el saldo', error);
           });
         });
       });
     });
-  }
+  }  
 
   guardarRole(role: Role) {
     this.r.insert(role).subscribe(
