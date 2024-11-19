@@ -54,8 +54,9 @@ export class DonationsService {
   }
   // Método para obtener donaciones por ONG (filtrado por username)
   getDonationsByOngUsername(ongUsername: string): Observable<Donations[]> {
-    return this.http.get<Donations[]>(`${this.url}/FiltrarDonativosPorONG?ongUsername=${ongUsername}`);
+    return this.http.get<Donations[]>(`${this.url}/FiltrarDonativosPorONG?ong=${ongUsername}`);
   }
+
   // Método para actualizar el estado de eliminado a true
   markAsDeleted(id: number): Observable<void> {
     return this.http.put<void>(`${this.url}/FiltrarDonativosActivos/${id}`, {});
