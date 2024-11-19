@@ -89,5 +89,5 @@ export class DonationsService {
   getCantidadDonativosPorTipoYM(mes: number): Observable<DonationforTypemothDTO[]> {
     return this.http.get<DonationforTypemothDTO[]>(`${this.url}/cantidadDonativosfisicosPorMonth?mes=${mes}`);
   }  
-  
+
 }

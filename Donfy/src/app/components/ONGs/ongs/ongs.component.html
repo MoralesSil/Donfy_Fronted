@@ -14,7 +14,10 @@
                 <h3>{{ ong.nombreONG }}</h3>
                 <p>{{ ong.direccion }}</p>
                 <p>{{ ong.ruc }}</p>
-                <button (click)="donar(ong.id)">Donar</button>
+                <!-- Aquí pasamos el objeto completo -->
+                <button mat-raised-button (click)="navegarADonacion(ong)">
+                    Donar a {{ ong.nombreONG }}
+                </button>
             </div>
         </div>
     </div>

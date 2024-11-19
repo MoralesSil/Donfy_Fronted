@@ -36,7 +36,6 @@ export class CreaeditanotificationComponent implements OnInit {
   notification: Notifications = new Notifications();
   id: number = 0;
   edicion: boolean = false;
-  headerTitle: string = '';
 
   tiposNotificacion$!: Observable<NotificationType[]>; 
   usuarios$!: Observable<Users[]>; 
@@ -65,15 +64,6 @@ export class CreaeditanotificationComponent implements OnInit {
       this.edicion = this.id !== null && this.id > 0;
       if (this.edicion) {
         this.initForm();
-      }
-    });
-
-    this.route.url.subscribe(urlSegments => {
-      const currentPath = urlSegments.join('/');
-      if (currentPath.includes('Agregar')) {
-        this.headerTitle = 'Registrar Nueva Notificación';
-      } else if (currentPath.includes('Modificar')) {
-        this.headerTitle = 'Actualizar Notificación';
       }
     });
 

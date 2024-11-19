@@ -9,11 +9,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { Donations } from '../../../models/Donations'; // Suponiendo que tienes un modelo Donation
 import { DonationsService } from '../../../services/donations.service'; // Asegúrate de que este servicio esté definido
-import { LoginService } from '../../../services/login.service';
 import { Users } from '../../../models/Users';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AppComponent } from '../../../app.component';
 import { UsersService } from '../../../services/users.service';
+import { LoginService } from '../../../services/login.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-creaeditadonation',
@@ -33,137 +35,160 @@ import { UsersService } from '../../../services/users.service';
   styleUrls: ['./creaeditadonation.component.css']
 })
 export class CreaeditadonationComponent implements OnInit {
-  form: FormGroup = new FormGroup({});
-  donation: Donations = new Donations();
+  form: FormGroup;
+  mostrarCamposMonetarios = false;
   today = new Date();
-  id: number = 0;
-  ongId:number=0;
-  usuarioReceptor: string = "";
-  username: string = "";
-  edicion: boolean = false;
-  mostrarCamposONG: boolean = false; // Controla la visibilidad de los campos adicionales
-  mostrarCamposMonetarios: boolean = false;
+  idDonationMonetaria: number;  // Declaración de propiedad para la donación monetaria
+  idDonationFisica: number;
+  ongs: Users[] = [];
+  idOngSeleccionada: number;  // Cambiar a number
+  ongSeleccionada!: Users;
 
-  constructor(
-    private dS: DonationsService,
-    private formBuilder: FormBuilder,
-    public loginService: LoginService,
-    private router: Router,
+  constructor(private fb: FormBuilder,
+    private loginService: LoginService,
+    private userService: UsersService,
+    private snackBar: MatSnackBar,
+    private donationsService: DonationsService,
     private route: ActivatedRoute,
-    private us:UsersService
-  ) { }
+    private router: Router) {
+    this.form = this.fb.group({
+      nombre: ['', [Validators.required, Validators.maxLength(50)]],
+      descripcion: ['', [Validators.required, Validators.maxLength(200)]],
+      estado: [{ value: 'pendiente', disabled: this.loginService.showRole() !== 'ADMINISTRADOR' }],
+      fechaRecojo: ['', Validators.required], // Validación dinámica
+      direccionRecojo: ['', [Validators.required, Validators.maxLength(100)]],
+      donationType: ['FISICO', Validators.required],
+      montoDonado: [null, Validators.min(0)],
+      idOngSeleccionada: [null, Validators.required],
+    });
+    this.idDonationMonetaria = 0;
+    this.idDonationFisica = 0;
+    this.idOngSeleccionada = 0;
+  }
 
   ngOnInit(): void {
-    this.route.params.subscribe((data: Params) => {
-      this.usuarioReceptor = data['ongId'];
-      this.edicion = data['ongId'] != null;
-      this.username=data['username'];
-      this.init();
-    });
+    this.aplicarValidadores();
 
-    this.form = this.formBuilder.group({
-      nombre: ['', Validators.maxLength(150)],
-      descripcion: ['', Validators.required],
-      estado: ['', Validators.maxLength(20)],
-      fechaRecojo: ['', Validators.required],
-      montoDonado: ['', [Validators.required, Validators.min(0.01)]],
-      direccionRecojo: ['', Validators.maxLength(200)],
-      eliminado: [false],
-      usuarioDonante: ['', Validators.required],
-      donationType: ['FISICO', Validators.required],
-      usuarioReceptor: [this.ongId, Validators.required]
-    });
-    if (this.loginService.showRole() === 'ADMINISTRADOR') {
-      this.agregarCamposADMINISTRADOR();
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state?.['ongData']) {
+      this.ongSeleccionada = navigation.extras.state['ongData'];
+      console.log('ONG seleccionada:', this.ongSeleccionada); // Verifica que los datos estén llegando correctamente
     }
-  }
 
-  agregarCamposADMINISTRADOR(): void {
-    this.form.addControl('estado', new FormControl('', Validators.required));
-  }
-
-  cambiarAMonetario(): void {
-    this.mostrarCamposMonetarios = !this.mostrarCamposMonetarios;
-    if (this.mostrarCamposMonetarios) {
-      this.agregarCamposMonetarios();
-    } else {
-      this.eliminarCamposMonetarios();
+    // Obtener el idOngSeleccionada desde la URL y convertirlo a number
+    const idOngString = this.route.snapshot.paramMap.get('id');
+    if (idOngString) {
+      this.idOngSeleccionada = parseInt(idOngString, 10); // Convertir a number
     }
-  }
 
-  agregarCamposMonetarios(): void {
-    this.form.addControl('montoDonado', new FormControl('', Validators.required));
-  }
+    // Usar el id para obtener los detalles de la ONG
+    /*this.userService.listId(this.idOngSeleccionada).subscribe((ong) => {
+      this.ongSeleccionada = ong.nombreONG;
+    });*/
 
-  eliminarCamposMonetarios(): void {
-    this.form.removeControl('montoDonado');
+    // Suscribirse al servicio para obtener las ONGs
+    this.userService.getONGs().subscribe((ongs) => {
+      this.ongs = ongs;  // Guardar las ONGs en la propiedad
+    }, (error) => {
+      console.error('Error al obtener las ONGs:', error);
+    });
   }
 
   alternarCamposMONETARIOSG(): void {
-    this.mostrarCamposONG = !this.mostrarCamposONG;
-    if (this.mostrarCamposONG) {
-      this.agregarCamposMonetarios();
-    } else {
-      this.eliminarCamposMonetarios();
-    }
+    this.mostrarCamposMonetarios = !this.mostrarCamposMonetarios;
+    this.aplicarValidadores();
   }
 
-  guardarCambios(): void {
-    if (this.form.valid) {
-      this.donation.nombre = this.form.value.nombre;
-      this.donation.descripcion = this.form.value.descripcion;
-      this.donation.fechaRecojo = this.form.value.fechaRecojo;
-      this.donation.direccionRecojo = this.form.value.direccionRecojo;
-      this.donation.users = this.form.value.usuarioDonante;
-      this.donation.usersReceptor = this.form.value.usersReceptor;
-      
-      if(this.loginService.showRole() === "ADMINISTRADOR"){
-        this.donation.estado = this.form.value.estado;
-      }
-      if (this.mostrarCamposONG) {
-        this.donation.montoDonado = this.form.value.montoDonado;
-        this.donation.donationType.nombreTipoDonation = "MONETARIO"
-      }
-
-
-      if (this.edicion) {
-        this.dS.listId(this.donation.idDonation).subscribe((data) => {
-          this.donation.idDonation = data.idDonation;
-          this.dS.update(this.donation).subscribe(() => {
-            this.dS.list().subscribe((data) => {
-              this.dS.setList(data);
-              this.router.navigate(['Donations']);
-            });
-          });
-        });
-      } else {
-        this.dS.insert(this.donation).subscribe(() => {
-          this.dS.list().subscribe((data) => {
-            this.dS.setList(data);
-            this.router.navigate(['Donations']);
-          });
-        });
-      }
-    }
-  }
-
-  init() {
-    if (this.edicion) {
-      this.dS.listId(this.id).subscribe((data) => {
-        const formData: any = {
-          nombre: data.nombre,
-          descripcion: data.descripcion,
-          estado: data.estado,
-          fechaRecojo: data.fechaRecojo,
-          montoDonado: data.montoDonado,
-          direccionRecojo: data.direccionRecojo,
-          usuarioReceptor: data.usersReceptor,
-          usuarioDonante: data.users,
-          tipoDonacion: data.donationType
-        };
-
-        this.form.setValue(formData);
+  aplicarValidadores(): void {
+    if (this.mostrarCamposMonetarios) {
+      // Configuración para donación monetaria
+      this.form.patchValue({
+        donationType: 'MONETARIO',
+        fechaRecojo: this.today, // Fecha automática
       });
+      this.form.get('fechaRecojo')?.clearValidators();
+      this.form.get('direccionRecojo')?.clearValidators();
+      this.form.get('montoDonado')?.setValidators([Validators.required, Validators.min(0)]);
+    } else {
+      // Configuración para donación física
+      this.form.patchValue({
+        donationType: 'FISICO',
+        fechaRecojo: '', // Resetea la fecha
+        montoDonado: null,
+      });
+      this.form.get('fechaRecojo')?.setValidators([Validators.required]); // Vuelve a ser requerida
+      this.form.get('direccionRecojo')?.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.form.get('montoDonado')?.clearValidators();
     }
+    this.form.get('fechaRecojo')?.updateValueAndValidity();
+    this.form.get('direccionRecojo')?.updateValueAndValidity();
+    this.form.get('montoDonado')?.updateValueAndValidity();
+  }
+
+  guardarCambios() {
+    const username = this.loginService.showUsername(); // Obtener el username del usuario logueado
+
+    if (!username) {
+      this.snackBar.open('No se pudo obtener el nombre de usuario', 'Cerrar', { duration: 3000 });
+      return;
+    }
+
+    this.userService.getIdByUsername(username).subscribe({
+      next: (userId) => {
+        this.userService.listId(userId).subscribe({
+          next: (usuarioLogueado) => {
+            const ongSeleccionada = this.ongs.find(ong => ong.id === this.idOngSeleccionada);
+
+            if (!ongSeleccionada) {
+              this.snackBar.open('No se pudo encontrar la ONG seleccionada', 'Cerrar', { duration: 3000 });
+              return;
+            }
+
+            const donacion: Donations = {
+              idDonation: 0,
+              nombre: this.mostrarCamposMonetarios ? '' : this.form.get('nombre')?.value,
+              descripcion: this.mostrarCamposMonetarios ? '' : this.form.get('descripcion')?.value,
+              estado: 'pendiente',
+              fechaRecojo: this.mostrarCamposMonetarios
+                ? new Date()
+                : this.form.get('fechaRecojo')?.value,
+              montoDonado: this.mostrarCamposMonetarios
+                ? this.form.get('montoDonado')?.value || 0
+                : 0,
+              eliminado: false,
+              direccionRecojo: this.mostrarCamposMonetarios ? '' : this.form.get('direccionRecojo')?.value,
+              users: usuarioLogueado,
+              usersReceptor: ongSeleccionada,
+              donationType: {
+                idTipoDonation: this.mostrarCamposMonetarios
+                  ? this.idDonationMonetaria
+                  : this.idDonationFisica,
+                nombreTipoDonation: this.mostrarCamposMonetarios ? 'MONETARIO' : 'FISICO'
+              }
+            };
+
+            // Enviar la donación al backend
+            this.donationsService.insert(donacion).subscribe({
+              next: () => {
+                this.snackBar.open('Donación registrada con éxito', 'Cerrar', { duration: 3000 });
+              },
+              error: () => {
+                this.snackBar.open('Error al registrar la donación', 'Cerrar', { duration: 3000 });
+              }
+            });
+          },
+          error: () => {
+            this.snackBar.open('Error al obtener información del usuario logueado', 'Cerrar', { duration: 3000 });
+          }
+        });
+      },
+      error: () => {
+        this.snackBar.open('Error al obtener el ID del usuario logueado', 'Cerrar', { duration: 3000 });
+      }
+    });
+  }
+
+  get userRole(): string {
+    return this.loginService.showRole();
   }
 }

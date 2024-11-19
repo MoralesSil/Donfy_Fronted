@@ -5,54 +5,72 @@
 
     <div class="donation-content">
         <form [formGroup]="form" (ngSubmit)="guardarCambios()" class="donation-form">
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Nombre de la Donación</mat-label>
-                <input matInput formControlName="nombre" maxlength="50">
+            <!-- Nombre de la ONG seleccionada -->
+            <mat-form-field appearance="fill">
+                <mat-label>ONG Seleccionada</mat-label>
+                <input matInput [value]="ongSeleccionada?.nombreONG" disabled>
             </mat-form-field>
 
-            <!-- Cambiar a Monetario -->
-            <mat-form-field *ngIf="mostrarCamposMonetarios" appearance="outline" class="form-field">
-                <mat-label>Monto Donado</mat-label>
-                <input matInput formControlName="montoDonado" type="number" min="0" step="0.01">
-            </mat-form-field>
+            <!-- Campos para donativo físico -->
+            <div *ngIf="!mostrarCamposMonetarios">
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Nombre de la Donación</mat-label>
+                    <input matInput formControlName="nombre" maxlength="50">
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Descripción</mat-label>
-                <input matInput formControlName="descripcion" maxlength="200">
-            </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Descripción</mat-label>
+                    <input matInput formControlName="descripcion" maxlength="200">
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" class="form-field" *ngIf="loginService.showRole() === 'ADMINISTRADOR'">
-                <mat-label>Estado</mat-label>
-                <mat-select formControlName="estado">
-                    <mat-option value="pendiente">Pendiente</mat-option>
-                    <mat-option value="completada">Completada</mat-option>
-                    <mat-option value="cancelada">Cancelada</mat-option>
-                </mat-select>
-            </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field" *ngIf="userRole === 'ADMINISTRADOR'">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="estado">
+                        <mat-option value="pendiente">Pendiente</mat-option>
+                        <mat-option value="completada">Completada</mat-option>
+                        <mat-option value="cancelada">Cancelada</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Fecha de Recojo</mat-label>
-                <input matInput formControlName="fechaRecojo" [matDatepicker]="picker" [min]="today" readonly>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Fecha de Recojo</mat-label>
+                    <input matInput formControlName="fechaRecojo" [matDatepicker]="picker" [min]="today">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Dirección de Recojo</mat-label>
-                <input matInput formControlName="direccionRecojo" maxlength="100">
-            </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Dirección de Recojo</mat-label>
+                    <input matInput formControlName="direccionRecojo" maxlength="100">
+                </mat-form-field>
+            </div>
+
+            <!-- Campos para donativo monetario -->
+            <div *ngIf="mostrarCamposMonetarios">
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Monto Donado</mat-label>
+                    <input matInput formControlName="montoDonado" type="number" min="0" step="0.01">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Fecha de Donación</mat-label>
+                    <input matInput formControlName="fechaDonacion" readonly>
+                </mat-form-field>
+            </div>
 
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Tipo de Donación</mat-label>
-                <input matInput formControlName="donationType" value="Físico" readonly>
+                <input matInput formControlName="donationType"
+                    [value]="mostrarCamposMonetarios ? 'Monetario' : 'Físico'" readonly>
             </mat-form-field>
 
             <!-- Botones -->
             <div class="form-buttons">
                 <button mat-raised-button class="button-save" type="submit" [disabled]="form.invalid">Guardar
                     Cambios</button>
-                <button mat-raised-button class="button-change" (click)="alternarCamposMONETARIOSG()">Cambiar a Donación
-                    Monetaria</button>
+                <button mat-raised-button class="button-change" type="button"
+                    (click)="alternarCamposMONETARIOSG()">Cambiar a {{ mostrarCamposMonetarios ? 'Donación Física' :
+                    'Donación Monetaria' }}</button>
             </div>
         </form>
     </div>
